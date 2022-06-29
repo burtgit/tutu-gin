@@ -1,0 +1,12 @@
+{
+  "apps":{
+    "name":"tutu-gin",
+    "script":"/usr/local/bin",
+    "exec_mode":"fork",
+    "args":[
+      "tutu-gin"
+    ],
+    "error_file":"/data/logs/tutu-gin.log",
+    "out_file":"/data/logs/tutu-gin.log"
+  }
+}
