@@ -17,6 +17,12 @@ func ErrorHandle() gin.HandlerFunc {
 					"Msg":  apiError.Msg,
 					"Data": apiError.Data,
 				})
+			} else if domainError, ok := err.(*exception.DomainException); ok {
+				c.JSON(http.StatusOK, gin.H{
+					"Code": domainError.Code,
+					"Msg":  domainError.Msg,
+					"Data": domainError.Data,
+				})
 			} else {
 				c.JSON(http.StatusOK, gin.H{
 					"Code": 500,
