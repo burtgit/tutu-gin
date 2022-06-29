@@ -1,11 +1,11 @@
 package parserAdapter
 
 import (
-	"errors"
 	"github.com/goccy/go-json"
 	"log"
 	"net/http"
 	"net/url"
+	"tutu-gin/core/exception"
 	"tutu-gin/core/global"
 	"tutu-gin/parser/parserApplicaition/parserDto"
 )
@@ -45,12 +45,13 @@ func (s *GetSpare) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Par
 
 	err = json.NewDecoder(resp.Body).Decode(&getSpareResult)
 	if err != nil {
+		log.Println(err)
 		return
 	}
-
+	log.Println(getSpareResult)
 	if getSpareResult.Code != "0001" {
-		err = errors.New(getSpareResult.Message)
-		return
+		log.Println(err)
+		return nil, exception.PARSE_FAIL
 	}
 	log.Println(getSpareResult)
 	result = &parserDto.ParserResultDto{

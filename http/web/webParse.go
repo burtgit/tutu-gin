@@ -24,10 +24,9 @@ func (w *WebParse) Parse(c *gin.Context) {
 
 	parserService := parserApplicaition.NewParserService()
 	result, err := parserService.Parse(requestData.PageUrl, c.ClientIP())
-	log.Println("!3123")
 	if err != nil {
 		log.Println(err)
-		c.Error(exception.API_PARAMETER_CHECK_FAIL)
+		c.Error(err)
 		return
 	}
 
