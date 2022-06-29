@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>抖音，快手无水印视频下载 - 抖音，快手视频解析下载保存到手机、电脑</title>
+    <meta name="keywords" content="免费抖音去水印,免费快手去水印,抖音去水印,快手去水印,抖音视频解析,快手视频解析,抖音视频下载,快手视频下载,抖音手机视频下载,快手视频下载">
+    <meta name="description" content="抖音，快手无水印视频下载工具支持解析抖音app和快手app上的任何视频,解析出来的视频无水印.是一个免费的在线抖音和快手视频下载器,可借助此下载器在电脑或手机上方便的下载保存抖音和快手平台的视频.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="兔子牙解析">
+    <meta name="referrer" content="no-referrer">
+    <!--meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"-->
+    <link href="/static/css/font_1360827_ma5wsooq24h.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/lime.min.css?5" rel="stylesheet">
+</head>
+
+<body>
+<!--<div class="preloader"><div class="preloader__wrap"><div class="circle-pulse"><div class="circle-pulse__1"></div><div class="circle-pulse__2"></div></div><div class="preloader__progress"><span></span></div></div></div>-->
+<!--<div class="lime-sidebar">-->
+<!--    <div class="lime-sidebar-inner slimscroll">-->
+<!--        <ul class="accordion-menu">-->
+<!--            <li class="sidebar-title">-->
+<!--                首页-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a class="" _action="./index.html" href="index.html"><i class="iconfont icon-dashboard1"></i>首页</a>-->
+<!--            </li>-->
+<!--            <li class="sidebar-title">-->
+<!--                登录 / 注册-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a class="" _action="./login.html" href="/login.html"><i class="iconfont icon-sign-in"></i>登录</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a class="" _action="./register.html" href="register.html"><i class="iconfont icon-tianjiayonghu-"></i>注册</a>-->
+<!--            </li>-->
+<!--            <li class="sidebar-title">-->
+<!--                开发者中心-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a class="" _action="./getapi.html" href="/getapi.html"><i class="iconfont icon-apps"></i>接口查询</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a class="" _action="./open.html" href="open.html"><i class="iconfont icon-Codeb"></i>开发文档</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="lime-header">
+    <nav class="navbar navbar-expand-lg">
+        <section class="material-design-hamburger navigation-toggle">
+<!--            <a href="javascript:void(0)" class="button-collapse material-design-hamburger__icon">-->
+<!--                <span class="material-design-hamburger__layer"></span>-->
+<!--            </a>-->
+        </section>
+        <a class="navbar-brand" href="#">兔子牙解析</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-sign-in"></i> 登录 / 注册 </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" _action="./login.html" href="./login.html">登录</a></li>
+                        <li class="divider"></li>
+                        <li><a class="dropdown-item" _action="./register.html" href="./register.html">注册</a></li>
+                    </ul>
+                    <!--a class="nav-link dropdown-toggle" _action="./login.html" href="/login.html" role="button">
+                        <i class="iconfont icon-sign-in"></i> 登录/注册
+                    </a-->
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="lime-container">
+    <div class="lime-body"><div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">网站公告</h5>
+                        <div>
+                            <p>网站支持快手、抖音、火山、今日头条、西瓜视频、微博、秒拍、小咖秀、晃咖、微视、美拍、网易云音乐、优酷、YouTube、好看视频、最右、全民、皮皮搞笑、皮皮虾、梨视频、哔哩哔哩(B站)、小红书、刷宝、QQ看点、facebook、Twitter、Instagram、剪映、AcFun(a站)、爱奇艺、muse(musical.ly)、Flipagram、陌陌、映客、小影、阳光宽频等100多个平台的视频解析</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">短视频去水印面板</h5>
+                        <div>
+                            <br>
+                            <input id="url" class="form-control mr-sm-2" placeholder="在此输入app内复制的连接" value="https://v.douyin.com/YHuCAyv/">
+                            <button class="btn btn-primary" id="subjx" style="width: 100%;margin-top: 10px;">解析</button>
+                        </div>
+                        <br>
+                        <div class="main-open text-center" style="display: none;">
+                            <div class="main-videos" style="display: none;">
+                                <div class="videos-list" id="return-videos"></div>
+                                <button class="btn btn-primary" id="videos_download_all" style="width: 100%;margin-top: 10px;">下载全部</button>
+                            </div>
+                            <div class="main-images" style="display: none;">
+                                <div id="return_pics_title"></div>
+                                <div class="videos-list" id="return-images"></div>
+                                <button class="btn btn-primary" id="images_download_all" style="width: 100%;margin-top: 10px;">下载全部</button>
+                            </div>
+                            <div class="main-video" style="display: none;">
+                                <div class="list-group-item">
+                                    <nav class="nav nav-pills nav-justified" id="myTab" role="tablist">
+                                        <a class="nav-item nav-link video-open" style="display: none;" id="video-tab" data-toggle="tab" href="#movie" role="tab" aria-controls="video" aria-selected="true">视频下载</a>
+                                        <a class="nav-item nav-link image-open" style="display: none;" id="image-tab" data-toggle="tab" href="#image" role="tab" aria-controls="image" aria-selected="false">图片下载</a>
+                                        <a class="nav-item nav-link title-open" style="display: none;" id="title-tab" data-toggle="tab" href="#title" role="tab" aria-controls="title" aria-selected="false">标题复制</a>
+                                    </nav>
+                                </div>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show video-open" style="display: none;" id="movie" role="tabpanel" aria-labelledby="video-tab">
+                                        <div id="return_video"></div>
+                                    </div>
+                                    <div class="tab-pane fade image-open" style="display: none;" id="image" role="tabpanel" aria-labelledby="image-tab">
+                                        <div id="return_cover"></div>
+                                    </div>
+                                    <div class="tab-pane fade title-open" style="display: none;" id="title" role="tabpanel" aria-labelledby="title-tab">
+                                        <div id="return_title"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">...</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lime-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <span class="footer-text text-left">© 2019 - 2020 兔子牙 <i class="iconfont icon-favorite"></i></span>
+                </div>
+                <div class="col-6">
+                    <span class="footer-text text-right"><a href="http://www.beian.miit.gov.cn/" target="_blank" style="color:#007bff;"></a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Javascripts -->
+<script src="/static/js/3.4.1/jquery.min.js"></script>
+<script src="/static/js/clipboard.min.js"></script>
+<script src="//at.alicdn.com/t/font_1360827_ma5wsooq24h.js"></script>
+<script src="/static/js/popper.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.slimscroll.min.js"></script>
+<script src="/static/js/lime.min.js"></script>
+<script src="/static/js/modal_dialog.js"></script>
+<script src="/static/js/main.js?1"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('a[_action="./index.html"]').addClass("active");
+    })
+
+    $("a[_action]").on("click", function() {
+        $("a[_action]").removeClass('active');
+        $(this).addClass("active");
+    });
+</script><script src="/static/js/aes.js"></script>
+<script type="text/javascript">
+    var k = (+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]+!![]+!![]+!![]]+([][[]]+[])[!+[]+!![]]+(+[]+[])+([]+{})[!+[]+!![]]+([][[]]+[])[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]+!![]+!![]+!![]]+([][[]]+[])[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+{}+[])[+!![]],
+        v = (!+[]+!![]+!![]+[])+(+{}+[])[+!![]]+(!+[]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+([][[]]+[])[!+[]+!![]+!![]]+([]+{})[!+[]+!![]]+(![]+[])[+[]]+(!+[]+!![]+!![]+!![]+[])+(+[]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+[]+[])+(+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+!![]+[])+(![]+[])[+[]]+([][[]]+[])[!+[]+!![]+!![]]+(!+[]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+(![]+[])[+[]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[]),
+        videos_list, images_list, req = new XMLHttpRequest();
+    var clipboard = new ClipboardJS('.btn-info');
+    clipboard.on('success', function(e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+
+        e.clearSelection();
+    });
+
+    clipboard.on('error', function(e) {
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+    });
+
+    $('#exampleModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var aa = button.data('aa');
+        var modal = $(this);
+        modal.find('.modal-title').text();
+        modal.find('.modal-body').html();
+        modal.find('.modal-footer').html();
+        if (aa == 'image') {
+            var image = button.data('image');
+            modal.find('.modal-title').text(button.data('title'));
+            modal.find('.modal-body').html("<div style='text-align: center;'><img class='img-fluid' style='margin: 0 auto;' src='" + image + "'></div>");
+            modal.find('.modal-footer').html("<a target='_blank' rel='noreferrer' href='" + image + "' class='btn btn-primary' download='true' role='button' title='下载'>下载</a><button type='button' class='btn btn-info' data-clipboard-text='" + image + "'>复制</button><button type='button' class='btn btn-secondary' data-dismiss='modal'>关闭</button>");
+        } else if (aa == 'video') {
+            var video = button.data('video');
+            modal.find('.modal-title').text(button.data('title'));
+            modal.find('.modal-body').html("<div class=\"embed-responsive embed-responsive-16by9\"><video class=\"embed-responsive-item\" controls=\"controls\" autoplay=\"autoplay\"><source src=\"" + video + "\" /></video></div>");
+            modal.find('.modal-footer').html("<a target='_blank' rel='noreferrer' href='" + video + "' class='btn btn-primary' download='true' role='button' title='下载'>下载</a><button type='button' class='btn btn-info' data-clipboard-demo data-clipboard-action='copy' data-clipboard-text='" + video + "'>复制</button><button type='button' class='btn btn-secondary' data-dismiss='modal'>关闭</button>");
+        } else if (aa == 'download') {
+            var url = button.data('fileurl'),
+                filename = button.data('filename');
+            modal.find('.modal-title').text("正在下载");
+            req.open("get", url, true);
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+            //监听进度事件
+            req.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = parseInt(evt.loaded / evt.total * 100);
+                    var html = '<div class="row align-items-center justify-content-center"><div class="col-10"><div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + percentComplete + '%"></div></div></div>';
+                    if (percentComplete == 100) {
+                        html += '<div class="col-2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-icon-test4"></use></svg></div></div><div style="padding-top:10px;"><i class="iconfont icon-yes" style="color: rgb(25, 190, 107);"></i>下载完成，未弹窗请点击手动保存： <a target="_blank" rel="noreferrer" href="' + url + '" class="btn btn-primary" download="true" role="button" title="下载">下载</a></div>';
+                    } else {
+                        html += '<div class="col-2">' + percentComplete + '%</div></div>';
+                    }
+                    modal.find('.modal-body').html(html);
+                } else {
+                    modal.find('.modal-body').html('<div style="padding-top:10px;"><i class="iconfont icon-no" style="color: red;"></i>下载失败，请点击手动保存： <a target="_blank" rel="noreferrer" href="' + url + '" class="btn btn-primary" download="true" role="button" title="下载">下载</a></div>');
+                }
+            }, false);
+            req.responseType = "blob";
+            req.onreadystatechange = function() {
+                if (req.readyState === 4 && req.status === 200) {
+                    if (typeof window.chrome !== 'undefined') {
+                        // Chrome version
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(req.response);
+                        link.download = filename;
+                        link.click();
+                    } else if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                        // IE version
+                        var blob = new Blob([req.response], {
+                            type: 'application/force-download'
+                        });
+                        window.navigator.msSaveBlob(blob, filename);
+                    } else {
+                        // Firefox version
+                        var file = new File([req.response], filename, {
+                            type: 'application/force-download'
+                        });
+                        window.open(URL.createObjectURL(file));
+                    }
+                }
+            };
+            req.send();
+            modal.find('.modal-footer').html("");
+        }
+    });
+    $('#exampleModal').on('hidden.bs.modal', function(event) {
+        var modal = $(this);
+        modal.find('.modal-title').text("");
+        modal.find('.modal-body').html("");
+        modal.find('.modal-footer').html("");
+        if (req.status !== 0) {
+            req.abort();
+        }
+    })
+    $(document).on('click', '.quality_download', function() {
+        var url = $("option[name='quality']:checked").val();
+        $(".quality_download").removeAttr("href");
+        $(".quality_download").attr("href", url);
+    });
+    $("#subjx").click(function() {
+        var url = $("#url").val();
+        if (url == '') {
+            message('error', '解析地址不能为空');
+            return false;
+        }
+        if (!isUrl(url) && (url = fetchUrl(url), !isUrl(url))) {
+            message('error', '请输入正确的链接');
+            return false;
+        }
+        var url = fetchUrl(url);
+        // var d = p({
+        //     "gtk": url + "qsy",
+        //     "t": url,
+        //     "act": "qsy"
+        // })
+        $('#subjx').attr("disabled", true);
+        $("#subjx").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>正在解析，请稍后...');
+        $(".main-open").css("display", "none");
+        $(".main-videos").css("display", "none");
+        $(".main-images").css("display", "none");
+        $(".main-video").css("display", "none");
+        $.ajax({
+            type: "POST",
+            url: "/v1/parse/index",
+            dataType: "json",
+            data: JSON.stringify({
+                "PageUrl": url,
+            }),
+            async: true,
+            success: function(data) {
+                $("#subjx").html('去水印');
+                $('#subjx').removeAttr("disabled");
+                if (data.Code === 200) {
+                    message('success', data.Msg);
+                    $(".main-open").removeAttr("style");
+                    if (data.Data.VideoUrls && data.Data.VideoUrls != '') {
+                        $(".main-videos").removeAttr("style");
+                        videos_list = [data.Data.VideoUrls];
+                        var videos_html = "";
+                        videos_html += "<div class='videos-item'><div class='videos-title'><span class='videos-text'>" + data.Data.Title + "</span></div><img src='" + data.Data.CoverUrls + "' class='videos-pic' />";
+                        videos_html += "<div class='videos-footer'><span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp4' data-fileurl='" + data.Data.VideoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;&nbsp;&nbsp;<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.Title + "' data-video='" + data.Data.VideoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a></span></div>";
+                        videos_html += "</div>";
+
+                        $("#return-videos").html(videos_html);
+                    } else if (data.Data.IsVideo === false && data.Data.Pics != null) {
+                        $(".main-images").removeAttr("style");
+                        var animals = data.Data.Pics;
+                        images_list = data.Data.Pics;
+                        var images_html = "";
+                        animals.forEach(function(item) {
+                            images_html += "<div class='videos-item'>";
+                            images_html += "<a href='#' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='' data-image='" + item + "'><img src='" + item + "' class='videos-pic' /></a>";
+                            images_html += "</div>";
+                        });
+                        $("#return-images").html(images_html);
+                        $('#return_pics_title').html("<ul class='list-group'><li class='list-group-item'>" + data.Data.Title + "</li></ul>")
+                    } else {
+                        $(".main-video").removeAttr("style");
+                        if (data.Data.VideoUrls || data.Data.quality) {
+                            $(".video-open").addClass("active");
+                        } else if (data.Data.CoverUrls) {
+                            $(".image-open").addClass("active");
+                        } else if (data.Data.Title) {
+                            $(".title-open").addClass("active");
+                        }
+                        if (data.Data.Title) {
+                            $('#return_title').html("<ul class='list-group'><li class='list-group-item'>" + data.Data.Title + "</li></ul>");
+                            $(".title-open").removeAttr("style");
+                        } else {
+                            data.Data.title = 'video'
+                        }
+                        if (data.Data.url || data.Data.quality) {
+                            $(".video-open").removeAttr("style");
+                            var video_html = "<ul class='list-group'><li class='list-group-item'>";
+                            if (data.Data.url) {
+                                var audio = data.Data.Audio ? "<a href='#' class='btn btn-info' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp3' data-fileurl='" + data.Data.Audio + "'><span class='iconfont icon-music txt-white'></span></a>&nbsp;" : "";
+                                video_html += "<p class='input-group'><input type='text' name='url' class='form-control' value='" + data.Data.VideoUrls + "'>&nbsp;<span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp4' data-fileurl='" + data.Data.VideoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;" + audio + "<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.Title + "' data-video='" + data.Data.VideoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a>&nbsp;<button class='btn btn-warning' data-clipboard-demo data-clipboard-action='copy' data-clipboard-text='" + data.Data.VideoUrls + "'><span class='iconfont icon-fuzhi txt-white'></span></button></span></p>";
+                            }
+                            if (data.Data.Formats) {
+                                video_html += "<form class='form-inline justify-content-center' role='form'><div class='form-group'><i class='iconfont icon-zuan' style='font-size:38px;color:#1296db;vertical-align: middle;'></i></div>&nbsp;&nbsp;&nbsp;<div class='form-group'><select id='inlineFormCustomSelectPref' class='custom-select my-1 mr-sm-2' style='margin: 0 10px 0 5px;'>";
+                                for (var i = 0; i < data.Data.quality.length; i++) {
+                                    video_html += "<option name='quality' value='" + data.Data.quality[i].url + "'>" + data.Data.quality[i].level + "(" + data.Data.quality[i].filesize + ")</option>";
+                                }
+                                video_html += "</select></div>&nbsp;&nbsp;&nbsp;<div class='form-group'><a target='_blank' rel='noreferrer' href='' class='btn btn-primary quality_download' download='true' role='button' title='下载'>下载</a></div></form>";
+                            }
+                            video_html += "</li></ul>";
+                            $("#return_video").html(video_html);
+                        }
+                        if (data.Data.CoverUrls) {
+                            if (data.Data.CoverUrls && data.Data.atlas) {
+                                var atlas_html = "<div class='list-group'><div class='list-group-item'><ul class='nav nav-pills nav-justified' id='pills-tab' role='tablist'><li class='nav-item'><a class='nav-link active' id='cover-down-tab' data-toggle='pill' href='#cover-down' role='tab' aria-controls='cover-down' aria-selected='true'>封面</a></li><li class='nav-item'><a class='nav-link' id='atlas-down-tab' data-toggle='pill' href='#atlas-down' role='tab' aria-controls='atlas-down' aria-selected='false'>图集</a></li></ul></div></div><div class='tab-content' id='pills-tabContent'><div class='tab-pane fade show active' id='cover-down' role='tabpanel' aria-labelledby='cover-down-tab'><ul class='list-group'><li class='list-group-item'><a href='#' class='data-image-url modal123' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='" + data.Data.title + "' data-image='" + data.Data.cover + "'><img src='" + data.Data.cover + "' class='img-fluid src-image-url' alt='" + data.Data.title + "'></a></li></ul></div><div class='tab-pane fade' id='atlas-down' role='tabpanel' aria-labelledby='atlas-down-tab'><ul class='list-group'><li class='list-group-item'>";
+                                for (var i = 0; i < data.Data.atlas.length; i++) {
+                                    atlas_html += "<a href='#' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='" + data.Data.title + "' data-image='" + data.Data.atlas[i] + "'><img src='" + data.Data.atlas[i] + "' class='img-thumbnail modal123' style='width:128px;height:128px;' alt='" + data.Data.title + "'></a>";
+                                }
+                                atlas_html += "</li></ul></div></div>";
+                                $("#return_cover").html(atlas_html);
+                            } else {
+                                $("#return_cover").html("<ul class='list-group'><li class='list-group-item'><a href='#' class='modal123' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='" + data.Data.Title + "' data-image='" + data.Data.CoverUrls + "'><img src='" + data.Data.CoverUrls + "' class='img-fluid' alt='" + data.Data.Title + "'></a></li></ul>");
+                            }
+                            $(".image-open").removeAttr("style");
+                        }
+                    }
+                } else {
+                    message('error', data.Msg);
+                }
+
+            },
+            error: function() {
+                $("#subjx").html('去水印');
+                $('#subjx').removeAttr("disabled");
+                message('error', '请检查你的网络');
+            }
+        })
+    })
+
+    $("#videos_download_all").click(function() {
+        var a = Promise.resolve();
+        return videos_list.forEach(function(t, o) {
+            a = a.then(function() {
+                return download(t.url, t.desc);
+            });
+        }), a;
+    });
+
+    $("#images_download_all").click(function() {
+        var a = Promise.resolve();
+        return images_list.forEach(function(t, o) {
+            a = a.then(function() {
+                return download(t);
+            });
+        }), a;
+    });
+
+    function download(url, filename) {
+        if (!filename) {
+            var filename = Math.random().toString(36).slice(-6);
+        }
+        return new Promise(function(a, o) {
+            $('#exampleModal').modal('show');
+            var modal = $('#exampleModal');
+            modal.find('.modal-title').text();
+            modal.find('.modal-body').html();
+            modal.find('.modal-footer').html();
+            modal.find('.modal-title').text("正在下载");
+            req.open("get", url, true);
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+            //监听进度事件
+            req.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = parseInt(evt.loaded / evt.total * 100);
+                    var html = '<div class="row align-items-center justify-content-center"><div class="col-10"><div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:' + percentComplete + '%"></div></div></div>';
+                    if (percentComplete == 100) {
+                        setTimeout(function() {
+                            a(true);
+                        }, 500);
+                        html += '<div class="col-2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-icon-test4"></use></svg></div></div><div style="padding-top:10px;"><i class="iconfont icon-yes" style="color: rgb(25, 190, 107);"></i>下载完成，未弹窗请点击手动保存： <a target="_blank" rel="noreferrer" href="' + url + '" class="btn btn-primary" download="true" role="button" title="下载">下载</a></div>';
+                    } else {
+                        html += '<div class="col-2">' + percentComplete + '%</div></div>';
+                    }
+                    modal.find('.modal-body').html(html);
+                } else {
+                    modal.find('.modal-body').html('<div style="padding-top:10px;"><i class="iconfont icon-no" style="color: red;"></i>下载失败，请点击手动保存： <a target="_blank" rel="noreferrer" href="' + url + '" class="btn btn-primary" download="true" role="button" title="下载">下载</a></div>');
+                }
+            }, false);
+            req.responseType = "blob";
+            req.onreadystatechange = function() {
+                if (req.readyState === 4 && req.status === 200) {
+                    if (typeof window.chrome !== 'undefined') {
+                        // Chrome version
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(req.response);
+                        link.download = filename;
+                        link.click();
+                    } else if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                        // IE version
+                        var blob = new Blob([req.response], {
+                            type: 'application/force-download'
+                        });
+                        window.navigator.msSaveBlob(blob, filename);
+                    } else {
+                        // Firefox version
+                        var file = new File([req.response], filename, {
+                            type: 'application/force-download'
+                        });
+                        window.open(URL.createObjectURL(file));
+                    }
+                }
+            };
+            req.send();
+            modal.find('.modal-footer').html("");
+        })
+    }
+
+    function p(array) {
+        var token = gtk(array.gtk),
+            timestamp = Date.parse(new Date()) / 1000,
+            sign = md5(token + timestamp);
+        array.token = token, array.timestamp = timestamp, array.sign = sign
+        d = e(JSON.stringify(array), k, v);
+        return d
+    }
+
+    function isUrl(string) {
+        return !!string && (string.startsWith("http://") || string.startsWith("https://"));
+    }
+
+    function fetchUrl(string) {
+        var o = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:\/~\+#!\$\(\)\\|]*[\w\-\@?^=%&\/~\+#!\$\(\)\\|])?/,
+            a = string.match(o);
+        return a ? a[0] : null;
+    }
+</script>
+</body>
+
+</html>

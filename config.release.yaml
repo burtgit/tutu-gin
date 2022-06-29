@@ -1,0 +1,11 @@
+database:
+  host: 127.0.0.1
+  username: root
+  password: 123456
+  port: 3306
+  dbname: video
+  tablePrefix: video_
+parser:
+  getSpare:
+    requestUrl: http://www.baidu.com
+    token: test
