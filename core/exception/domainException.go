@@ -6,11 +6,11 @@ import (
 )
 
 var domainErrMaps = map[string]int{
-	"资源未找到": 404,
-	"解析失败，请联系微信kaolajiexi2": 500,
-	"json解析失败":              201,
-	"数据库操作失败":               500,
-	"请求失败":                  500,
+	DOMAIN_NOT_FOUND:       404,
+	DOMAIN_PARSE_FAIL:      500,
+	DOMAIN_JSON_PARSE_FAIL: 201,
+	DOMAIN_DB_ACTION_FAIL:  500,
+	DOMAIN_REQUEST_FAIL:    500,
 }
 
 type DomainException struct {

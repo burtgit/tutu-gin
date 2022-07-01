@@ -13,8 +13,8 @@ type ApiException struct {
 }
 
 var apiErrMaps = map[string]int{
-	"解析失败，请联系微信：kaolajiexi2": 201,
-	"参数请求有误":                 201,
+	API_PARSER_FAIL:          201,
+	API_PARAMETER_CHECK_FAIL: 201,
 }
 
 func (a *ApiException) Error() string {
