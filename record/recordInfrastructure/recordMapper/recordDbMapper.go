@@ -1,7 +1,7 @@
 package recordMapper
 
 import (
-	"log"
+	"github.com/juju/errors"
 	"time"
 	"tutu-gin/core/exception"
 	"tutu-gin/core/global"
@@ -30,8 +30,7 @@ func (m *RecordDbMapper) Insert(dao *recordDataobject.RecordDao) (id int, err er
 
 	_, err = global.DB.InsertOne(m)
 	if err != nil {
-		log.Println(err)
-		return 0, exception.DB_ACTION_FAIL
+		return 0, errors.Annotate(err, exception.DOMAIN_DB_ACTION_FAIL)
 	}
 
 	return m.Id, nil

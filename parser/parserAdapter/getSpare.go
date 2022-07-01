@@ -2,6 +2,7 @@ package parserAdapter
 
 import (
 	"github.com/goccy/go-json"
+	"github.com/juju/errors"
 	"log"
 	"net/http"
 	"net/url"
@@ -37,21 +38,18 @@ func (s *GetSpare) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Par
 
 	resp, err := http.PostForm(global.SERVICE_CONFIG.ParserConfig.GetSpare.RequestUrl, requestBody)
 	if err != nil {
-		log.Println(err)
-		return
+		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_REQUEST_FAIL))
 	}
 	defer resp.Body.Close()
 	var getSpareResult GetSpareResult
 
 	err = json.NewDecoder(resp.Body).Decode(&getSpareResult)
 	if err != nil {
-		log.Println(err)
-		return
+		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_JSON_PARSE_FAIL))
 	}
 	log.Println(getSpareResult)
 	if getSpareResult.Code != "0001" {
-		log.Println(err)
-		return nil, exception.PARSE_FAIL
+		return nil, exception.DomainError(errors.Annotate(errors.New(getSpareResult.Message), exception.DOMAIN_PARSE_FAIL))
 	}
 	log.Println(getSpareResult)
 	result = &parserDto.ParserResultDto{

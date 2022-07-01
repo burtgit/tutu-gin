@@ -14,13 +14,13 @@ func ErrorHandle() gin.HandlerFunc {
 			if apiError, ok := err.(*exception.ApiException); ok {
 				c.JSON(http.StatusOK, gin.H{
 					"Code": apiError.Code,
-					"Msg":  apiError.Msg,
+					"Msg":  apiError.Error(),
 					"Data": apiError.Data,
 				})
 			} else if domainError, ok := err.(*exception.DomainException); ok {
 				c.JSON(http.StatusOK, gin.H{
 					"Code": domainError.Code,
-					"Msg":  domainError.Msg,
+					"Msg":  domainError.Error(),
 					"Data": domainError.Data,
 				})
 			} else {

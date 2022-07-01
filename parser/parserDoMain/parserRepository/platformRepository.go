@@ -1,6 +1,7 @@
 package parserRepository
 
 import (
+	"github.com/juju/errors"
 	"strings"
 	"tutu-gin/core/exception"
 	"tutu-gin/parser/parserDoMain"
@@ -16,7 +17,7 @@ func (p *PlatformRepository) GetByDomain(url string) (platform *parserDoMain.Pla
 
 	platformList, err := p.getList()
 	if err != nil {
-		return nil, exception.DOMAIN_NOT_FOUND
+		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_NOT_FOUND))
 	}
 
 	for _, v := range platformList {
@@ -37,7 +38,7 @@ func (p *PlatformRepository) getList() (platformList []*parserDoMain.Platform, e
 	// 这边加入缓存
 	data, err := p.mapper.GetList()
 	if err != nil {
-		return nil, exception.DOMAIN_NOT_FOUND
+		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_NOT_FOUND))
 	}
 
 	for _, v := range data {

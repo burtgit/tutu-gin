@@ -2,7 +2,7 @@ package web
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
+	"github.com/juju/errors"
 	"net/http"
 	"tutu-gin/core/api"
 	"tutu-gin/core/exception"
@@ -17,16 +17,14 @@ func (w *WebParse) Parse(c *gin.Context) {
 	var requestData webValidator.WebParseValidator
 
 	if err := c.ShouldBindJSON(&requestData); err != nil {
-		log.Println(err)
-		c.Error(exception.API_PARAMETER_CHECK_FAIL)
+		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
 		return
 	}
 
 	parserService := parserApplicaition.NewParserService()
 	result, err := parserService.Parse(requestData.PageUrl, c.ClientIP())
 	if err != nil {
-		log.Println(err)
-		c.Error(err)
+		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARSER_FAIL)))
 		return
 	}
 

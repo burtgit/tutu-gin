@@ -1,6 +1,7 @@
 package parserApplicaition
 
 import (
+	"github.com/juju/errors"
 	"tutu-gin/core/event"
 	"tutu-gin/core/exception"
 	"tutu-gin/parser/parserAdapter"
@@ -18,22 +19,28 @@ func (p *ParserService) Parse(pageUrl string, ip string) (result *parserDto.Pars
 
 	platform, err := p.platformRepository.GetByDomain(pageUrl)
 
-	if err != nil || platform == nil {
-		return nil, exception.DOMAIN_NOT_FOUND
+	if err != nil {
+		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_NOT_FOUND))
+	}
+
+	if platform == nil {
+		return nil, exception.DomainError(errors.Annotate(errors.New("platform not found"), exception.DOMAIN_NOT_FOUND))
 	}
 
 	getSpare := parserAdapter.NewGetSpare()
 	result, err = getSpare.Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
 
-	// 解析成功事件
-	if err == nil {
-		go event.EventHandler(&parseEvent.ParseSuccessEvent{
-			ParserResult: result,
-			Url:          pageUrl,
-			UserId:       11,
-			Ip:           ip,
-		})
+	if err != nil {
+		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_PARSE_FAIL))
 	}
+
+	// 解析成功事件
+	go event.EventHandler(&parseEvent.ParseSuccessEvent{
+		ParserResult: result,
+		Url:          pageUrl,
+		UserId:       11,
+		Ip:           ip,
+	})
 	return
 }
 
