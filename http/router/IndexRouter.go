@@ -2,7 +2,6 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"tutu-gin/http/middleware"
 	"tutu-gin/http/web"
 )
 
@@ -12,7 +11,6 @@ type IndexRouter struct {
 func (i IndexRouter) Init(router *gin.Engine) {
 
 	indexController := web.NewIndex()
-	router.Use(middleware.ErrorHandle())
 	router.GET("/", indexController.Index)
 
 }
