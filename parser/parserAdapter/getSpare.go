@@ -51,7 +51,7 @@ func (s *GetSpare) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Par
 	if getSpareResult.Code != "0001" {
 		return nil, exception.DomainError(errors.Annotate(errors.New(getSpareResult.Message), exception.DOMAIN_PARSE_FAIL))
 	}
-	log.Println(getSpareResult)
+
 	result = &parserDto.ParserResultDto{
 		Title:     getSpareResult.Data.Desc,
 		CoverUrls: getSpareResult.Data.Cover,

@@ -15,6 +15,12 @@ type PlatformRepository struct {
 // GetByDomain 获取链接获取平台信息
 func (p *PlatformRepository) GetByDomain(url string) (platform *parserDoMain.Platform, err error) {
 
+	platform = &parserDoMain.Platform{
+		Code:   "Default",
+		Name:   "default",
+		Domain: []string{},
+	}
+
 	platformList, err := p.getList()
 	if err != nil {
 		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_NOT_FOUND))
