@@ -1,8 +1,10 @@
 package parserAdapter
 
 import (
+	"fmt"
 	"github.com/goccy/go-json"
 	"github.com/juju/errors"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -42,9 +44,10 @@ func (s *GetSpare) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Par
 	}
 	defer resp.Body.Close()
 	var getSpareResult GetSpareResult
-
 	err = json.NewDecoder(resp.Body).Decode(&getSpareResult)
 	if err != nil {
+		ss, _ := io.ReadAll(resp.Body)
+		fmt.Println(string(ss))
 		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_JSON_PARSE_FAIL))
 	}
 	log.Println(getSpareResult)

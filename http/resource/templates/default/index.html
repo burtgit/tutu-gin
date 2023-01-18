@@ -6,7 +6,7 @@
     <meta name="keywords" content="免费抖音去水印,免费快手去水印,抖音去水印,快手去水印,抖音视频解析,快手视频解析,抖音视频下载,快手视频下载,抖音手机视频下载,快手视频下载">
     <meta name="description" content="抖音，快手无水印视频下载工具支持解析抖音app和快手app上的任何视频,解析出来的视频无水印.是一个免费的在线抖音和快手视频下载器,可借助此下载器在电脑或手机上方便的下载保存抖音和快手平台的视频.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <meta name="author" content="兔子牙解析">
     <meta name="referrer" content="no-referrer">
     <!--meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"-->
@@ -91,10 +91,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">短视频去水印面板</h5>
+                        <h5 class="card-title">兔子牙去水印</h5>
                         <div>
                             <br>
-                            <input id="url" class="form-control mr-sm-2" placeholder="在此输入app内复制的连接" value="">
+                            <input id="url" class="form-control mr-sm-2" placeholder="在此输入app内复制的连接" value="9.92 ebN:/ 酷玩王国烟花终于在春节限定回归了，预售早鸟票99全天畅完，速屯，春节就来酷玩看烟花吧# 心动春节 # 春节心动之旅# 酷玩王国春节烟花秀 # 浙江小迪士尼 # 春节  https://v.douyin.com/kqnfTXn/ 复制此链接，打开Dou音搜索，直接观看视频！">
                             <button class="btn btn-primary" id="subjx" style="width: 100%;margin-top: 10px;">解析</button>
                         </div>
                         <br>
@@ -196,13 +196,14 @@
         console.info('Action:', e.action);
         console.info('Text:', e.text);
         console.info('Trigger:', e.trigger);
-
         e.clearSelection();
+        message('success', "复制成功");
     });
 
     clipboard.on('error', function(e) {
         console.error('Action:', e.action);
         console.error('Trigger:', e.trigger);
+        message('error', "复制失败");
     });
 
     $('#exampleModal').on('show.bs.modal', function(event) {
@@ -319,11 +320,14 @@
                 $("#subjx").html('去水印');
                 $('#subjx').removeAttr("disabled");
                 if (data.Code === 200) {
+
+                    clipboard = new ClipboardJS('.btn-info');
+
                     message('success', data.Msg);
                     $(".main-open").removeAttr("style");
                     if (data.Data.VideoUrls && data.Data.VideoUrls != '') {
                         $(".main-videos").removeAttr("style");
-                        videos_list = [data.Data.VideoUrls];
+                        videos_list = [{"url":data.Data.VideoUrls,"desc":data.Data.Title}];
                         var videos_html = "";
                         videos_html += "<div class='videos-item'><div class='videos-title'><span class='videos-text'>" + data.Data.Title + "</span></div><img src='" + data.Data.CoverUrls + "' class='videos-pic' />";
                         videos_html += "<div class='videos-footer'><span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp4' data-fileurl='" + data.Data.VideoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;&nbsp;&nbsp;<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.Title + "' data-video='" + data.Data.VideoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a></span></div>";

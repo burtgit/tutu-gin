@@ -160,6 +160,7 @@ function $modal(data) { // data 必传 且为对象
             margin: 'auto',
             right: '0',
             opacity: '0',
+            zIndex:"10000"
         })
         // 设置文字内容框样式
         $('.' + idText + '_item.item2').css({
@@ -530,7 +531,7 @@ function message(e,data) {
         $modal({
             type: 'message', //弹框类型  'alert' or  'confirm' or 'message'  message提示(开启之前如果之前含有弹框则清除)
             icon: e, // 提示图标显示 'info' or 'success' or 'warning' or 'error'  or 'question'
-            timeout: 2000, // 单位 ms  显示多少毫秒后关闭弹框 （ confirm 下无效 | 不传默认为 2000ms | 最短显示时间为500ms） 
+            timeout: 2000, // 单位 ms  显示多少毫秒后关闭弹框 （ confirm 下无效 | 不传默认为 2000ms | 最短显示时间为500ms）
             content: data, // 提示文字 
             center: false, // 是否绝对居中 默认为false  设置true后   top无效
             top: 20, //距离顶部距离 单位px
