@@ -4,14 +4,16 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 	"tutu-gin/core/api"
 	"tutu-gin/parser/parserApplicaition/parserDto"
 )
 
 func StatusHandle() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		fmt.Println("本地解析客户端地址：" + c.ClientIP())
-		if c.ClientIP() == "118.25.251.62" {
+		ip := c.ClientIP()
+		fmt.Println("本地解析客户端地址：" + ip)
+		if ip == "118.25.251.62" || strings.Contains(ip, ":") {
 			fmt.Println("检测到异常ip地址")
 			c.JSON(http.StatusOK, api.ApiSuccessResponse(parserDto.ParserResultDto{
 				Title:     "请关注微信公众号『考拉解析』进行视频去水印",
