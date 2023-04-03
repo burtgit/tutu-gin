@@ -10,7 +10,7 @@ import (
 func StatusHandle() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		if c.ClientIP() == "::1" {
+		if c.ClientIP() == "118.25.251.62" {
 			c.JSON(http.StatusOK, api.ApiSuccessResponse(parserDto.ParserResultDto{
 				Title:     "请关注微信公众号『考拉解析』进行视频去水印",
 				CoverUrls: "https://img.alicdn.com/bao/uploaded/i1/O1CN01MVPP541Pyp5ooFMjU_!!2-rate.png",
