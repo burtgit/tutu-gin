@@ -382,6 +382,9 @@
         $(".main-videos").css("display", "none");
         $(".main-images").css("display", "none");
         $(".main-video").css("display", "none");
+
+        var timerShow
+
         $.ajax({
             type: "POST",
             url: "/v1/parse/index",
@@ -394,6 +397,10 @@
                 $("#subjx").html('去水印');
                 $('#subjx').removeAttr("disabled");
                 if (data.Code === 200) {
+
+                    if (timerShow != "") {
+                        clearTimeout(timerShow);
+                    }
 
                     clipboard = new ClipboardJS('.btn-info');
 
@@ -479,7 +486,7 @@
                                 $("#login_qrcode").attr("src",data.Data.Url)
                                 $('#loginModal').modal('show')
 
-                                var timerShow = setInterval(function() {
+                                timerShow = setInterval(function() {
                                     $.ajax({
                                         type: "GET",
                                         url: "/v1/qrcode/check?ticket=" + data.Data.Ticket,
