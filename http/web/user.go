@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 
@@ -119,6 +120,13 @@ func (u *User) Check(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, string(body))
+}
+
+func (u *User) Test(c *gin.Context) {
+	result, err := global.REDIS_CLIENT.Get(c, "paqiakerui_access_token").Result()
+	fmt.Println(err)
+	fmt.Println(result)
+	c.JSON(http.StatusOK, "123213")
 }
 
 func NewUser() *User {

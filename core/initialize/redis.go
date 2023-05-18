@@ -14,22 +14,11 @@ func InitRedis() {
 	client := redis.NewClient(&redis.Options{
 		Addr:     config.Addr,
 		Password: config.Password,
-		DB:       0,
+		DB:       config.DB,
 	})
 	err := client.Ping(context.Background()).Err()
 	if err != nil {
 		log.Panicln("Redis Error: ", err.Error())
 	}
 	global.REDIS_CLIENT = client
-
-	client2 := redis.NewClient(&redis.Options{
-		Addr:     config.Addr,
-		Password: config.Password,
-		DB:       1,
-	})
-	err = client.Ping(context.Background()).Err()
-	if err != nil {
-		log.Panicln("Redis Error: ", err.Error())
-	}
-	global.REDIS_CLIENT = client2
 }

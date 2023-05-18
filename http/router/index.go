@@ -11,6 +11,10 @@ func RouterInit(engine *gin.Engine) {
 	indexRouter := &IndexRouter{}
 	indexRouter.Init(engine)
 
+	// 初始化网页路由
+	userRouter := &UserRouter{}
+	userRouter.Init(engine)
+
 	// 初始化静态资源
 	engine.Static("/static/", "./http/resource")
 
