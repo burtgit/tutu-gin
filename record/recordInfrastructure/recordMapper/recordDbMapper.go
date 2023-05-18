@@ -1,8 +1,10 @@
 package recordMapper
 
 import (
-	"github.com/juju/errors"
 	"time"
+
+	"github.com/juju/errors"
+
 	"tutu-gin/core/exception"
 	"tutu-gin/core/global"
 	"tutu-gin/record/recordInfrastructure/recordDataobject"
@@ -10,7 +12,7 @@ import (
 
 type RecordDbMapper struct {
 	Id         int
-	UserId     int
+	UserId     int64
 	Title      string
 	Url        string
 	Ip         string

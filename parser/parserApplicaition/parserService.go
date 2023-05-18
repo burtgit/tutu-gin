@@ -15,10 +15,8 @@ type ParserService struct {
 }
 
 // Parse 解析操作
-func (p *ParserService) Parse(pageUrl string, ip string) (result *parserDto.ParserResultDto, err error) {
-
+func (p *ParserService) Parse(pageUrl string, ip string, userId int64) (result *parserDto.ParserResultDto, err error) {
 	platform, err := p.platformRepository.GetByDomain(pageUrl)
-
 	if err != nil {
 		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_NOT_FOUND))
 	}
@@ -38,7 +36,7 @@ func (p *ParserService) Parse(pageUrl string, ip string) (result *parserDto.Pars
 	go event.EventHandler(&parseEvent.ParseSuccessEvent{
 		ParserResult: result,
 		Url:          pageUrl,
-		UserId:       11,
+		UserId:       userId,
 		Ip:           ip,
 	})
 	return

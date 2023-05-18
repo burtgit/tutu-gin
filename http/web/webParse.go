@@ -1,17 +1,18 @@
 package web
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/juju/errors"
-	"net/http"
+
 	"tutu-gin/core/api"
 	"tutu-gin/core/exception"
 	"tutu-gin/http/validator/webValidator"
 	"tutu-gin/parser/parserApplicaition"
 )
 
-type WebParse struct {
-}
+type WebParse struct{}
 
 func (w *WebParse) Parse(c *gin.Context) {
 	var requestData webValidator.WebParseValidator
@@ -21,8 +22,10 @@ func (w *WebParse) Parse(c *gin.Context) {
 		return
 	}
 
+	getInt64 := c.GetInt64("userId")
+
 	parserService := parserApplicaition.NewParserService()
-	result, err := parserService.Parse(requestData.PageUrl, c.ClientIP())
+	result, err := parserService.Parse(requestData.PageUrl, c.ClientIP(), getInt64)
 	if err != nil {
 		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARSER_FAIL)))
 		return

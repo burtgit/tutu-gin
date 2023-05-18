@@ -2,7 +2,7 @@ package recordDomain
 
 type Record struct {
 	Id         int
-	UserId     int
+	UserId     int64
 	Title      string
 	Url        string
 	Ip         string
@@ -15,7 +15,7 @@ func (r *Record) SetId(id int) *Record {
 	return r
 }
 
-func (r *Record) SetUserId(userId int) *Record {
+func (r *Record) SetUserId(userId int64) *Record {
 	r.UserId = userId
 	return r
 }

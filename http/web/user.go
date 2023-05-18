@@ -55,6 +55,9 @@ func (u *User) Qrcode(c *gin.Context) {
 		c.Error(exception.ValidatorError(errors.Annotate(errors.New("生成二维码失败"), exception.API_PARAMETER_CHECK_FAIL)))
 		return
 	}
+	//qrcode := vo.QrcodeResponse{
+	//	Ticket: "gQFp8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyRzNBcEprNTNlREMxbktERDFBMVcAAgRuFmZkAwSAUQEA",
+	//}
 
 	c.JSON(http.StatusOK, api.ApiSuccessResponse(map[string]string{
 		"Url":    "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + url.QueryEscape(qrcode.Ticket),
@@ -103,7 +106,7 @@ func (u *User) getCode(token string) (error, vo.QrcodeResponse) {
 func (u *User) Check(c *gin.Context) {
 	var requestData webValidator.UserQrcodeValidator
 
-	if err := c.ShouldBindJSON(&requestData); err != nil {
+	if err := c.ShouldBind(&requestData); err != nil {
 		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
 		return
 	}

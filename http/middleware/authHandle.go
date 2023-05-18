@@ -1,21 +1,46 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
 	"tutu-gin/core/api"
 	"tutu-gin/parser/parserApplicaition/parserDto"
+	"tutu-gin/user"
+	"tutu-gin/user/infrastructure/dto"
 )
 
-func StatusHandle() gin.HandlerFunc {
+func AuthHandle() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ip := c.ClientIP()
-		fmt.Println("本地解析客户端地址：" + ip)
-		if ip == "118.25.251.62" || ip == "119.29.94.101" {
-			fmt.Println("检测到异常ip地址")
+		token, err := c.Cookie("tokens")
+		if err != nil || len(token) <= 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"Code": 403,
+				"Msg":  "未登录",
+				"Data": nil,
+			})
+			c.Abort()
+			return
+		}
+
+		userService := user.NewUserService(&dto.ConfigDto{
+			Token: token,
+		})
+
+		userInfo := userService.Detail()
+
+		if userInfo.Id <= 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"Code": 403,
+				"Msg":  "未登录",
+				"Data": nil,
+			})
+			c.Abort()
+			return
+		}
+
+		if userInfo.Status == 0 {
 			c.JSON(http.StatusOK, api.ApiSuccessResponse(parserDto.ParserResultDto{
 				Title:     "请关注微信公众号『考拉解析』进行视频去水印",
 				CoverUrls: "https://img.alicdn.com/bao/uploaded/i1/O1CN01MVPP541Pyp5ooFMjU_!!2-rate.png",
@@ -24,8 +49,9 @@ func StatusHandle() gin.HandlerFunc {
 			}))
 			c.Abort()
 			return
-		} else {
-			c.Next()
 		}
+
+		c.Set("userId", userInfo.Id)
+		c.Next()
 	}
 }

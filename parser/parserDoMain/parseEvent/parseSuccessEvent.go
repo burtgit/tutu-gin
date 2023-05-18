@@ -2,6 +2,7 @@ package parseEvent
 
 import (
 	"log"
+
 	"tutu-gin/parser/parserApplicaition/parserDto"
 	"tutu-gin/record/recordApplication"
 	"tutu-gin/record/recordApplication/recordDto"
@@ -9,7 +10,7 @@ import (
 
 type ParseSuccessEvent struct {
 	ParserResult *parserDto.ParserResultDto
-	UserId       int
+	UserId       int64
 	Ip           string
 	Url          string
 }

@@ -5,5 +5,5 @@ type WebParseValidator struct {
 }
 
 type UserQrcodeValidator struct {
-	Ticket string `json:"ticket"  binding:"required"`
+	Ticket string `form:"ticket"  binding:"required"`
 }

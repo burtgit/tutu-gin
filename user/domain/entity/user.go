@@ -3,7 +3,7 @@ package entity
 import "time"
 
 type User struct {
-	ID          int64     `gorm:"column:id" json:"id"`
+	Id          int64     `gorm:"column:id" json:"id"`
 	Mobile      string    `gorm:"column:mobile" json:"mobile"`
 	Username    string    `gorm:"column:username" json:"username"`
 	Avatar      string    `gorm:"column:avatar" json:"avatar"`
@@ -11,8 +11,8 @@ type User struct {
 	Token       string    `gorm:"column:token" json:"token"`
 	Status      int64     `gorm:"column:status" json:"status"`
 	EndTime     int64     `gorm:"column:end_time" json:"end_time"`
-	CreateTime  time.Time `gorm:"column:create_time" json:"create_time"`
-	UpdateTime  time.Time `gorm:"column:update_time" json:"update_time"`
+	CreateTime  time.Time `xorm:"created"`
+	UpdateTime  time.Time `xorm:"updated"`
 	Message     string    `gorm:"column:message" json:"message"` //  消息
 	Name        int64     `gorm:"column:name" json:"name"`       //  可使用次数
 	Times       int64     `gorm:"column:times" json:"times"`     //  可使用次数
