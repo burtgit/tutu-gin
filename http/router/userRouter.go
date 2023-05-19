@@ -14,7 +14,6 @@ func (u *UserRouter) Init(router *gin.Engine) {
 	v1.Use(middleware.ErrorHandle(), middleware.StatusHandle())
 	{
 		v1.GET("/qrcode/get", parseController.Qrcode)
-		v1.GET("/qrcode/test", parseController.Test)
 		v1.GET("/qrcode/check", parseController.Check)
 	}
 }
