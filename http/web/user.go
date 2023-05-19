@@ -20,8 +20,6 @@ import (
 type User struct{}
 
 func (u *User) Qrcode(c *gin.Context) {
-	c.Error(exception.ValidatorError(errors.Annotate(errors.New("授权失败"), exception.API_PARAMETER_CHECK_FAIL)))
-	return
 	cacheKey := "paqiakerui_access_token"
 	token, err := global.REDIS_CLIENT.Get(c, cacheKey).Result()
 	if err != nil {
