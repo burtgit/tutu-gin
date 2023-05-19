@@ -212,6 +212,7 @@
         v = (!+[]+!![]+!![]+[])+(+{}+[])[+!![]]+(!+[]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+([][[]]+[])[!+[]+!![]+!![]]+([]+{})[!+[]+!![]]+(![]+[])[+[]]+(!+[]+!![]+!![]+!![]+[])+(+[]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+[]+[])+(+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+!![]+[])+(![]+[])[+[]]+([][[]]+[])[!+[]+!![]+!![]]+(!+[]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+(![]+[])[+[]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[]),
         videos_list, images_list, req = new XMLHttpRequest();
     var clipboard = new ClipboardJS('.btn-info');
+    var timerShow
     clipboard.on('success', function(e) {
         console.info('Action:', e.action);
         console.info('Text:', e.text);
@@ -318,8 +319,16 @@
         modal.find('.modal-title').text("");
         modal.find('.modal-body').html("");
         modal.find('.modal-footer').html("");
+        if (timerShow != "") {
+            clearTimeout(timerShow)
+        }
         if (req.status !== 0) {
             req.abort();
+        }
+    })
+    $('#loginModal').on('hidden.bs.modal', function(event) {
+        if (timerShow != "") {
+            clearTimeout(timerShow)
         }
     })
     $(document).on('click', '.quality_download', function() {
@@ -341,7 +350,7 @@
                         $("#login_qrcode").attr("src",data.Data.Url)
                         $('#loginModal').modal('show')
 
-                        var timerShow = setInterval(function() {
+                        timerShow = setInterval(function() {
                             $.ajax({
                                 type: "GET",
                                 url: "/v1/qrcode/check?ticket=" + data.Data.Ticket,
@@ -383,8 +392,6 @@
         $(".main-videos").css("display", "none");
         $(".main-images").css("display", "none");
         $(".main-video").css("display", "none");
-
-        var timerShow
 
         $.ajax({
             type: "POST",

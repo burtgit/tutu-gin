@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"net/url"
 
+	"tutu-gin/core/global"
+
 	"tutu-gin/http/validator/webValidator"
 
 	"tutu-gin/core/api"
@@ -13,7 +15,6 @@ import (
 	"github.com/juju/errors"
 	"github.com/valyala/fasthttp"
 	"tutu-gin/core/exception"
-	"tutu-gin/core/global"
 	"tutu-gin/http/vo"
 )
 
