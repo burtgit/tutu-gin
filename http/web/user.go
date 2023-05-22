@@ -23,10 +23,10 @@ type User struct{}
 func (u *User) Qrcode(c *gin.Context) {
 	cacheKey := "paqiakerui_access_token"
 	token, err := global.REDIS_CLIENT.Get(c, cacheKey).Result()
-	if err != nil {
-		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
-		return
-	}
+	//if err != nil {
+	//	c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
+	//	return
+	//}
 
 	if len(token) <= 0 {
 		code, body, err := fasthttp.Get(nil, "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxd6322dba9f40d541&secret=3e05992970e12dcaf1074264742c6e12")
