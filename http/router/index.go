@@ -7,6 +7,10 @@ func RouterInit(engine *gin.Engine) {
 	parseRouter := &ParseRouter{}
 	parseRouter.Init(engine)
 
+	// 初始化api解析路由
+	apiRouter := &ApiRouter{}
+	apiRouter.Init(engine)
+
 	// 初始化网页路由
 	indexRouter := &IndexRouter{}
 	indexRouter.Init(engine)

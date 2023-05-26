@@ -7,3 +7,8 @@ type WebParseValidator struct {
 type UserQrcodeValidator struct {
 	Ticket string `form:"ticket"  binding:"required"`
 }
+
+type ApiParseValidator struct {
+	PageUrl string `json:"pageUrl"   binding:"required" form:"pageUrl"`
+	Token   string `json:"token"  binding:"required" form:"token"`
+}

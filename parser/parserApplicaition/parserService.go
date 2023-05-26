@@ -25,20 +25,28 @@ func (p *ParserService) Parse(pageUrl string, ip string, userId int64) (result *
 		return nil, exception.DomainError(errors.Annotate(errors.New("platform not found"), exception.DOMAIN_NOT_FOUND))
 	}
 
-	getSpare := parserAdapter.NewGetSpare()
-	result, err = getSpare.Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
+	if platform.Code == "TENCENT_TV" {
+		result, err = parserAdapter.NewGetLux().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
+	} else if platform.Code == "ZHIHU" {
+		result, err = parserAdapter.NewGetLux().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
+	} else {
+		getSpare := parserAdapter.NewGetSpare()
+		result, err = getSpare.Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
+	}
 
 	if err != nil {
 		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_PARSE_FAIL))
 	}
 
-	// 解析成功事件
-	go event.EventHandler(&parseEvent.ParseSuccessEvent{
-		ParserResult: result,
-		Url:          pageUrl,
-		UserId:       userId,
-		Ip:           ip,
-	})
+	if userId != 1 {
+		// 解析成功事件
+		go event.EventHandler(&parseEvent.ParseSuccessEvent{
+			ParserResult: result,
+			Url:          pageUrl,
+			UserId:       userId,
+			Ip:           ip,
+		})
+	}
 	return
 }
 

@@ -55,6 +55,29 @@ func (w *WebParse) Parse(c *gin.Context) {
 	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))
 }
 
+func (w WebParse) Api(c *gin.Context) {
+	var requestData webValidator.ApiParseValidator
+
+	if err := c.ShouldBind(&requestData); err != nil {
+		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
+		return
+	}
+
+	if requestData.Token != "9788678dced821353c6d881b3fde18cb" {
+		c.Error(exception.ValidatorError(errors.Annotate(errors.New("token 有误"), exception.API_PARAMETER_CHECK_FAIL)))
+		return
+	}
+
+	parserService := parserApplicaition.NewParserService()
+	result, err := parserService.Parse(requestData.PageUrl, c.ClientIP(), 1)
+	if err != nil {
+		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARSER_FAIL)))
+		return
+	}
+
+	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))
+}
+
 func NewWebParse() *WebParse {
 	return &WebParse{}
 }

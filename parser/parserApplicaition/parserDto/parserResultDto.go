@@ -7,5 +7,12 @@ type ParserResultDto struct {
 	IsVideo   bool
 	Pics      []string
 	Audio     []string
-	Formats   []string
+	Formats   []ParseFormat
+}
+
+type ParseFormat struct {
+	QualityNote string
+	Separate    int
+	Vext        string
+	Video       string
 }

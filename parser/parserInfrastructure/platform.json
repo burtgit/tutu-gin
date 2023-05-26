@@ -289,5 +289,21 @@
     "patterns":[
       "twitter.com"
     ]
+  },
+  "TENCENT_TV": {
+    "name": "腾讯视频",
+    "code": "TENCENT_TV",
+    "logoImage":"//www.tutujiexi.com/images/quanminkge.png",
+    "patterns":[
+      "v.qq.com"
+    ]
+  },
+  "ZHIHU": {
+    "name": "知乎",
+    "code": "ZHIHU",
+    "logoImage":"//www.tutujiexi.com/images/quanminkge.png",
+    "patterns":[
+      "zhihu.com"
+    ]
   }
 }
