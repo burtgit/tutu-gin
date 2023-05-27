@@ -3,6 +3,7 @@ package qq
 import (
 	"encoding/json"
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -211,6 +212,15 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		return nil, errors.New(data.Msg)
 	}
 	cdn := data.Vl.Vi[0].Ul.UI[0].URL
+
+	reg, _ := regexp.Compile("(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)")
+
+	ipCdn := reg.FindString(cdn)
+
+	if len(ipCdn) > 0 {
+		cdn = strings.Replace(cdn, ipCdn, "apd-vlive.apdcdn.tc.qq.com", 1)
+	}
+
 	streams, err := genStreams(vid, cdn, data)
 	if err != nil {
 		return nil, errors.WithStack(err)

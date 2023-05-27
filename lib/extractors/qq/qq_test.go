@@ -2,6 +2,7 @@ package qq
 
 import (
 	"fmt"
+	"regexp"
 	"testing"
 
 	"tutu-gin/lib/extractors"
@@ -51,4 +52,12 @@ func TestDownload(t *testing.T) {
 			// test.Check(t, tt.args, data[0])
 		})
 	}
+}
+
+func TestName(t *testing.T) {
+	str := "http://apd-vlive.apdcdn.tc.qq.com/vkp.tc.qq.com/"
+
+	reg, _ := regexp.Compile("(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)")
+
+	fmt.Println(reg.FindString(str))
 }
