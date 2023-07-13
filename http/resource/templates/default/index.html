@@ -102,7 +102,7 @@
                         <div class="main-open text-center" style="display: none;">
                             <div class="main-videos" style="display: none;">
                                 <div class="videos-list" id="return-videos"></div>
-                                <button class="btn btn-primary" id="videos_download_all" style="width: 100%;margin-top: 10px;">下载全部</button>
+                                <button class="btn btn-primary" id="videos_download_all" style="margin-top: 10px;">下载全部</button>
                             </div>
                             <div class="main-images" style="display: none;">
                                 <div id="return_pics_title"></div>
@@ -208,6 +208,8 @@
     });
 </script><script src="/static/js/aes.js"></script>
 <script type="text/javascript">
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+    $.fn.modal.Constructor.prototype._enforceFocus = function() {};
     var k = (+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]+!![]+!![]+!![]]+([][[]]+[])[!+[]+!![]]+(+[]+[])+([]+{})[!+[]+!![]]+([][[]]+[])[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]+!![]+!![]+!![]]+([][[]]+[])[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+{}+[])[+!![]],
         v = (!+[]+!![]+!![]+[])+(+{}+[])[+!![]]+(!+[]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+([][[]]+[])[!+[]+!![]+!![]]+([]+{})[!+[]+!![]]+(![]+[])[+[]]+(!+[]+!![]+!![]+!![]+[])+(+[]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+([]+{})[!+[]+!![]]+(!+[]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+[]+[])+(+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(+!![]+[])+(![]+[])[+[]]+([][[]]+[])[!+[]+!![]+!![]]+(!+[]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+[])+(![]+[])[+[]]+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[])+(!+[]+!![]+[])+(!+[]+!![]+!![]+!![]+!![]+!![]+!![]+!![]+[]),
         videos_list, images_list, req = new XMLHttpRequest();
@@ -419,7 +421,7 @@
                         videos_list = [{"url":data.Data.VideoUrls,"desc":data.Data.Title}];
                         var videos_html = "";
                         videos_html += "<div class='videos-item'><div class='videos-title'><span class='videos-text'>" + data.Data.Title + "</span></div><img src='" + data.Data.CoverUrls + "' class='videos-pic' />";
-                        videos_html += "<div class='videos-footer'><span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp4' data-fileurl='" + data.Data.VideoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;&nbsp;&nbsp;<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.Title + "' data-video='" + data.Data.VideoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a></span></div>";
+                        videos_html += "<div class='videos-footer'><span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp4' data-fileurl='" + data.Data.VideoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;&nbsp;&nbsp;<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.Title + "' data-video='" + data.Data.VideoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a></span><button class='btn btn-success btn-info' style='margin-top: 10px;background-color: #06ba54' data-clipboard-action='copy' data-clipboard-text='" + data.Data.EncodeUrl + "'>复制视频链接</button><button class='btn btn-success btn-info' style='margin-top: 10px;background-color: #50bfff' data-clipboard-action='copy' data-clipboard-text='" + data.Data.CoverUrls + "'>复制封面链接</button><button class='btn btn-success btn-info' style='margin-top: 10px;' data-clipboard-action='copy' data-clipboard-text='" + data.Data.Title + "'>复制标题</button></div>";
                         videos_html += "</div>";
 
                         $("#return-videos").html(videos_html);

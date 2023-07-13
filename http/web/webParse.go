@@ -1,8 +1,14 @@
 package web
 
 import (
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/sha256"
+	"encoding/base64"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"tutu-gin/record/recordDomain/values"
@@ -52,6 +58,36 @@ func (w *WebParse) Parse(c *gin.Context) {
 		return
 	}
 	global.DB.ID(apply.Id).Incr("success_times").Cols("success_times").Update(&apply)
+
+	if result.IsVideo {
+		// 加密
+		// 计算 SHA256 哈希值
+		secret := sha256.Sum256([]byte("lihuanjiehahha"))
+		// 初始化向量
+		iv := []byte("loserLiHuanJieaq")
+
+		// 创建 AES-256-CBC 加密器
+		block, err := aes.NewCipher(secret[:])
+		if err != nil {
+			panic(err)
+		}
+		mode := cipher.NewCBCEncrypter(block, iv)
+
+		// 加密数据
+		data := []byte(result.VideoUrls)
+		padded := pkcs7Pad(data, aes.BlockSize)
+		encrypted := make([]byte, len(padded))
+		mode.CryptBlocks(encrypted, padded)
+
+		// 将加密后的数据转换成 base64 编码
+		encoded := base64.StdEncoding.EncodeToString(encrypted)
+
+		// 替换 + 号为 ! 号
+		encoded = replacePlus(encoded)
+
+		result.EncodeUrl = "http://www.zanqianba.com/xzb/video_" + strconv.FormatInt(time.Now().Unix(), 10) + ".mp4?s=" + encoded
+	}
+
 	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))
 }
 
@@ -76,6 +112,18 @@ func (w WebParse) Api(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))
+}
+
+// 使用 PKCS7 填充方式对数据进行填充
+func pkcs7Pad(data []byte, blockSize int) []byte {
+	padding := blockSize - (len(data) % blockSize)
+	padText := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(data, padText...)
+}
+
+// 将字符串中的 + 号替换为 ! 号
+func replacePlus(str string) string {
+	return strings.ReplaceAll(str, "+", "!")
 }
 
 func NewWebParse() *WebParse {
