@@ -14,5 +14,6 @@ func (p *ApiRouter) Init(router *gin.Engine) {
 	v1.Use(middleware.ErrorHandle(), middleware.StatusHandle())
 	{
 		v1.POST("/api/parse", parseController.Api)
+		v1.POST("/api/parse/agent", parseController.Agent)
 	}
 }

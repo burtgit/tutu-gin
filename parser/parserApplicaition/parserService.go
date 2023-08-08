@@ -50,6 +50,16 @@ func (p *ParserService) Parse(pageUrl string, ip string, userId int64) (result *
 	return
 }
 
+func (p *ParserService) Agent(pageUrl string) (result *parserDto.ParserResultDto, err error) {
+	platform, err := p.platformRepository.GetByDomain(pageUrl)
+	if err != nil {
+		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_NOT_FOUND))
+	}
+	result, err = parserAdapter.NewGetLux().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
+
+	return result, err
+}
+
 func NewParserService() *ParserService {
 	return &ParserService{
 		platformRepository: parserRepository.NewPlatformRepository(),

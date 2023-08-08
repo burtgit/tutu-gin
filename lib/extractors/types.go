@@ -2,9 +2,10 @@ package extractors
 
 // Part is the data structure for a single part of the video stream information.
 type Part struct {
-	URL  string `json:"url"`
-	Size int64  `json:"size"`
-	Ext  string `json:"ext"`
+	URL   string   `json:"url"`
+	Size  int64    `json:"size"`
+	Ext   string   `json:"ext"`
+	Image []string `json:"image"`
 }
 
 type CaptionPart struct {
@@ -28,6 +29,7 @@ type Stream struct {
 	Ext string `json:"ext"`
 	// if the parts need mux
 	NeedMux bool
+	Cover   string `json:"cover"`
 }
 
 // DataType indicates the type of extracted data, eg: video or image.
@@ -45,11 +47,13 @@ const (
 // Data is the main data structure for the whole video data.
 type Data struct {
 	// URL is used to record the address of this download
-	URL   string   `json:"url"`
-	Site  string   `json:"site"`
-	Title string   `json:"title"`
-	Type  DataType `json:"type"`
-	Cover string   `json:"cover"`
+	URL        string   `json:"url"`
+	Site       string   `json:"site"`
+	Title      string   `json:"title"`
+	Type       DataType `json:"type"`
+	Cover      string   `json:"cover"`
+	Image      []string
+	IsNotVideo bool
 	// each stream has it's own Parts and Quality
 	Streams map[string]*Stream `json:"streams"`
 	// danmaku, subtitles, etc

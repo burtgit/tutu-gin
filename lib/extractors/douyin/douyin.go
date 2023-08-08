@@ -10,19 +10,20 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/iawia002/lux/request"
+
+	"tutu-gin/lib/extractors"
+	"tutu-gin/utils"
+
 	"github.com/dop251/goja"
 	"github.com/pkg/errors"
-
-	"github.com/iawia002/lux/extractors"
-	"github.com/iawia002/lux/request"
-	"github.com/iawia002/lux/utils"
 )
 
-func init() {
-	e := New()
-	extractors.Register("douyin", e)
-	extractors.Register("iesdouyin", e)
-}
+//func init() {
+//	e := New()
+//	extractors.Register("douyin", e)
+//	extractors.Register("iesdouyin", e)
+//}
 
 //go:embed sign.js
 var script string
@@ -104,36 +105,41 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	urlData := make([]*extractors.Part, 0)
 	var douyinType extractors.DataType
 	var totalSize int64
+	var isNotVideo bool
 	// AwemeType: 0:video 68:image
 	if douyin.AwemeDetail.AwemeType == 68 {
+		isNotVideo = true
 		douyinType = extractors.DataTypeImage
 		for _, img := range douyin.AwemeDetail.Images {
-			realURL := img.URLList[len(img.URLList)-1]
-			size, err := request.Size(realURL, url)
-			if err != nil {
-				return nil, errors.WithStack(err)
-			}
-			totalSize += size
-			_, ext, err := utils.GetNameAndExt(realURL)
-			if err != nil {
-				return nil, errors.WithStack(err)
-			}
+			//realURL := img.URLList[len(img.URLList)-1]
+			//size, err := request.Size(realURL, url)
+			//if err != nil {
+			//	return nil, errors.WithStack(err)
+			//}
+			//totalSize += size
+			//_, ext, err := utils.GetNameAndExt(realURL)
+			//if err != nil {
+			//	return nil, errors.WithStack(err)
+			//}
 			urlData = append(urlData, &extractors.Part{
-				URL:  realURL,
-				Size: size,
-				Ext:  ext,
+				Image: img.URLList,
+				Size:  1,
+				Ext:   "image",
 			})
 		}
 	} else {
 		douyinType = extractors.DataTypeVideo
 		realURL := douyin.AwemeDetail.Video.PlayAddr.URLList[0]
-		totalSize, err = request.Size(realURL, url)
-		if err != nil {
-			return nil, errors.WithStack(err)
+		if len(douyin.AwemeDetail.Video.BitRate) > 0 && len(douyin.AwemeDetail.Video.BitRate[0].PlayAddr.URLList) > 0 {
+			realURL = douyin.AwemeDetail.Video.BitRate[0].PlayAddr.URLList[0]
 		}
+		//totalSize, err = request.Size(realURL, url)
+		//if err != nil {
+		//	return nil, errors.WithStack(err)
+		//}
 		urlData = append(urlData, &extractors.Part{
 			URL:  realURL,
-			Size: totalSize,
+			Size: 1,
 			Ext:  "mp4",
 		})
 	}
@@ -141,16 +147,20 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		"default": {
 			Parts: urlData,
 			Size:  totalSize,
+			Cover: douyin.AwemeDetail.Video.DynamicCover.URLList[1],
 		},
 	}
 
 	return []*extractors.Data{
 		{
-			Site:    "抖音 douyin.com",
-			Title:   douyin.AwemeDetail.Desc,
-			Type:    douyinType,
-			Streams: streams,
-			URL:     url,
+			Site:       "抖音 douyin.com",
+			Title:      douyin.AwemeDetail.Desc,
+			Type:       douyinType,
+			Streams:    streams,
+			URL:        url,
+			Cover:      douyin.AwemeDetail.Video.DynamicCover.URLList[1],
+			IsNotVideo: isNotVideo,
+			Image:      urlData[0].Image,
 		},
 	}, nil
 }
