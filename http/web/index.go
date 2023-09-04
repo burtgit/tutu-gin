@@ -1,15 +1,20 @@
 package web
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
-type Index struct {
-}
+type Index struct{}
 
 func (i Index) Index(c *gin.Context) {
-	c.HTML(http.StatusOK, "index.html", nil)
+	if strings.Contains(c.Request.Host, "danajx.com") {
+		c.HTML(http.StatusOK, "dana_index.html", nil)
+	} else {
+		c.HTML(http.StatusOK, "index.html", nil)
+	}
 }
 
 func NewIndex() *Index {

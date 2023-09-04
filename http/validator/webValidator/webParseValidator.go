@@ -1,7 +1,7 @@
 package webValidator
 
 type WebParseValidator struct {
-	PageUrl string `json:"pageUrl"  binding:"required"`
+	PageUrl string `json:"pageUrl" form:"pageUrl"  binding:"required"`
 }
 
 type UserQrcodeValidator struct {
