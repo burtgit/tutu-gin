@@ -4,24 +4,18 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 
 	"github.com/valyala/fasthttp"
 
 	"github.com/juju/errors"
 
 	"tutu-gin/core/exception"
-	"tutu-gin/core/global"
 	"tutu-gin/parser/parserApplicaition/parserDto"
 )
 
 type GetSpareKuaishou struct{}
 
 func (s *GetSpareKuaishou) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.ParserResultDto, err error) {
-	requestBody := url.Values{}
-	requestBody.Set("token", global.SERVICE_CONFIG.ParserConfig.GetSpare.Token)
-	requestBody.Set("link", dto.PageUrl)
-
 	req := fasthttp.AcquireRequest()
 	defer fasthttp.ReleaseRequest(req) // 用完需要释放资源
 
@@ -29,7 +23,7 @@ func (s *GetSpareKuaishou) Fetch(dto *parserDto.GetSpareFetchDto) (result *parse
 	req.Header.SetMethod(http.MethodPost)
 	req.SetRequestURI("https://qrcode.layzz.cn/test/moreDyAnalyse")
 
-	req.SetBody([]byte(`{"link":"` + dto.PageUrl + `":"cnbk#ucyitzkc-auther-hengtongtongxin"}`))
+	req.SetBody([]byte(`{"link":"` + dto.PageUrl + `","token":"cnbk#ucyitzkc-auther-hengtongtongxin"}`))
 
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseResponse(resp)
