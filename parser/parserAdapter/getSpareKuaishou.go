@@ -23,7 +23,14 @@ func (s *GetSpareKuaishou) Fetch(dto *parserDto.GetSpareFetchDto) (result *parse
 	req.Header.SetMethod(http.MethodPost)
 	req.SetRequestURI("https://qrcode.layzz.cn/test/moreDyAnalyse")
 
-	req.SetBody([]byte(`{"link":"` + dto.PageUrl + `","token":"cnbk#ucyitzkc-auther-hengtongtongxin"}`))
+	params := map[string]string{
+		"link":  dto.PageUrl,
+		"token": "cnbk#ucyitzkc-auther-hengtongtongxin",
+	}
+
+	b, _ := json.Marshal(params)
+	fmt.Println(string(b))
+	req.SetBody(b)
 
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseResponse(resp)
