@@ -29,6 +29,8 @@ func (p *ParserService) Parse(pageUrl string, ip string, userId int64) (result *
 		result, err = parserAdapter.NewGetLux().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
 	} else if platform.Code == "ZHIHU" {
 		result, err = parserAdapter.NewGetLux().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
+	} else if platform.Code == "KUAISHOU" {
+		result, err = parserAdapter.NewGetSpareKuaishou().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
 	} else {
 		getSpare := parserAdapter.NewGetSpare()
 		result, err = getSpare.Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})

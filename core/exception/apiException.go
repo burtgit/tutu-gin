@@ -1,8 +1,9 @@
 package exception
 
 import (
-	"github.com/juju/errors"
 	"log"
+
+	"github.com/juju/errors"
 )
 
 type ApiException struct {
@@ -14,6 +15,7 @@ type ApiException struct {
 
 var apiErrMaps = map[string]int{
 	API_PARSER_FAIL:          201,
+	API_PAY_FAIL:             201,
 	API_PARAMETER_CHECK_FAIL: 201,
 }
 
@@ -31,5 +33,8 @@ func ValidatorError(err error) *ApiException {
 	}
 }
 
-var API_PARAMETER_CHECK_FAIL = "参数请求有误"
-var API_PARSER_FAIL = "解析失败，请联系微信：kaolajiexi2"
+var (
+	API_PARAMETER_CHECK_FAIL = "参数请求有误"
+	API_PARSER_FAIL          = "解析失败，请联系微信：kaolajiexi2"
+	API_PAY_FAIL             = "支付失败，请联系微信：kaolajiexi2"
+)

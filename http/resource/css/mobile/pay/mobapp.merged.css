@@ -1,0 +1,129 @@
+/* merged: mtime=2022-12-04 01:00:59, now=2023-03-29 17:32:25, files=fvwebapp-ajs-mobapp.drawer-menu.part.css,fvwebapp-ajs-mobapp.footer.part.css,fvwebapp-ajs-mobapp.header.part.css */
+.drawer-menu {
+display: none;
+position: fixed;
+bottom: 0;
+width: 100%;
+height: 100%;
+z-index: 99;
+}
+.drawer-menu .mask {
+opacity: 0;
+width: 100%;
+height: 100%;
+display: flex;
+transition: opacity 0.4s;
+background-color: rgba(33, 33, 33, 0.6);
+}
+.drawer-menu .mask .menu {
+opacity: 1;
+padding-top: 0.88rem;
+width: 60%;
+height: 100%;
+background-color: #fff;
+}
+.drawer-menu .mask .menu ul {
+font-size: 0.28rem;
+list-style-type: none;
+padding: 0;
+}
+.drawer-menu .mask .menu ul li {
+color: #333;
+padding: 0.4rem 0 0.4rem 0.4rem;
+border-bottom: 1px solid #f5f5f5;
+}
+.drawer-menu .mask .menu ul li a {
+display: inline-block;
+width: 100%;
+height: 100%;
+color: #333;
+}
+.drawer-menu .mask .menu ul li .svg {
+margin-right: 0.2rem;
+width: 0.32rem;
+height: 0.32rem;
+vertical-align: bottom;
+}
+.drawer-menu .mask .menu ul li:active {
+background-color: #ccc;
+}
+.drawer-menu .mask .menu.show {
+animation: menu-in 0.4s forwards;
+}
+.drawer-menu .mask .menu.hide {
+animation: menu-out 0.4s forwards;
+}
+.drawer-menu .mask .left-menu-overlay {
+width: 40%;
+height: 100%;
+}
+.drawer-menu .mask.show {
+opacity: 0;
+}
+.drawer-menu .mask.hide {
+opacity: 1;
+}
+@keyframes menu-in {
+0% {
+transform: translate(-100%);
+}
+100% {
+transform: translate(0%);
+}
+}
+@keyframes menu-out {
+0% {
+transform: translate(0%);
+}
+100% {
+transform: translate(-100%);
+}
+}
+.footer {
+margin: 1.2rem auto 2.3rem;
+width: 95%;
+padding-top: 0.12rem;
+border-top: 0.01rem solid #eee;
+}
+.footer .copy-right {
+margin-top: 1.2rem;
+display: flex;
+flex-direction: column;
+text-align: center;
+}
+.footer .copy-right span {
+font-size: 0.24rem;
+color: #999;
+}
+.footer .copy-right span .svg {
+vertical-align: bottom;
+width: 0.3rem;
+height: 0.3rem;
+}
+.footer .tip {
+margin-top: 0.38rem;
+text-align: center;
+display: flex;
+flex-direction: column;
+}
+.footer .tip span {
+font-size: 0.24rem;
+color: #333;
+}
+.header {
+width: 100%;
+position: fixed;
+z-index: 999;
+top: 0;
+height: 0.88rem;
+background-color: #fff;
+font-size: 0.44rem;
+display: flex;
+justify-content: space-between;
+box-shadow: 0 4px 8px rgba(190, 190, 190, 0.2);
+}
+.header .menu-icon {
+width: 0.44rem;
+height: 0.44rem;
+margin: 0.22rem;
+}

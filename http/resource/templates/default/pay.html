@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>购买套餐 - 会员续费，购买会员 </title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+
+    <link href="/favicon_ajs.ico" rel="icon" type="image/x-icon" />
+
+<!--    <script src="/static-shared/lib/better-js/better-js.js"></script>-->
+    <!-- <script src="/static-shared/lib/requirejs/requirejs-2.3.6.min.js"></script> -->
+
+    <script src="/static/js/3.4.1/jquery.min.js"></script>
+    <script>window.fvwebapp={env:{"ActionPath":"Payment\/Purchase","ActionPathFields":["Payment","Purchase"],"CurrentUserName":null,"CurrentLang":"zh_cn"}}</script>
+
+    <link href="/static/css/pay_icontfont.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/pay_fvwebapp.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/payment.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/pay_icontfont.js"></script>
+<!--    <script type="text/javascript" src="/Site/Ajiasu/Js/ajiasu/common-func.js?_v=1615774554"></script>-->
+</head>
+<body>
+<div id="page-header">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="main-width">
+            <div class="navbar-header">
+                <!--在移动端的时候导航条折叠起来，三横的样式出现，点击该样式可以显示或隐藏导航条上的内容-->
+                <button class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo-title" href="/">
+                    <svg class="head-logo-light icon" aria-hidden="true" style="width: 90px;height: 90px;"><use xlink:href="#iconAJS-logo"></use></svg>
+                    <img class="head-logo-dark" alt="兔兔解析" style="width: 75px;height: 75px;" src="/static/images/logo.png"/><span style="margin-left: 20px">兔兔解析</span>
+                </a>
+            </div>
+            <div id="menu" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li id="head-menu-Index">
+                        <a href="/">首页</a>
+                    </li>
+                    <li id="head-menu-Payment-Purchase" style="position: relative;" class="active">
+                        <a href="/purchase">购买套餐</a>
+                        <span class="purchase-tip">八折起</span>
+                    </li>
+                    <li id="head-menu-Page-Download" style="position: relative;">
+                        <a class="dropdown" href="/download">APP下载</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div id="body-main-content">
+    <style>
+        .icon-info {
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="free-use-package">
+
+    </div>
+
+    <div style="background: #FFF; padding: 65px 0 100px;">
+        <div class="main-width">
+            <div class="choose-package">
+                <div id="product-M1" data-type="5" class="price-box active-box">
+                    <img src="/static/images/img_sale@2x.png?_v=1599197013" class="price-box-sale"/>
+                    <div class="price-month">1个月</div>
+                    <div class="price-list">
+                        <span class="rmb-symbol">￥</span>
+                        <span class="actual-price">15</span>
+                        <span class="align-span"></span>
+                    </div>
+                    <div class="divide-line"></div>
+                    <div class="original-price">￥20</div>
+                    <div class="price-per-month">￥15/月</div>
+                    <div class="select-div">
+                        <svg class="icon icon-select" aria-hidden="true">
+                            <use xlink:href="#icon-select"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div id="product-M3" data-type="6" class="price-box ">
+                    <div class="price-month">6个月</div>
+                    <div class="price-list">
+                        <span class="rmb-symbol">￥</span>
+                        <span class="actual-price">60</span>
+                        <span class="align-span"></span>
+                    </div>
+                    <div class="divide-line"></div>
+                    <div class="original-price">￥75</div>
+                    <div class="price-per-month">￥12.5/月</div>
+                    <div class="select-div">
+                        <svg class="icon icon-select" aria-hidden="true">
+                            <use xlink:href="#icon-select"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div id="product-M12" data-type="6" class="price-box ">
+                                                                                    <span class="price-box-title">
+                                    8 折
+                                </span>
+                    <div class="price-month">12个月</div>
+                    <div class="price-list">
+                        <span class="rmb-symbol">￥</span>
+                        <span class="actual-price">120</span>
+                        <span class="align-span"></span>
+                    </div>
+                    <div class="divide-line"></div>
+                    <div class="original-price">￥150</div>
+                    <div class="price-per-month">￥12.5/月</div>
+                    <div class="select-div">
+                        <svg class="icon icon-select" aria-hidden="true">
+                            <use xlink:href="#icon-select"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div id="product-M4" data-type="8" class="price-box ">
+                    <div class="price-month">永久</div>
+                    <div class="price-list">
+                        <span class="rmb-symbol">￥</span>
+                        <span class="actual-price">150</span>
+                        <span class="align-span"></span>
+                    </div>
+                    <div class="divide-line"></div>
+                    <div class="original-price">￥300</div>
+                    <div class="price-per-month">￥0/月</div>
+                    <div class="select-div">
+                        <svg class="icon icon-select" aria-hidden="true">
+                            <use xlink:href="#icon-select"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div id="product-M5" data-type="3" class="price-box ">
+                    <div class="price-month">500次</div>
+                    <div class="price-list">
+                        <span class="rmb-symbol">￥</span>
+                        <span class="actual-price">36</span>
+                        <span class="align-span"></span>
+                    </div>
+                    <div class="divide-line"></div>
+                    <div class="original-price">￥50</div>
+                    <div class="price-per-month">￥0.072/次</div>
+                    <div class="select-div">
+                        <svg class="icon icon-select" aria-hidden="true">
+                            <use xlink:href="#icon-select"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div id="product-H6" data-type="9" class="price-box ">
+                    <div class="price-month">3天</div>
+                    <div class="price-list">
+                        <span class="rmb-symbol">￥</span>
+                        <span class="actual-price">10</span>
+                    </div>
+                    <div class="divide-line"></div>
+                    <div class="price-per-month" style="color: #999999; font-size:16px; line-height:26px; margin-top: 17px;">考拉解析体验</div>
+                    <div style="font-size:16px; line-height:26px; color: #FF703D; text-align: center;">6个小时后到期</div>
+                    <div class="select-div">
+                        <svg class="icon icon-select" aria-hidden="true">
+                            <use xlink:href="#icon-select"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="pay_method" value="3">
+            <input type="hidden" name="vip" value="5">
+            <div class="row payment-list">
+                <div class="col-md-12 all-payment-method">
+                    <div class="payment-method payment-method-active" data-method="3">
+                        <img src="/static/images/btn_wechat_pay.svg" class="icon-wechat-pay"/>
+                        <div class="selected-payment-method">
+                            <svg class="icon icon-select" aria-hidden="true">
+                                <use xlink:href="#icon-select"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="payment-method" data-method="1">
+                        <img src="/static/images/btn_alipay.svg" class="icon-alipay"/>
+                        <div class="selected-payment-method">
+                            <svg class="icon icon-select" aria-hidden="true">
+                                <use xlink:href="#icon-select"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn purchase-btn" style="outline: none;">
+                            立即购买
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(function(){
+            $("div.price-list").each(function(){
+                $(this).find("span.align-span").width($(this).find("span.rmb-symbol").width());
+            })
+
+            $("div.price-box").click(function(){
+                $.each($("div.price-box"), function(){
+                    $(this).removeClass("active-box");
+                });
+                $(this).addClass("active-box");
+
+                $("input[name=vip]").val($(this).data('type'));
+            });
+
+            $("div.payment-method").click(function() {
+                $("div.all-payment-method").find(".payment-method").removeClass("payment-method-active");
+                $(this).addClass("payment-method-active");
+                $("input[name=pay_method]").val($(this).data('method'));
+            });
+
+
+            //购买三弹窗
+            $('.purchase-btn').click(function () {
+                //$('#step-two').hide();
+
+                var pay_method = $("input[name=pay_method]").val()
+                var vip = $("input[name=vip]").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/v1/pay/apply',
+                    data: {
+                        "pay_method": pay_method,
+                        "vip": vip,
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data)
+                        if(data.Code === 200) {
+                            window.location.href = data.Data;
+                        }else {
+                            alert(data.msg);
+                        }
+                    },
+                    error: function () {
+                        alert("请求失败");
+                    }
+                })
+
+
+            })
+
+
+            //$("#online-number")[0].addEventListener('DOMMouseScroll', mouseWheel, false);
+
+            function mouseWheel(event) {
+                event = event || window.event;
+                event.preventDefault();
+            }
+
+
+            $(".popup-confirm-input").on('click', function(){
+                var payMethod = $("div.all-payment-method").find("div.payment-method-active").attr("data-method");
+                payAction(payMethod);
+            });
+        });
+    </script>
+</div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p><a href="https://beian.miit.gov.cn/" target="_blank">浙ICP备2022010397号-2</a>
+        </p><p>解析结果归相关平台所有，兔兔去水印不拥有其版权。</p>
+    </div>
+</footer>
+<script>
+    $(function() {
+        var $headMenuActionPath;
+        for (var i = fvwebapp.env.ActionPathFields.length; i >= 1; i--) {
+            $headMenuActionPath = $("#head-menu-" + fvwebapp.env.ActionPathFields.slice(0, i).join('-'));
+            if ($headMenuActionPath.length) {
+                $headMenuActionPath.addClass('active');
+                break;
+            }
+        }
+
+        var $topNavbar = $('#page-header .navbar');
+        var updateNavbarStyle = function() {
+            var allThemeCssClasses = ['navbar-custom-scroll', 'head-use-light-logo', 'head-use-light-text', 'head-use-dark-logo', 'head-use-dark-text'];
+            var curThemeCssClasses;
+            var isScrolled = $(window).scrollTop() >= 24;
+            if (isScrolled) {
+                curThemeCssClasses = ['navbar-custom-scroll', 'head-use-dark-logo', 'head-use-dark-text'];
+            } else {
+                // 首页导航在未滚动时，字体为白色(后续如果背景颜色与文字颜色相同，在这单独换导航文字颜色)
+                var themeMap = {
+                    'Index': ['head-use-dark-logo', 'head-use-light-text'],
+                };
+                curThemeCssClasses = themeMap[fvwebapp.env.ActionPath] || ['head-use-dark-logo', 'head-use-dark-text'] /* default style for all pages */;
+            }
+            $topNavbar.removeClass(allThemeCssClasses).addClass(curThemeCssClasses);
+        };
+
+        updateNavbarStyle();
+        $(window).scroll(updateNavbarStyle);
+        $(window).resize(updateNavbarStyle);
+    });
+</script>
+
+</body>
+</html>

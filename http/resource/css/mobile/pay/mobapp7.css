@@ -1,0 +1,720 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption, tbody, tfoot, thead, input, textarea, header, button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+button {
+    background: transparent; /* Fix for Chrome and Firefox OS */
+}
+:focus {
+    outline: 0;
+}
+ol, ul {
+    list-style: none;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: "";
+}
+blockquote, q {
+    quotes: "" "";
+}
+
+
+
+
+
+* {
+    /* prevent callout when holding tap on links (the native dialog that comes up) */
+    -webkit-touch-callout: none;
+
+    /* prevent webkit from resizing text to fit */
+    -webkit-text-size-adjust: none;
+
+    /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    /* prevent copy paste, to allow, change 'none' to 'text' */
+    -webkit-user-select: none;
+}
+
+input, textarea { -webkit-user-select: text; }
+
+/* turn off webkit checkbox style, works for other inputs too */
+input[type="checkbox"],input[type="radio"] {     -webkit-border-radius: 1em;  border-radius: 1em; }
+
+/* placeholder text opacity */
+input::-webkit-input-placeholder { opacity: .8; }
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    /*  overflow: hidden; PC? MOBILE?*/
+    position: relative;
+    word-wrap: break-word;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    height: 100%;
+    font-weight: 300;
+    line-height: 1;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+}
+
+a {
+    text-decoration: none;
+    color:rgb(21, 125, 251);
+}
+
+.cl {clear: both;}
+.center { text-align: center; }
+
+/* Tabbar */
+nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 49px;
+    text-align: center;
+    background-size: 100% 1px;
+    background: rgba(248, 248, 248, 0.9) linear-gradient(180deg, rgb(200, 199, 204), rgb(200, 199, 204) 50%, transparent 50%) no-repeat top center;
+    z-index: 100;
+}
+
+nav button {
+    display: inline-block;
+    width: 64px;
+    text-align: center;
+    font-size: 10px;
+    line-height: 1em;
+    padding: 6px 0 0 0;
+    margin: 0;
+    color: rgb(111, 111, 116);
+}
+
+nav button.active {
+    color:rgb(21, 125, 251);
+}
+nav button .btn-icon {
+    display: inline-block;
+    background-color: rgb(111, 111, 116);
+    height: 24px;
+    width: 24px;
+    margin-bottom: 2px;
+}
+nav button.active .btn-icon {
+    background-color:rgb(21, 125, 251);
+}
+
+/* Views */
+section {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+.hidden {
+    display: none;
+}
+
+.spinner {
+    background: url(../Images/skin7/spinner.svg) center no-repeat;
+    -webkit-animation: rotate 1.5s infinite steps(12);
+    -moz-animation: rotate 1.5s infinite steps(12);
+    -ms-animation: rotate 1.5s infinite steps(12);
+    -o-animation: rotate 1.5s infinite steps(12);
+    animation: rotate 1.5s infinite steps(12);
+}
+
+header {
+    position: absolute;
+    top:0;
+    height: 44px;
+    line-height: 44px;
+    width: 100%;
+    padding-top: 0;
+    background-color: #ffffff;
+    background-image: linear-gradient(0deg, rgb(200, 199, 204), rgb(200, 199, 204) 50%, transparent 50%);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: 10;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+button {
+    display: inline-block;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-size: 17px;
+    color:rgb(21, 125, 251);
+    padding: 0;
+    font-weight: 300;
+    height: 44px;
+    line-height: 44px;
+    text-overflow: ellipsis !important;
+}
+
+header button, header a {
+    position: absolute;
+    top: 0;
+}
+
+button:active {
+    opacity: 0.3;
+}
+.bold {
+    font-weight: 500;
+}
+.green {
+    color:rgb(41, 197, 25);
+}
+.gray {
+    color:#666;
+}
+.disabled {
+    color:rgb(200, 199, 204);
+}
+
+header .arrow {
+    background-size: 24px 44px;
+    background-repeat: no-repeat;
+}
+.top-at-header-height {
+    position: absolute; left: 0; top: 44px; width: 100%;
+}
+header .left {
+    left:0;
+    padding-left: 9px;
+}
+header .left.arrow {
+    padding-left: 23px;
+    background-image: url(../Images/skin7/backBtn.svg);
+    background-position: left bottom;
+}
+header .right {
+    right:0;
+    text-align: right;
+    padding-right: 9px;
+}
+header .right.arrow {
+    padding-right: 23px;
+    background-image: url(../Images/skin7/nextBtn.svg);
+    background-position: right bottom;
+}
+
+header h1 {
+    display: block;
+    padding: 0;
+    font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    overflow: hidden;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    margin: 0 65px;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+    color: #333333;
+}
+
+.scroll-wrap {
+    position: absolute;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    padding-top: 44px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.scroll-wrap .terms-title {
+    font-size: 18px;
+    margin: 20px 0;
+    text-indent: 0;
+    text-align: center;
+}
+
+.scroll-wrap .terms-secondary {
+    text-indent: 0;
+    text-align:center;
+}
+
+.scroll-wrap .content {
+    padding:10px;
+}
+
+.scroll-term p {
+    text-indent:2em;
+}
+
+.no-padding-top {
+    padding-top: 0;
+}
+
+.content {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    line-height: 1em;
+    font-weight: 400;
+    width: 100%;
+    height: 100%;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+
+    padding-bottom: 20px;
+    background-color: #ffffff;
+}
+
+input, textarea {
+    font-weight: 300;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+a.button, .content button {
+    font-size: 18px;
+}
+
+ul.list {
+    background-color: white;
+}
+ul.list.list-top-margined {
+    margin-top: 20px;
+}
+ul.list li {
+    display: block;
+    padding: 8px 16px 8px 0px;
+    border-bottom: .5px solid #e6e6e6;
+    margin-left: 16px;
+}
+
+
+ul.list.list-arrowed .list-item {
+    display: block;
+    background-size: 15px 15px;
+    background: url(../Images/skin7/listArrow.svg) no-repeat right center;
+    padding-right: 5%;
+}
+
+.list-item.item-icon-title img.icon, .list-item.item-icon-title span.title {
+    vertical-align: middle;
+}
+
+ul.list.list-form label {
+    display: inline-block;
+    width: 35%;
+    vertical-align: middle;
+    padding: 10px 0;
+}
+ul.list.list-form input, ul.list.list-form select, ul.list.list-form span.text {
+    display: inline-block;
+    width: 55%;
+    vertical-align: middle;
+    float: right;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #999999;
+    text-align: right;
+}
+ul.list.list-form input, ul.list.list-form select, ul.list.list-form span.text.limit-length {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.content button {
+    padding: 12px 18px;
+    border-radius: 6px;
+    box-shadow: 0 1px 1px -1px rgba(200, 199, 204, .5);
+    font-weight: 300;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.content button.bold {
+    font-weight: 500;
+}
+
+
+.content ul.list li.single {
+    line-height: 36px;
+}
+
+.content ul.list button, .content ul.list a.button{
+    padding: 0;
+    height: 36px;
+    line-height: 36px;
+}
+
+@media (-webkit-max-device-pixel-ratio: 1) {
+    li, input, textarea, header {
+        background-image: none;
+        border-bottom: 1px solid rgb(200, 199, 204);
+    }
+}
+@media (max-device-pixel-ratio: 1) {
+    li, input, textarea, header {
+        background-image: none;
+        border-bottom: 1px solid rgb(200, 199, 204);
+    }
+}
+
+p.group-title {
+    margin-top: 20px;
+    padding-left: 10px;
+    font-size: 90%;
+    line-height: 32px;
+    color: #6D6D72;
+    text-shadow: #FFF 0 1px 0;
+}
+
+p.group-comment {
+    padding-left: 10px;
+    font-size: 85%;
+    line-height: 32px;
+    color: #6D6D72;
+    text-shadow: #FFF 0 1px 0;
+}
+
+/*页面结构*/
+/*top-banner*/
+/*center-body*/
+/*bottom-banner*/
+.top-banner {
+    background-color: rgb(209, 237, 254);
+    padding: 10px 10px 4px 10px;
+    text-align: center;
+}
+
+.top-banner label {
+    color: rgb(51, 164, 233);
+    font-size: 12px;
+}
+
+.top-banner * {
+    margin-bottom: 6px;
+    vertical-align: middle;
+}
+
+.center-body * {
+    vertical-align: middle;
+}
+
+.img-input {
+    position: relative;
+}
+
+.img-input img {
+    height: 18px;
+    position: absolute;
+    top: 8px;
+}
+
+.img-input img.right-img {
+    height: 18px;
+    right: 5%
+}
+
+.img-input input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+    font-size: 14px;
+}
+
+ul.center-body {
+    padding: 7px 4%;
+    background-color: white;
+}
+
+ul.center-body li {
+    border-bottom: 1px solid #EEE;
+    height: 35px;
+}
+
+ul.center-body li * {
+    line-height: 35px;
+    vertical-align: middle;
+}
+
+ul.bottom-banner {
+    padding: 10px;
+}
+
+/*button背景div绘制*/
+div.button-bg {
+    height: 40px;
+    border-radius: 5px;
+    background-color: #388fff;
+    max-width: 343px;
+    margin: auto;
+}
+
+div.button-bg button {
+    color: white;
+    line-height: 40px;
+    height: 40px;
+    padding: 0;
+    width: 100%;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.popup-layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    text-align: center;
+    top: 0;
+    left: 0;
+}
+.popup-block {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    width:300px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.22), 0 8px 17px 0 rgba(0,0,0,0.14);
+    border-radius: 8px;
+}
+.popup-title {
+    font-size: 17px;
+    color: #333333;
+    padding: 12px 0;
+    font-weight: bold;
+}
+.popup-content {
+    font-size: 14px;
+    color: #333333;
+    text-align: justify;
+    font-weight: normal;
+    padding: 10px 20px 20px;
+    line-height: 20px;
+    border-bottom: 1px solid #DFDFDF;
+    max-height: 300px;
+    overflow: auto;
+}
+.popup-btn {
+    font-size: 15px;
+    color: #2580FF;
+    padding: 12px;
+    font-weight: bold;
+}
+
+.input-label {
+    padding-left: 16px;
+    background: #f9f9f9;
+    line-height: 30px;
+    font-size: 12px;
+    color: #999999;
+    padding-top: 3px;
+    margin-bottom: -3px;
+}
+
+ul.center-body li.no-border {
+    border-bottom: none;
+}
+
+.back {
+    height: 16px;
+    margin-left: 7px;
+    vertical-align: middle;
+}
+
+.refresh {
+    width: 16px;
+    margin-right: 7px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+li.border-b {
+    border-bottom: 8px solid #F4F4F4;
+    padding-bottom: 7px;
+}
+
+.height-50 {
+    height: 50px;
+    line-height: 50px;
+}
+
+button.send-mail {
+    padding: 0;
+    font-size: 14px;
+    display: inline-block;
+    border-radius: 3px;
+    height: 40px;
+    float: right;
+    border: solid 1px #388fff;
+    color: #388fff;
+    width: 116px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+button.send-msg {
+    padding: 0;
+    font-size: 14px;
+    display: inline-block;
+    border-radius: 3px;
+    height: 40px;
+    float: right;
+    border: solid 1px #388fff;
+    color: #388fff;
+    width: 116px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+::placeholder {
+    color: #cccccc;
+    font-size: 14px;
+}
+
+.error-msg {
+    display: none;
+    font-size: 11px;
+    color: #ff3636;
+    margin: 6px 0 4px;
+}
+
+img.clear-icon {
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    top: 20px;
+    cursor: pointer;
+}
+
+label.info {
+    font-size: 16px;
+    color: #333333;
+}
+
+.next-arrow {
+    width: 10px;
+    height: 14px;
+    margin: 0 0 0 16px;
+    float: right;
+    padding: 10px 0;
+}
+
+img.captcha-img{
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    vertical-align: middle;
+    padding: 0;
+    font-size: 14px;
+    display: inline-block;
+    border-radius: 3px;
+    height: 40px;
+    float: right;
+    width: 116px;
+    top: 10px;
+    right: 0;
+}
+
+.disable-btn {
+    cursor: not-allowed;
+    border: solid 1px #b0d3ff !important;
+    color: #b0d3ff !important;
+}
+
+.disable-submit {
+    cursor: not-allowed;
+    background-color: #b0d3ff !important;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+div p.sign {
+    margin-right: 20px;
+}
+
+div.terms-content {
+    line-height: 150%;
+}
+
+div.terms-content h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+ol.terms {
+    list-style: decimal inside;
+}
+
+p.sign {
+    margin-top: 40px;
+    margin-right: 100px;
+    text-align: right;
+}
+.text-center {
+    text-align: center;
+}
+
+.terms{
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+.qidian_wpa_img {
+    display: none;
+}
+
+.service {
+    z-index: 98;
+    position: fixed;
+    right: 0.3rem;
+    bottom: 2.8rem;
+    width: 0.94rem;
+    height: 0.94rem;
+    border-radius: 50%;
+}
+
+.service .svg {
+    height: 0.94rem;
+    width: 0.94rem;
+}

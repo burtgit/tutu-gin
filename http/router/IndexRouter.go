@@ -5,12 +5,9 @@ import (
 	"tutu-gin/http/web"
 )
 
-type IndexRouter struct {
-}
+type IndexRouter struct{}
 
 func (i IndexRouter) Init(router *gin.Engine) {
-
 	indexController := web.NewIndex()
 	router.GET("/", indexController.Index)
-
 }

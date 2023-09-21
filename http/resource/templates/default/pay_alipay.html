@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta name="apple-mobile-web-app-capable" content="no"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="format-detection" content="telephone=no,email=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>支付宝扫码支付</title>
+    <link href="/static/css/wechat_pay.css" rel="stylesheet" media="screen">
+    <script src="/static/js/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="body">
+    <h1 class="mod-title">
+        <span class="ico_log ico-1"></span>
+    </h1>
+
+    <div class="mod-ct">
+        <div class="order">
+        </div>
+        <div class="amount" id="money">￥{{.price}}</div>
+        <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
+            <div data-role="qrPayImg" class="qrcode-img-area">
+                <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;">加载中</div>
+                <div style="position: relative;display: inline-block;">
+                    <!--                    <img  id='show_qrcode' alt="加载中..." src="https://img.alicdn.com/bao/uploaded/i4/O1CN01zA2LDx1jvstgoExeo_!!2-rate.png" width="210" height="210" style="display: block;" ali='jxm'>-->
+                    <!--                    <img  id='show_qrcode' alt="加载中..." src="https://img.alicdn.com/imgextra/i4/2/O1CN01Prdyom1jvsvJK6Pr9_!!2-rate.png23" width="210" height="210" style="display: block;">-->
+                    <!--                    <img  id='show_qrcode' alt="加载中..." src="https://img.alicdn.com/bao/uploaded/i4/O1CN01qgeq4D1Pyp5lZtwKT_!!2-rate.png" width="210" height="210" style="display: block;">-->
+                    <!--                    <img  id='show_qrcode' alt="加载中..." src="https://img.alicdn.com/bao/uploaded/i3/O1CN01wutBRy1jvss6OktBQ_!!2-rate.png" width="210" height="210" style="display: block;">-->
+                    <img  id='show_qrcode' alt="加载中..." src="https://img.alicdn.com/bao/uploaded/i1/O1CN01CY4yC31jvssVHtJj5_!!2-rate.png" width="210" height="210" style="display: block;">
+                    <div style="background-color: rgba(0,0,0,0.8);position: absolute;left: 0;right: 0;top: 0;bottom: 0;display: none" id="hide-qrcode">
+                        <p style="color: #fff;font-size: 18px;font-weight: bold;margin-bottom: 5px;margin-top: 20px">二维码已失效</p>
+                        <p style="color: #fff;font-size: 18px;font-weight: bold">超时5分钟未付款</p>
+                        <div style="margin-top: 20px;background-color: #00cc00;padding: 5px 14px;border-radius: 4px;display: inline-block;color: #fff;font-size: 20px;cursor: pointer">刷新二维码</div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="time-item">
+            <div class="time-item" id="msg"><h1>付款请备注数字：<span style="color: red">{{.user_id}}</span></h1> </div>
+            <strong id="hour_show">0时</strong>
+            <strong id="minute_show">0分</strong>
+            <strong id="second_show">0秒</strong>
+        </div>
+        <input type="hidden" name="order" value="{{.order}}">
+        <input type="hidden" name="vip" value="{{.vip}}">
+        <div class="tip">
+            <div class="ico-scan"></div>
+            <div class="tip-text">
+                <p>请使用支付宝扫一扫</p>
+                <p>扫描二维码完成支付</p>
+            </div>
+        </div>
+        <!--        <p style="margin: 10px; 0">付款成功后3分钟内自动开通，任何充值问题联系微信：</p>-->
+        <div class="detail" id="orderDetail">
+            <dl class="detail-ct" id="desc" style="display: none;">
+                <dt>金额</dt>
+                <dd>{{.price}}</dd>
+                <dt>创建时间：</dt>
+                <dd>{{.create_time}}</dd>
+                <dt>状态</dt>
+                <dd>等待支付</dd>
+            </dl>
+
+            <a href="javascript:void(0)" class="arrow"><i class="ico-arrow"></i></a>
+        </div>
+
+        <div class="tip-text">
+
+        </div>
+
+
+    </div>
+    <div class="foot">
+        <div class="inner">
+            <p>手机用户可保存上方二维码到手机中</p>
+            <p>在支付宝扫一扫中选择“相册”即可</p>
+        </div>
+    </div>
+
+</div>
+<div class="copyRight">
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#orderDetail .arrow').click(function (event) {
+            if ($('#orderDetail').hasClass('detail-open')) {
+                $('#orderDetail .detail-ct').slideUp(500, function () {
+                    $('#orderDetail').removeClass('detail-open');
+                });
+            } else {
+                $('#orderDetail .detail-ct').slideDown(500, function () {
+                    $('#orderDetail').addClass('detail-open');
+                });
+            }
+        });
+
+        function showLeftTime(s) {
+            var m =  Math.floor(s / 60);
+            var c = s % 60;
+            $("#minute_show").html(m + "分");
+            $("#second_show").html(c + "秒");
+        }
+
+        var leftTime = 10;
+        var timerShow = setInterval(function() {
+            if(leftTime <= 0) {
+                $("#hide-qrcode").show();
+                clearTimeout(timerShow);
+            }
+            if(leftTime % 2 === 0 && leftTime !== 10) {
+                $.ajax({
+                    url:'/v1/pay/check',// 跳转到 action
+                    data:{
+                        order:$("input[name='order']").val(),
+                        pay_type:1
+                    },
+                    type:'post',
+                    cache:false,
+                    dataType:'json',
+                    success:function(data) {
+                        console.log(data);
+
+                        if(data.Code === 200) {
+                            clearTimeout(timerShow);
+                            window.location.href = "/"
+                        }
+                    },
+                    error : function() {
+                        // view("异常！");
+                        console.log("异常！");
+                    }
+                })
+            }
+
+            showLeftTime(leftTime);
+            leftTime--;
+        },1000)
+        $("#hide-qrcode").click(function() {
+            var vip = $("input[name='vip']").val();
+            $.ajax({
+                type: 'POST',
+                url: '/v1/pay/apply',
+                data: {
+                    "pay_method": 1,
+                    "vip": vip,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if(data.Code === 200) {
+                        window.location.href = data.Data;
+                    }else {
+                        alert(data.msg);
+                    }
+                },
+                error: function () {
+                    alert("请求失败");
+                }
+            })
+        })
+    });
+</script>
+</body>
+</html>

@@ -19,6 +19,10 @@ func RouterInit(engine *gin.Engine) {
 	userRouter := &UserRouter{}
 	userRouter.Init(engine)
 
+	// 初始化网页路由
+	payRouter := &PayRouter{}
+	payRouter.Init(engine)
+
 	// 初始化静态资源
 	engine.Static("/static/", "./http/resource")
 
