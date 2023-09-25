@@ -27,7 +27,7 @@ var app = new Vue({
     delimiters: ["{", "}"],
     el: '#app',
     data: {
-        link: '6.12 qrR:/ # 被好风景收买  https://v.douyin.com/ie2HkymX/ 复制此链接，打开Dou音搜索，直接观看视频！',
+        link: '',
         errorTip: '',
         isMP4File: false,
         requestSuccess: false,

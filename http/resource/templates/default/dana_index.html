@@ -101,7 +101,7 @@
                 </li>
             </ul>
             <div class="tab-content mt-2" v-if="requestSuccess">
-                <div class="tab-pane container" id="video">
+                <div class="tab-pane container" id="video" :class="{active:requestResult.IsVideo}">
                     <div class="row justify-content-center">
                         <div class="col-md-2 col-sm-6 mr-4">
                             <video rel="noreferrer" :src="requestResult.VideoUrls" controls="controls" style="width:200px;"></video>
