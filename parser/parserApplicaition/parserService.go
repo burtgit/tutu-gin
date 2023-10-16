@@ -76,9 +76,9 @@ func (p *ParserService) Parse(pageUrl string, ip string, userId int64) (result *
 		getSpare := parserAdapter.NewGetSpare()
 		result, err = getSpare.Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
 
-		if platform.Code == "WEIBO" && err == nil {
-			result.VideoUrls = strings.ReplaceAll(result.VideoUrls, "video.weibocdn.com", "fvdcdn.cp63.ott.cibntv.net/video.weibocdn.com")
-		}
+		//if platform.Code == "WEIBO" && err == nil {
+		//	result.VideoUrls = strings.ReplaceAll(result.VideoUrls, "video.weibocdn.com", "fvdcdn.cp63.ott.cibntv.net/video.weibocdn.com")
+		//}
 	}
 
 	if err != nil {
