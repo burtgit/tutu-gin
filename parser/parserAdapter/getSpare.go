@@ -2,19 +2,20 @@ package parserAdapter
 
 import (
 	"fmt"
-	"github.com/goccy/go-json"
-	"github.com/juju/errors"
 	"io"
 	"log"
 	"net/http"
 	"net/url"
+
+	"github.com/goccy/go-json"
+	"github.com/juju/errors"
+
 	"tutu-gin/core/exception"
 	"tutu-gin/core/global"
 	"tutu-gin/parser/parserApplicaition/parserDto"
 )
 
-type GetSpare struct {
-}
+type GetSpare struct{}
 
 type GetSpareResult struct {
 	Code    string             `json:"code"`
@@ -33,7 +34,6 @@ type GetSpareResultData struct {
 }
 
 func (s *GetSpare) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.ParserResultDto, err error) {
-
 	requestBody := url.Values{}
 	requestBody.Set("token", global.SERVICE_CONFIG.ParserConfig.GetSpare.Token)
 	requestBody.Set("link", dto.PageUrl)
@@ -68,7 +68,6 @@ func (s *GetSpare) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Par
 	}
 
 	return
-
 }
 
 func NewGetSpare() *GetSpare {

@@ -108,7 +108,11 @@ var app = new Vue({
             return "/xzbs/video_" + new Date().getTime() + ".mp4?s=" + encodeURIComponent(CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(videoUrl)));
         },
         submit: function (event) {
-            console.log("13123123")
+
+            if(!this.link) {
+                return
+            }
+
             //清空并隐藏之前的错误提示
             this.errorTip = "";
 
