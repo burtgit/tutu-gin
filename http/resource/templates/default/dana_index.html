@@ -20,46 +20,37 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item {{ if eq .path "/" }}active{{ end }} ">
                         <a class="nav-link" href="/">抖音</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ if eq .path "/xiaohongshu.html" }}active{{ end }} ">
                         <a class="nav-link" href="/xiaohongshu.html">小红书</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ if eq .path "/kuaishou.html" }}active{{ end }} ">
                         <a class="nav-link" href="/kuaishou.html">快手</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ if eq .path "/xigua.html" }}active{{ end }} ">
+                    <a class="nav-link" href="/xigua.html">西瓜</a>
+                    </li>
+                    <li class="nav-item {{ if eq .path "/weibo.html" }}active{{ end }} ">
+                    <a class="nav-link" href="/weibo.html">微博</a>
+                    </li>
+                    <li class="nav-item {{ if eq .path "/bilibili.html" }}active{{ end }} ">
                         <a class="nav-link" href="/bilibili.html">哔哩哔哩</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ if eq .path "/instagram.html" }}active{{ end }} ">
                         <a class="nav-link" href="/instagram.html">Instagram</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ if eq .path "/youtube.html" }}active{{ end }} ">
                         <a class="nav-link" href="/youtube.html">Youtube</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/batch.html">批量解析</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                            更多
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/xigua.html">西瓜/头条</a>
-                            <a class="dropdown-item" href="/taobao.html">淘宝</a>
-                            <a class="dropdown-item" href="/weishi.html">微视</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/other.html">其他</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="//aivoice.pro">文字转语音</a>
+                    <li class="nav-item {{ if eq .path "/tiktok.html" }}active{{ end }} ">
+                        <a class="nav-link" href="/tiktok.html">Tiktok</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item vauth">
-                        <a class="nav-link" href="javascript:void(0);">登录/注册</a>
+                        <a class="nav-link" href="https://www.zanqianba.com/invite/index" target="_blank">客户端下载</a>
                     </li>
                 </ul>
             </div>
@@ -73,8 +64,8 @@
             <div style="height:150px;"></div>
         </div>
         <div class="text-white text-center">
-            <h1 style="font-size: x-large">抖音无水印在线解析下载</h1>
-            <p>💡💡 <ins><a class="text-white" href="/article/how-to-download-douyin.html">如何下载抖音视频</a></ins> &nbsp;<ins><a class="text-white"  href="https://agcdn.zanqianba.com/kaolajiexi-amd64-zanqianba.exe?version=v1.0.1">【微博】解析后无法下载，请使用我们的去水印软件：下载去水印软件</a></ins></p>
+            <h1 style="font-size: x-large">{{.title}}无水印在线解析下载</h1>
+            <p>💡💡 <ins><a class="text-white" href="/article/how-to-download-douyin.html">{{ .desc }}如何去水印</a></ins> &nbsp;<ins><a class="text-white"  href="https://agcdn.zanqianba.com/kaolajiexi-amd64-zanqianba.exe?version=v1.0.1">【微博】解析后无法下载，请使用我们的去水印软件：下载去水印软件</a></ins></p>
         </div>
         <div class="input-group input-group-lg">
             <div class="input-group-prepend">
@@ -82,7 +73,7 @@
                     <svg t="1686376350519" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5724" width="30" height="30"><path d="M578.133 675.627c-3.306-3.307-8.746-3.307-12.053 0L442.133 799.573c-57.386 57.387-154.24 63.467-217.6 0-63.466-63.466-57.386-160.213 0-217.6L348.48 458.027c3.307-3.307 3.307-8.747 0-12.054l-42.453-42.453c-3.307-3.307-8.747-3.307-12.054 0L170.027 527.467c-90.24 90.24-90.24 236.266 0 326.4s236.266 90.24 326.4 0L620.373 729.92c3.307-3.307 3.307-8.747 0-12.053l-42.24-42.24z m275.84-505.6c-90.24-90.24-236.266-90.24-326.4 0L403.52 293.973c-3.307 3.307-3.307 8.747 0 12.054l42.347 42.346c3.306 3.307 8.746 3.307 12.053 0l123.947-123.946c57.386-57.387 154.24-63.467 217.6 0 63.466 63.466 57.386 160.213 0 217.6L675.52 565.973c-3.307 3.307-3.307 8.747 0 12.054l42.453 42.453c3.307 3.307 8.747 3.307 12.054 0l123.946-123.947c90.134-90.24 90.134-236.266 0-326.506z" p-id="5725"></path><path d="M616.64 362.987c-3.307-3.307-8.747-3.307-12.053 0l-241.6 241.493c-3.307 3.307-3.307 8.747 0 12.053l42.24 42.24c3.306 3.307 8.746 3.307 12.053 0L658.773 417.28c3.307-3.307 3.307-8.747 0-12.053l-42.133-42.24z" p-id="5726"></path></svg>
                 </span>
             </div>
-            <input type="text" class="form-control" name="url" placeholder="输入抖音分享地址" v-model="link">
+            <input type="text" class="form-control" name="url" placeholder="输入{{ .title }}分享地址" v-model="link">
         </div>
         <div class="input-group input-group-lg mt-4">
             <button class="btn btn-lg btn-block submit-btn" style="color: #fff;background-color: #337ab7;border-color: #2e6da4;" @click="submit">解析</button>
@@ -135,10 +126,10 @@
                 <span>
                     <svg t="1686374806492" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4423" width="32" height="32"><path d="M512 925.215C283.871 925.215 98.785 740.129 98.785 512S283.871 98.785 512 98.785c228.13 0 413.215 185.086 413.215 413.215S740.13 925.215 512 925.215zM219.307 512c0 161.412 131.281 292.693 292.693 292.693S804.694 673.412 804.694 512 673.412 219.306 512 219.306 219.307 350.588 219.307 512zM696.01 542.131 524.375 713.765c-3.766 3.229-8.07 4.843-12.375 4.843-4.304 0-8.608-1.614-12.375-4.843L327.452 541.592c-4.842-5.38-6.456-12.375-3.766-18.831 2.689-6.456 9.146-10.761 16.141-10.761l103.304 0L443.131 322.61c0-9.685 7.533-17.217 17.218-17.217l103.304 0c9.685 0 17.217 7.533 17.217 17.217L580.87 512l103.305 0c9.685 0 17.217 7.533 17.217 17.217C701.391 534.06 699.238 538.363 696.01 542.131z" p-id="4424" fill="#ffffff"></path></svg>
                 </span>
-                <span>抖音 视频解析下载</span>
+                <span>{{ .desc }}解析下载</span>
             </h4>
             <p>
-                你在抖音上看到喜欢的视频了吗？您想知道如何將它下载到您的电脑的MP3或MP4视频档案？你来对地方了！我们的抖音视频下载、图片下载工具允许您在几秒钟內下载成功！只需將抖音分享Url复制到输入框中，按一下解析就可以了！
+                你在{{ .title }}上看到喜欢的视频了吗？您想知道如何將它下载到您的电脑的MP3或MP4视频档案？你来对地方了！我们的{{ .title }}视频下载、图片下载工具允许您在几秒钟內下载成功！只需將{{ .title }}分享Url复制到输入框中，按一下解析就可以了！
             </p>
         </div>
         <div class="mt-5">
@@ -149,10 +140,10 @@
         <div class="bg-light p-2 rounded">
             <ol class="mt-3 text-break">
                 <li class="mt-2 mb-2">
-                    在抖音里面复制分享链接，例如 http://v.douyin.com/22TnGD/
+                    在{{ .title }}里面复制分享链接，例如 {{ .example }}
                 </li>
                 <li class="mt-2 mb-2">
-                    在本网站输入抖音分享链接
+                    在本网站输入{{ .title }}分享链接
                 </li>
                 <li class="mt-2 mb-2">
                     点击“解析”按钮获取视频下载链接
@@ -167,18 +158,16 @@
             <dl class="mt-3 pr-4 pl-4">
                 <dt><strong>1、Android手机上可以用吗?</strong></dt>
                 <dd>可以的。<br>
-                    第一种方法：使用APP进行下载（<a href="/article/web-video-download.html" target="_blank" rel="noopener">APP下载链接</a>）<br>
+                    第一种方法：使用APP进行下载（<a href="https://www.zanqianba.com/invite/index" target="_blank" rel="noopener">APP下载链接</a>）<br>
                     第二种方法：Android和iOS都可以很方便的使用，Android手机在常用的Chrome、UC、360、QQ等浏览器上都可以很方便的使用本站。 推荐Chrome浏览器获得最佳下载体验。</dd>
                 <dt><strong>2、iOS设备（iPhone、iPad、iPod）上点击下载视频按钮后，跳转到视频页面，并没有直接下载，怎么办？</strong></dt>
                 <dd>
-                    使用APP进行下载（<a href="/article/web-video-download.html" target="_blank" rel="noopener">APP下载链接</a>）<br>
+                    使用APP进行下载（<a href="https://www.zanqianba.com/invite/index" target="_blank" rel="noopener">APP下载链接</a>）<br>
                 </dd>
                 <dt><strong>4、解析下载完了的视频，出现打不开怎么办？</strong></dt>
                 <dd>一般是文件后缀问题，把下载后的文件重命名添加".mp4"后缀即可播放。</dd>
-                <dt><strong>5、解析下载完了的图片，出现打不开怎么办？</strong></dt>
-                <dd>一般是因为下载下来的图片格式是webp的，可以使用<a href="/webp2jpg/index.html">格式工具</a>转换成jpg格式</dd>
                 <dt><strong>6、点击批量下载无效怎么办？或者想在电脑是批量下载图片和视频</strong></dt>
-                <dd><a href="/article/chrome-plugin-downloader.html" target="_blank" rel="noopener">电脑浏览器插件下载视频或者图片方法</a></dd>
+                <dd><a href="https://www.zanqianba.com/invite/index" target="_blank" rel="noopener">下载我们的客户端</a></dd>
 
             </dl>
         </div>
