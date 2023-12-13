@@ -273,6 +273,8 @@
         } else if (aa == 'download') {
             var url = button.data('fileurl'),
                 filename = button.data('filename');
+
+            //url = url.replace("http://", "https://")
             modal.find('.modal-title').text("正在下载");
             req.open("get", url, true);
             req.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
@@ -313,6 +315,8 @@
                         });
                         window.open(URL.createObjectURL(file));
                     }
+                }else {
+                    modal.find('.modal-body').html('<div style="padding-top:10px;"><i class="iconfont icon-no" style="color: red;"></i>下载失败，请点击手动保存： <a target="_blank" rel="noreferrer" href="' + url + '" class="btn btn-primary" download="true" role="button" title="下载">下载</a></div>');
                 }
             };
             req.send();
