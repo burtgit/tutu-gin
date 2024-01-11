@@ -85,7 +85,7 @@ func (w *WebParse) Parse(c *gin.Context) {
 		// 替换 + 号为 ! 号
 		encoded = replacePlus(encoded)
 
-		result.EncodeUrl = "http://www.zanqianba.com/xzb/video_" + strconv.FormatInt(time.Now().Unix(), 10) + ".mp4?s=" + encoded
+		result.EncodeUrl = "http://dw.zanqianba.com/xzb/video_" + strconv.FormatInt(time.Now().Unix(), 10) + ".mp4?s=" + encoded
 	}
 
 	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))
@@ -150,7 +150,7 @@ func (w *WebParse) ParseDaNa(c *gin.Context) {
 		// 替换 + 号为 ! 号
 		encoded = replacePlus(encoded)
 
-		result.EncodeUrl = "http://www.zanqianba.com/xzb/video_" + strconv.FormatInt(time.Now().Unix(), 10) + ".mp4?s=" + encoded
+		result.EncodeUrl = "http://dw.zanqianba.com/xzb/video_" + strconv.FormatInt(time.Now().Unix(), 10) + ".mp4?s=" + encoded
 	}
 
 	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))

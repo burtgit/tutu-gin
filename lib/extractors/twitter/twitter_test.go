@@ -1,10 +1,9 @@
 package twitter
 
 import (
-	"testing"
-
-	"github.com/iawia002/lux/extractors"
 	"github.com/iawia002/lux/test"
+	"testing"
+	"tutu-gin/lib/extractors"
 )
 
 func TestDownload(t *testing.T) {

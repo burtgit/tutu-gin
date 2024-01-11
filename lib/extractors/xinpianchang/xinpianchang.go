@@ -9,8 +9,8 @@ import (
 	"github.com/itchyny/gojq"
 	"github.com/pkg/errors"
 
-	"github.com/iawia002/lux/extractors"
 	"github.com/iawia002/lux/request"
+	"tutu-gin/lib/extractors"
 )
 
 func init() {
@@ -45,7 +45,7 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		return nil, errors.WithStack(err)
 	}
 
-	r1 := regexp.MustCompile(`vid = "(.+?)";`)
+	r1 := regexp.MustCompile(`vid:"(.+?)";`)
 	r2 := regexp.MustCompile(`modeServerAppKey = "(.+?)";`)
 
 	vid := r1.FindSubmatch([]byte(html))[1]
