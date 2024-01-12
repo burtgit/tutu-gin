@@ -1,8 +1,7 @@
 package exception
 
 import (
-	"log"
-
+	"fmt"
 	"github.com/juju/errors"
 )
 
@@ -25,7 +24,7 @@ func (a *ApiException) Error() string {
 
 func ValidatorError(err error) *ApiException {
 	e, _ := err.(*errors.Err)
-	log.Println(e.StackTrace())
+	fmt.Println(e.StackTrace())
 	return &ApiException{
 		Code: apiErrMaps[e.Message()],
 		Msg:  e.Message(),

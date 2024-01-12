@@ -1,15 +1,14 @@
 package youtube
 
 import (
-	"fmt"
 	"net/http"
-	"strconv"
+	"strings"
+	"tutu-gin/lib/extractors"
 
 	"github.com/iawia002/lia/array"
 	"github.com/kkdai/youtube/v2"
 	"github.com/pkg/errors"
 
-	"github.com/iawia002/lux/extractors"
 	"github.com/iawia002/lux/request"
 	"github.com/iawia002/lux/utils"
 )
@@ -81,50 +80,54 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 // youtubeDownload download function for single url
 func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractors.Data {
 	streams := make(map[string]*extractors.Stream, len(video.Formats))
-	audioCache := make(map[string]*extractors.Part)
 
 	for i := range video.Formats {
 		f := &video.Formats[i]
-		itag := strconv.Itoa(f.ItagNo)
-		quality := f.MimeType
-		if f.QualityLabel != "" {
-			quality = fmt.Sprintf("%s %s", f.QualityLabel, f.MimeType)
+
+		if !strings.Contains(f.MimeType, "video/mp4") {
+			continue
 		}
 
-		part, err := e.genPartByFormat(video, f)
-		if err != nil {
-			return extractors.EmptyData(url, err)
-		}
-		stream := &extractors.Stream{
-			ID:      itag,
-			Parts:   []*extractors.Part{part},
-			Quality: quality,
-			Ext:     part.Ext,
-			NeedMux: true,
+		stream, ok := streams[f.Quality]
+		var hasAudio bool
+		if f.AudioChannels <= 0 {
+			hasAudio = true
 		}
 
-		// Unlike `url_encoded_fmt_stream_map`, all videos in `adaptive_fmts` have no sound,
-		// we need download video and audio both and then merge them.
-		// video format with audio:
-		//   AudioSampleRate: "44100", AudioChannels: 2
-		// video format without audio:
-		//   AudioSampleRate: "", AudioChannels: 0
-		if f.AudioChannels == 0 {
-			audioPart, ok := audioCache[part.Ext]
-			if !ok {
-				audio, err := getVideoAudio(video, part.Ext)
-				if err != nil {
-					return extractors.EmptyData(url, err)
-				}
-				audioPart, err = e.genPartByFormat(video, audio)
-				if err != nil {
-					return extractors.EmptyData(url, err)
-				}
-				audioCache[part.Ext] = audioPart
+		if ok && stream.NoAudio && f.AudioChannels > 0 {
+			stream = &extractors.Stream{
+				Parts: []*extractors.Part{
+					{
+						URL: f.URL,
+					},
+				},
+				Quality: f.QualityLabel,
+				NeedMux: true,
+				NoAudio: hasAudio,
 			}
-			stream.Parts = append(stream.Parts, audioPart)
 		}
-		streams[itag] = stream
+
+		stream = &extractors.Stream{
+			Parts: []*extractors.Part{
+				{
+					URL:  f.URL,
+					Size: int64(f.Height),
+				},
+			},
+			Quality: f.QualityLabel,
+			NeedMux: true,
+			NoAudio: hasAudio,
+		}
+		streams[f.Quality] = stream
+	}
+
+	var maxSize uint
+	var cover string
+
+	for _, thumbnail := range video.Thumbnails {
+		if thumbnail.Height > maxSize {
+			cover = thumbnail.URL
+		}
 	}
 
 	return &extractors.Data{
@@ -133,6 +136,7 @@ func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractor
 		Type:    "video",
 		Streams: streams,
 		URL:     url,
+		Cover:   cover,
 	}
 }
 

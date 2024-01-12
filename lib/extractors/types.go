@@ -30,6 +30,7 @@ type Stream struct {
 	// if the parts need mux
 	NeedMux bool
 	Cover   string `json:"cover"`
+	NoAudio bool
 }
 
 // DataType indicates the type of extracted data, eg: video or image.

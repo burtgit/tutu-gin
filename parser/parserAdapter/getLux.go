@@ -38,16 +38,27 @@ func (s *GetLux) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Parse
 				continue
 			}
 
-			if v.Size > bigSize {
+			if v.Size > bigSize && !v.NoAudio {
 				bigSize = v.Size
 				bigUrl = v.Parts[0].URL
 			}
+
+			var separate int
+
+			if v.NoAudio {
+				separate = 1
+			}
+
 			formats = append(formats, parserDto.ParseFormat{
 				QualityNote: v.Quality,
-				Separate:    0,
+				Separate:    separate,
 				Vext:        v.Ext,
 				Video:       v.Parts[0].URL,
 			})
+		}
+
+		if len(bigUrl) <= 0 && len(formats) > 0 {
+			bigUrl = formats[0].Video
 		}
 
 		result = &parserDto.ParserResultDto{
