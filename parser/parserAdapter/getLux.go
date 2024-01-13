@@ -1,6 +1,7 @@
 package parserAdapter
 
 import (
+	"github.com/pkg/errors"
 	"tutu-gin/lib/extractors"
 
 	"tutu-gin/parser/parserApplicaition/parserDto"
@@ -31,6 +32,10 @@ func (s *GetLux) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Parse
 	} else {
 		var bigSize int64
 		var bigUrl string
+
+		if len(item.Streams) <= 0 {
+			return nil, errors.New("视频不存在")
+		}
 
 		for _, v := range item.Streams {
 

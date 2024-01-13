@@ -38,14 +38,14 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "url_encoded_fmt_stream_map test",
 			args: test.Args{
-				URL:   "https://youtu.be/DNaOZovrSVo",
+				URL:   "https://www.youtube.com/shorts/pYCNdvKhJmo?feature=share",
 				Title: "QNAP Customer Story | Scorptec",
 			},
 		},
 		{
 			name: "stream 404 test 1",
 			args: test.Args{
-				URL:   "https://www.youtube.com/watch?v=MRJ8NnUXacY",
+				URL:   "https://youtu.be/RPIdUNqytys?si=gTvnmSAadOmGnNfJ",
 				Title: "FreeFileSync: Mirror Synchronization",
 			},
 		},

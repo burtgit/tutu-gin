@@ -2,6 +2,7 @@ package youtube
 
 import (
 	"net/http"
+	"strconv"
 	"strings"
 	"tutu-gin/lib/extractors"
 
@@ -82,23 +83,45 @@ func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractor
 	streams := make(map[string]*extractors.Stream, len(video.Formats))
 
 	for i := range video.Formats {
-		f := &video.Formats[i]
+		f := video.Formats[i]
+		quality := strconv.Itoa(f.Height)
 
 		if !strings.Contains(f.MimeType, "video/mp4") {
 			continue
 		}
 
-		stream, ok := streams[f.Quality]
+		stream, ok := streams[quality]
 		var hasAudio bool
 		if f.AudioChannels <= 0 {
 			hasAudio = true
 		}
 
-		if ok && stream.NoAudio && f.AudioChannels > 0 {
+		if ok {
+			if stream.NoAudio && f.AudioChannels > 0 {
+				if len(f.URL) <= 0 {
+					f.URL, _ = e.client.GetStreamURL(video, &f)
+				}
+				stream = &extractors.Stream{
+					Parts: []*extractors.Part{
+						{
+							URL:  f.URL,
+							Size: int64(f.Height),
+						},
+					},
+					Quality: f.QualityLabel,
+					NeedMux: true,
+					NoAudio: hasAudio,
+				}
+			}
+		} else {
+			if len(f.URL) <= 0 {
+				f.URL, _ = e.client.GetStreamURL(video, &f)
+			}
 			stream = &extractors.Stream{
 				Parts: []*extractors.Part{
 					{
-						URL: f.URL,
+						URL:  f.URL,
+						Size: int64(f.Height),
 					},
 				},
 				Quality: f.QualityLabel,
@@ -107,18 +130,7 @@ func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractor
 			}
 		}
 
-		stream = &extractors.Stream{
-			Parts: []*extractors.Part{
-				{
-					URL:  f.URL,
-					Size: int64(f.Height),
-				},
-			},
-			Quality: f.QualityLabel,
-			NeedMux: true,
-			NoAudio: hasAudio,
-		}
-		streams[f.Quality] = stream
+		streams[quality] = stream
 	}
 
 	var maxSize uint

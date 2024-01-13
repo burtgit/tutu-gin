@@ -11,7 +11,7 @@ upload_resorce:
 
 
 upload_resorce_over:
-	scp -r ./http/resource root@ove:/data/tutu-gin/http/resource
+	scp -r ./http/resource root@byn-dida:/usr/local/src/tutu-gin/http/resource
 
 prod-over:
 	@GOOS=linux GOARCH=amd64 go build main.go
