@@ -73,7 +73,7 @@ func (c *client[T]) Apply(router string, params map[string]string) (error, T) {
 
 func NewClient[T response.ClientResponse]() *client[T] {
 	return &client[T]{
-		//host: "http://localhost:3000",
-		host: "https://jxapi.sucps.com/",
+		host: "http://localhost:3000",
+		//host: "https://jxapi.sucps.com/",
 	}
 }
