@@ -30,13 +30,6 @@ func (u *User) Qrcode(c *gin.Context) {
 	//	return
 	//}
 
-	c.JSON(http.StatusOK, api.ApiSuccessResponse(map[string]string{
-		"Url":    "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + url.QueryEscape("6cb16fa127bf8c35117bb20414003d8bdbd6c27bc2fffc417ad4285eac476f69"),
-		"Ticket": "6cb16fa127bf8c35117bb20414003d8bdbd6c27bc2fffc417ad4285eac476f69",
-	}))
-
-	return
-
 	if len(token) <= 0 {
 		code, body, err := fasthttp.Get(nil, "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxd6322dba9f40d541&secret=3e05992970e12dcaf1074264742c6e12")
 		if err != nil {

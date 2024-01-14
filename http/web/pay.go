@@ -22,7 +22,12 @@ type Pay struct{}
 
 func (i *Pay) Index(c *gin.Context) {
 
-	tokens, _ := c.Request.Cookie("tokens")
+	var token string
+	tokens, e := c.Request.Cookie("tokens")
+
+	if e == nil {
+		token = tokens.Value
+	}
 
 	var result response.Menu
 	var err error
@@ -34,14 +39,14 @@ func (i *Pay) Index(c *gin.Context) {
 	go func() {
 		defer wg.Done()
 		err, result = kljx.NewClient[response.Menu]().Apply(kljx.PayInfo, map[string]string{
-			"token": tokens.Value,
+			"token": token,
 		})
 	}()
 
 	go func() {
 		defer wg.Done()
 		err, userDetail = kljx.NewClient[response.User]().Apply(kljx.UserInfo, map[string]string{
-			"token": tokens.Value,
+			"token": token,
 		})
 	}()
 
@@ -97,10 +102,15 @@ func (i *Pay) Apply(c *gin.Context) {
 		return
 	}
 
-	tokens, _ := c.Request.Cookie("tokens")
+	var token string
+	tokens, err := c.Request.Cookie("tokens")
+
+	if err == nil {
+		token = tokens.Value
+	}
 
 	err, result := kljx.NewClient[response.PayApplyResult]().Apply(kljx.PayApply, map[string]string{
-		"token":    tokens.Value,
+		"token":    token,
 		"menu":     strconv.FormatInt(requestData.Menu, 10),
 		"pay_type": strconv.FormatInt(requestData.PayType, 10),
 	})
@@ -155,10 +165,15 @@ func (i *Pay) Check(c *gin.Context) {
 		return
 	}
 
-	tokens, _ := c.Request.Cookie("tokens")
+	var token string
+	tokens, err := c.Request.Cookie("tokens")
 
-	err, _ := kljx.NewClient[any]().Apply(kljx.PayCheck, map[string]string{
-		"token":    tokens.Value,
+	if err == nil {
+		token = tokens.Value
+	}
+
+	err, _ = kljx.NewClient[any]().Apply(kljx.PayCheck, map[string]string{
+		"token":    token,
 		"order_id": strconv.FormatInt(requestData.OrderId, 10),
 		"pay_type": strconv.FormatInt(requestData.PayType, 10),
 	})

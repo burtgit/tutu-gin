@@ -49,11 +49,13 @@ func (c *client[T]) Apply(router string, params map[string]string) (error, T) {
 	var result response.Response[T]
 
 	if err := fasthttp.DoTimeout(req, resp, time.Minute*5); err != nil {
+		fmt.Println(string(resp.Body()))
 		return exception.ValidatorError(errors2.Annotate(errors.New(result.Msg), exception.API_REQUEST_FAIL)), result.Data
 	}
 
 	err := json.Unmarshal(resp.Body(), &result)
 	if err != nil {
+		fmt.Println(string(resp.Body()))
 		return exception.ValidatorError(errors2.Annotate(errors.New(result.Msg), exception.API_REQUEST_FAIL)), result.Data
 	}
 

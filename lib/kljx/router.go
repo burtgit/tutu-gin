@@ -1,6 +1,6 @@
 package kljx
 
-const Login = "/web/login"
+const Login = "/auth/ticketCheck2"
 const Parse = "/web/parseNew"
 const UserInfo = "/web/user"
 const SiteInfo = "/web/site"

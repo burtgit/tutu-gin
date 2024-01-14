@@ -104,13 +104,18 @@ func (w *WebParse) ParseV2(c *gin.Context) {
 		return
 	}
 
-	tokens, _ := c.Request.Cookie("tokens")
+	var token string
+	tokens, err := c.Request.Cookie("tokens")
+
+	if err == nil {
+		token = tokens.Value
+	}
 
 	// 目前全部启用考拉优化接口
 	err, result := kljx.NewClient[response.Parser]().Apply(kljx.Parse, map[string]string{
 		"platform": "www.zhishuzhan.com",
 		"pageUrl":  requestData.PageUrl,
-		"token":    tokens.Value,
+		"token":    token,
 	})
 	if err != nil {
 		c.Error(err)

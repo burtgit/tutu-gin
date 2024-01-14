@@ -58,9 +58,16 @@ func (i Index) Index(c *gin.Context) {
 			"path":    path,
 		})
 	} else {
-		tokens, _ := c.Request.Cookie("tokens")
+
+		var token string
+		tokens, err := c.Request.Cookie("tokens")
+
+		if err == nil {
+			token = tokens.Value
+		}
+
 		_, userDetail := kljx.NewClient[response.User]().Apply(kljx.UserInfo, map[string]string{
-			"token": tokens.Value,
+			"token": token,
 		})
 
 		var isVip bool
