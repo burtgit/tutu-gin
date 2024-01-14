@@ -3,6 +3,7 @@ package twitter
 import (
 	"encoding/json"
 	"fmt"
+	errors2 "github.com/juju/errors"
 	"strconv"
 	"strings"
 	"tutu-gin/lib/extractors"
@@ -32,47 +33,94 @@ func New() extractors.Extractor {
 	return &extractor{}
 }
 
+type twitterInfo struct {
+	CommunityNote  interface{}   `json:"communityNote"`
+	ConversationID string        `json:"conversationID"`
+	Date           string        `json:"date"`
+	DateEpoch      int           `json:"date_epoch"`
+	Hashtags       []interface{} `json:"hashtags"`
+	Likes          int           `json:"likes"`
+	MediaURLs      []string      `json:"mediaURLs"`
+	MediaExtended  []struct {
+		AltText        interface{} `json:"altText"`
+		DurationMillis int         `json:"duration_millis"`
+		Size           struct {
+			Height int `json:"height"`
+			Width  int `json:"width"`
+		} `json:"size"`
+		ThumbnailUrl string `json:"thumbnail_url"`
+		Type         string `json:"type"`
+		Url          string `json:"url"`
+	} `json:"media_extended"`
+	PossiblySensitive   bool        `json:"possibly_sensitive"`
+	QrtURL              interface{} `json:"qrtURL"`
+	Replies             int         `json:"replies"`
+	Retweets            int         `json:"retweets"`
+	Text                string      `json:"text"`
+	TweetID             string      `json:"tweetID"`
+	TweetURL            string      `json:"tweetURL"`
+	UserName            string      `json:"user_name"`
+	UserProfileImageUrl string      `json:"user_profile_image_url"`
+	UserScreenName      string      `json:"user_screen_name"`
+}
+
 // Extract is the main function to extract the data.
 func (e *extractor) Extract(url string, option extractors.Options) ([]*extractors.Data, error) {
-	html, err := request.Get(url, url, nil)
+	url = strings.Replace(url, "twitter.com", "api.vxtwitter.com", -1)
+	url = strings.Replace(url, "x.com", "api.vxtwitter.com", -1)
+	b, err := request.Get(url, url, map[string]string{
+		"User-Agent": "TelegramBot (like TwitterBot)",
+	})
+	//resp, err := request.Request(http.MethodGet, strings.Replace(url, "twitter.com", "api.vxtwitter.com", -1), nil, map[string]string{
+	//	"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+	//})
+	//if err != nil {
+	//	return nil, errors2.Annotate(errors.New("twitter获取失败"), "twitter获取失败")
+	//}
+	//defer resp.Body.Close() // nolint
+	//b, _ := io.ReadAll(resp.Body)
+	//fmt.Println(string(b))
+	var detail twitterInfo
+	err = json.Unmarshal([]byte(b), &detail)
+
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, errors2.Annotate(errors.New("twitter的json解析失败"), "twitter的json解析失败")
 	}
 
-	usernames := utils.MatchOneOf(html, `property="og:title"\s+content="(.+)"`)
-	if usernames == nil || len(usernames) < 2 {
-		return nil, errors.WithStack(extractors.ErrURLParseFailed)
-	}
-	username := usernames[1]
+	quality := strconv.Itoa(detail.MediaExtended[0].Size.Height)
+	streams := make(map[string]*extractors.Stream)
+	var images []string
+	var isNotVideo bool
 
-	tweetIDs := utils.MatchOneOf(url, `(status|statuses)/(\d+)`)
-	if tweetIDs == nil || len(tweetIDs) < 3 {
-		return nil, errors.WithStack(extractors.ErrURLParseFailed)
+	if detail.MediaExtended[0].Type == "image" {
+		isNotVideo = true
+		images = append(images, detail.MediaExtended[0].Url)
+	} else {
+		stream := &extractors.Stream{
+			Parts: []*extractors.Part{
+				{
+					URL:  detail.MediaExtended[0].Url,
+					Size: 850,
+				},
+			},
+			Size:    850,
+			Quality: quality,
+		}
+		streams[quality] = stream
 	}
-	tweetID := tweetIDs[2]
 
-	api := fmt.Sprintf(
-		"https://api.twitter.com/1.1/videos/tweet/config/%s.json", tweetID,
-	)
-	headers := map[string]string{
-		"Authorization": "Bearer AAAAAAAAAAAAAAAAAAAAAIK1zgAAAAAA2tUWuhGZ2JceoId5GwYWU5GspY4%3DUq7gzFoCZs1QfwGoVdvSac3IniczZEYXIcDyumCauIXpcAPorE",
-	}
-	jsonString, err := request.Get(api, url, headers)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-
-	var twitterData twitter
-	if err := json.Unmarshal([]byte(jsonString), &twitterData); err != nil {
-		return nil, errors.WithStack(extractors.ErrURLParseFailed)
-	}
-	twitterData.TweetID = tweetID
-	twitterData.Username = username
-	extractedData, err := download(twitterData, url)
-	if err != nil {
-		return nil, errors.WithStack(err)
-	}
-	return extractedData, nil
+	return []*extractors.Data{
+		{
+			Site:       "Twitter twitter.com",
+			Title:      detail.Text,
+			Type:       extractors.DataTypeImage,
+			Streams:    streams,
+			URL:        url,
+			Image:      images,
+			Cover:      detail.MediaExtended[0].ThumbnailUrl,
+			IsNotVideo: isNotVideo,
+		},
+	}, nil
 }
 
 func download(data twitter, uri string) ([]*extractors.Data, error) {

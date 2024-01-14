@@ -1,14 +1,14 @@
 package web
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
+	"sync"
 	"time"
+	"tutu-gin/lib/kljx"
+	"tutu-gin/lib/kljx/response"
 
 	"tutu-gin/core/api"
-
-	"github.com/valyala/fasthttp"
 
 	"github.com/juju/errors"
 
@@ -21,7 +21,68 @@ import (
 type Pay struct{}
 
 func (i *Pay) Index(c *gin.Context) {
-	c.HTML(http.StatusOK, "pay.html", nil)
+
+	tokens, _ := c.Request.Cookie("tokens")
+
+	var result response.Menu
+	var err error
+	var userDetail response.User
+
+	wg := &sync.WaitGroup{}
+
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		err, result = kljx.NewClient[response.Menu]().Apply(kljx.PayInfo, map[string]string{
+			"token": tokens.Value,
+		})
+	}()
+
+	go func() {
+		defer wg.Done()
+		err, userDetail = kljx.NewClient[response.User]().Apply(kljx.UserInfo, map[string]string{
+			"token": tokens.Value,
+		})
+	}()
+
+	wg.Wait()
+
+	var errorTip string
+	if err != nil {
+		errorTip = err.Error()
+	}
+
+	hasType := 0
+	mode := "single"
+	if len(c.Query("hasType")) > 0 {
+		hasType = 1
+	}
+
+	if len(c.Query("type")) > 0 {
+		mode = c.Query("type")
+	}
+
+	if c.Query("res") == "2" {
+		errorTip = "海外视频解析仅限会员使用，请先购买会员"
+	} else if c.Query("res") == "1" {
+		errorTip = "今日的免费次数已用完，请先购买会员"
+	}
+
+	c.HTML(http.StatusOK, "pay2.html", gin.H{
+		"menuList":     result.MenuList,
+		"messageData":  result.Message,
+		"errorTip":     errorTip,
+		"token":        userDetail.Token,
+		"vip_times":    userDetail.Times,
+		"batch_time":   userDetail.BatchTime,
+		"vip_end_time": userDetail.EndTime,
+		"message":      userDetail.Message,
+		"user_id":      userDetail.Id,
+		"domain":       "zhishuzhan.com",
+		"mode":         mode,
+		"has_type":     hasType,
+		"vip_type":     1,
+	})
 }
 
 func (i *Pay) Mobile(c *gin.Context) {
@@ -36,55 +97,20 @@ func (i *Pay) Apply(c *gin.Context) {
 		return
 	}
 
-	type Result struct {
-		Status int    `json:"status"`
-		Msg    string `json:"msg"`
-		Data   struct {
-			Money      string `json:"money"`
-			OrderId    int64  `json:"order_id"`
-			PayType    string `json:"pay_type"`
-			NeedRemark bool   `json:"need_remark"`
-			UserId     int64  `json:"user_id"`
-			Qrcode     string `json:"qrcode"`
-		} `json:"data"`
-	}
+	tokens, _ := c.Request.Cookie("tokens")
 
-	req := fasthttp.AcquireRequest()
-	defer fasthttp.ReleaseRequest(req) // 用完需要释放资源
+	err, result := kljx.NewClient[response.PayApplyResult]().Apply(kljx.PayApply, map[string]string{
+		"token":    tokens.Value,
+		"menu":     strconv.FormatInt(requestData.Menu, 10),
+		"pay_type": strconv.FormatInt(requestData.PayType, 10),
+	})
 
-	req.Header.SetContentType("application/json")
-	req.Header.SetMethod(http.MethodPost)
-	req.SetRequestURI("http://localhost:3000/app/pay/apply")
-
-	token, _ := c.Cookie("tokens")
-
-	req.SetBody([]byte(`{"menu":` + strconv.FormatInt(requestData.Vip, 10) + `,"pay_type":"` + strconv.FormatInt(requestData.PayMethod, 10) + `","token":"` + token + `"}`))
-
-	resp := fasthttp.AcquireResponse()
-	defer fasthttp.ReleaseResponse(resp)
-
-	if err := fasthttp.Do(req, resp); err != nil {
-		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PAY_FAIL)))
-		return
-	}
-
-	var result Result
-
-	err := json.Unmarshal(resp.Body(), &result)
 	if err != nil {
-		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PAY_FAIL)))
+		c.Error(err)
 		return
 	}
 
-	payUrl := "/v1/pay/wechat"
-
-	if requestData.PayMethod == 1 {
-		payUrl = "/v1/pay/alipay"
-	}
-
-	link := payUrl + "?user_id=" + strconv.FormatInt(result.Data.UserId, 10) + "&price=" + result.Data.Money + "&order=" + strconv.FormatInt(result.Data.OrderId, 10) + "&vip=" + strconv.FormatInt(requestData.Vip, 10)
-
-	c.JSON(http.StatusOK, api.ApiSuccessResponse(link))
+	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))
 }
 
 func (i *Pay) Wechat(c *gin.Context) {
@@ -129,38 +155,19 @@ func (i *Pay) Check(c *gin.Context) {
 		return
 	}
 
-	type Result struct {
-		Status int    `json:"status"`
-		Msg    string `json:"msg"`
-		Data   any    `json:"data"`
-	}
+	tokens, _ := c.Request.Cookie("tokens")
 
-	req := fasthttp.AcquireRequest()
-	defer fasthttp.ReleaseRequest(req) // 用完需要释放资源
+	err, _ := kljx.NewClient[any]().Apply(kljx.PayCheck, map[string]string{
+		"token":    tokens.Value,
+		"order_id": strconv.FormatInt(requestData.OrderId, 10),
+		"pay_type": strconv.FormatInt(requestData.PayType, 10),
+	})
 
-	req.Header.SetContentType("application/json")
-	req.Header.SetMethod(http.MethodPost)
-	req.SetRequestURI("http://localhost:3000/app/pay/check")
-
-	token, _ := c.Cookie("tokens")
-
-	req.SetBody([]byte(`{"order_id":` + strconv.FormatInt(requestData.OrderId, 10) + `,"pay_type":"` + strconv.FormatInt(requestData.PayType, 10) + `","token":"` + token + `"}`))
-
-	resp := fasthttp.AcquireResponse()
-	defer fasthttp.ReleaseResponse(resp)
-
-	if err := fasthttp.Do(req, resp); err != nil {
-		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PAY_FAIL)))
+	if err != nil {
+		c.Error(err)
 		return
 	}
 
-	var result Result
-
-	err := json.Unmarshal(resp.Body(), &result)
-	if err != nil || result.Status != 200 {
-		c.Error(exception.ValidatorError(errors.Annotate(errors.New(exception.API_PAY_FAIL), exception.API_PAY_FAIL)))
-		return
-	}
 	c.JSON(http.StatusOK, api.ApiSuccessResponse("支付成功"))
 }
 

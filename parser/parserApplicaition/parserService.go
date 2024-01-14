@@ -104,6 +104,14 @@ func (p *ParserService) Agent(pageUrl string) (result *parserDto.ParserResultDto
 	}
 	result, err = parserAdapter.NewGetLux().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
 
+	// 解析成功事件
+	go event.EventHandler(&parseEvent.ParseSuccessEvent{
+		ParserResult: result,
+		Url:          pageUrl,
+		UserId:       111,
+		Ip:           "127.0.0.1",
+	})
+
 	return result, err
 }
 

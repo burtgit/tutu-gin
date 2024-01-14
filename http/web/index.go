@@ -1,10 +1,12 @@
 package web
 
 import (
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
-
-	"github.com/gin-gonic/gin"
+	"time"
+	"tutu-gin/lib/kljx"
+	"tutu-gin/lib/kljx/response"
 )
 
 type Index struct{}
@@ -56,7 +58,21 @@ func (i Index) Index(c *gin.Context) {
 			"path":    path,
 		})
 	} else {
-		c.HTML(http.StatusOK, "index.html", nil)
+		tokens, _ := c.Request.Cookie("tokens")
+		_, userDetail := kljx.NewClient[response.User]().Apply(kljx.UserInfo, map[string]string{
+			"token": tokens.Value,
+		})
+
+		var isVip bool
+		if userDetail.EndTime > time.Now().Unix() {
+			isVip = true
+		} else if userDetail.Times > 0 {
+			isVip = true
+		}
+
+		c.HTML(http.StatusOK, "index.html", gin.H{
+			"isVip": isVip,
+		})
 	}
 }
 

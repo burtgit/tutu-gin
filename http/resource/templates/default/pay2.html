@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>考拉解析--购买会员</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="考拉解析--购买会员">
+    <meta name="description" content="考拉解析--购买会员">
+    <link href="/static/css/bootstrap.min2.css" rel="stylesheet">
+    <meta name="referrer" content="no-referrer">
+    <link href="/static/css/site.css?v32" rel="stylesheet">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <style>
+        .container .navbar-header .logo-img {
+            width: 41px;
+            height: 41px;
+            margin-left: 15px;
+            margin-top: 5px;
+            float: left;
+            display: inline-block;
+            background: url(/img/logo.png) no-repeat;
+            background-size: contain;
+            background: 0 0\9;
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/img/logo.png', sizingMethod='scale');
+        }
+
+        @media (min-width: 768px) {
+            .container .navbar-header .logo-img {margin-left: 0;}
+        }
+        .sponsor-img img {
+            max-height: 60px;
+            max-width: 100%;
+            margin-bottom: 2px;
+            padding: 0 2px;
+        }
+        .sponsor-img {
+            text-align: center;
+            margin-bottom: 3px;
+        }
+        [v-cloak] {
+            display: none;
+        }
+        .ad-image {
+            position: relative;
+            display: inline-block;
+        }
+        .ad-image:after {
+            content: "广告";
+            font-size: 12px;
+            color: #fff;
+            background-color: #000;
+            opacity: .7;
+            width: 26px;
+            height: 14px;
+            line-height: 14px;
+            text-align: center;
+            position: absolute;
+            right: 3px;
+            bottom: 2px;
+        }
+        .navbar-nav li a.active {
+            background: #1e97bf;
+        }
+
+        .payment-method li.active {
+            border-color: #EC7350;
+        }
+        .mod-ct .order {
+            font-size: 20px;
+            padding-top: 10px;
+        }
+        .mod-ct .amount {
+            font-size: 48px;
+            margin-top: 10px;
+        }
+        .time-item strong {
+            background: #3ec742;
+            color: #fff;
+            line-height: 25px;
+            font-size: 15px;
+            font-family: Arial;
+            padding: 0 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .mod-ct .tip {
+            margin-top: 20px;
+            border-top: 1px dashed #e5e5e5;
+            padding: 10px 0;
+            position: relative;
+        }
+        .mod-ct .tip .ico-scan {
+            display: inline-block;
+            width: 56px;
+            height: 55px;
+            background: url(/static/images/wechat-pay.png) 0 0 no-repeat;
+            vertical-align: middle;
+            *display: inline;
+            *zoom: 1;
+        }
+        .mod-ct {
+            min-width: 300px;
+            max-width: 640px;
+            margin: 15px auto 0;
+            background: #fff url(/static/images/wave.png) top center repeat-x;
+            text-align: center;
+            color: #333;
+            border: 1px solid #e5e5e5;
+            border-top: none;
+        }
+        .mod-ct .tip .tip-text {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: left;
+            margin-left: 23px;
+            font-size: 16px;
+            line-height: 28px;
+            *display: inline;
+            *zoom: 1;
+        }
+
+        .list-container .buy-wrapper {
+            width: 100%;
+            margin: 22px auto 0;
+        }
+        .list-container .buy-wrapper .wrapper-item {
+            width: 152px;
+            height: 182px;
+            padding-top: 22px;
+            margin-left: 20px;
+            margin-bottom: 20px;
+            float: left;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .list-container .wrapper-shadow {
+            background: #fff;
+            box-shadow: 0px 0px 15px #7892B3;
+        }
+
+        .list-container .buy-wrapper .price {
+            font-size: 3.125rem;
+            color: #EC7350;
+            padding-bottom: 10px;
+        }
+        .din_number_font {
+            text-align: center;
+            font-family: "DIN Medium";
+        }
+        .list-container .buy-wrapper .wrapper-item span {
+            display: block;
+        }
+
+        .list-container .buy-wrapper .buy-now {
+            width: 136px;
+            height: 30px;
+            background-color: #426FF4;
+            line-height: 30px;
+            color: #fff;
+            border-radius: 4px;
+            margin: 0 auto;
+            transition: all 0.1s;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .list-container .buy-wrapper .time {
+            font-size: 16px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+        .list-container .buy-wrapper .price {
+            font-size: 3.125rem;
+            color: #EC7350;
+            padding-bottom: 10px;
+        }
+
+        .list-container .buy-wrapper .price i {
+            font-size: 25px;
+            font-family: "DIN";
+        }
+
+        .clearfix:after {
+            content: ".";
+            height: 0;
+            clear: both;
+            display: block;
+            visibility: hidden;
+        }
+
+        .list-container .buy-wrapper .wrapper-item:hover {
+            background-color: #426FF4; }
+        .list-container .buy-wrapper .wrapper-item:hover span {
+            color: #fff; }
+        .list-container .buy-wrapper .wrapper-item:hover .buy-now {
+            background-color: #fff;
+            color: #426FF4;
+            font-size: 16px;
+            transform: scale(1.1); }
+
+        .payment-method {
+            margin: 10px auto;
+            list-style: none;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .payment-method li {
+            width: 160px;
+            height: 52px;
+            overflow: hidden;
+            display: inline-block;
+            margin-left: 10px;
+            box-shadow: 0px 0px 15px #B8C7E0;
+            border: 1px solid #fff;
+            position: relative;
+            cursor: pointer;
+            text-align: center;
+            line-height: 44px;
+        }
+        .list-container {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body >
+<script>
+    var token = "{{ .token }}";
+    var vip_type = "{{ .vip_type }}";
+    var vip_times = "{{ .vip_times }}";
+    var batch_time = "{{ .batch_time }}";
+    var times2 = "{{ .times2 }}";
+    var vip_end_time = "{{ .end_time }}";
+    var message = "{{ .message }}";
+    var messageData = {{ .messageData }};
+    var user_id = "{{ .user_id }}"
+    var domain = "{{ .domain }}"
+    var errorTip = "{{ .errorTip }}"
+    var mode = "{{ .mode }}"
+    var menuList = {{ .menuList }}
+    var has_type = {{ .has_type }}
+</script>
+<div id="app">
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">1233213213</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">兔子牙去水印</a>
+            </div>
+            <div class="navbar-collapse collapse" role="navigation">
+                <ul id="parent-nav" class="nav navbar-nav" style="position: relative;">
+                    <li><a href="http://www.{{ .domain }}">单个解析</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a target="_blank" :href="'https://in.sucps.com/invite/index?invite_id=' + user_id + '&domain=<?php echo $domain?>'">客户端下载</a></li>
+                    <li v-if="!token"><a href="/">登录/注册</a></li>
+
+                    <li v-cloak v-if="token"><a href="javascript:$('#userModal').modal('show');">账号：{user_id}</a></li>
+
+                    <li><a href="javascript:void(0);" class="active">购买会员</a></li>
+                </ul>
+            </div>
+        </div>
+        <div  v-cloak  style="background-color: #fff4db;
+   text-align: center" v-if="message">{message}</div>
+    </div>
+
+    <div class="container" v-cloak style="margin-top: 70px;">
+        <div class="list-container">
+            <div style="margin-bottom: 20px;"><p>会员说明:</p>
+                <div><ol>
+                    <li v-for="(v,k) in data.messageData">{v}</li>
+                </ol></div></div>
+            <div v-if="data.errorTip" class="alert alert-danger" role="alert">
+                {data.errorTip }
+            </div>
+            <ul class="nav nav-tabs">
+<!--                <li role="presentation" @click="ChangeTab('single')" :class="{'active': data.mode ==='single'}" v-if="has_type === 0"><a href="javascript:void(0);">单个解析会员套餐</a></li>-->
+<!--                <li role="presentation" @click="ChangeTab('batch')" :class="{'active': data.mode ==='batch'}" v-if="has_type === 0"><a href="javascript:void(0);">个人主页会员套餐</a></li>-->
+            </ul>
+            <div style="border:1px solid #ddd; border-top: 0;padding-top: 25px;" v-if="data.mode ==='single'">
+                <div class="alert alert-warning" role="alert" style="margin: 0 25px">{data.userVipEnd}</div>
+                <div class="item-container" id="buy-vip-wrapper">
+                    <div class="tab_container">
+                        <!--                            在线购买VIP-->
+                        <div id="tab1" class="buy-wrapper tab_content clearfix">
+                            <div class="wrapper-item wrapper-shadow" v-for="(v,k) in data.menuList" @click="OpenDialog(v)">
+                                <span class="time">{ v.title}</span>
+                                <span class="price din_number_font"><i>¥</i>{  v.price }</span>
+                                <span data-time_id="9" class="buy-now">立即购买</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="border:1px solid #ddd; border-top: 0;padding-top: 25px;" v-if="data.mode ==='batch'">
+                <div class="alert alert-warning" role="alert" style="margin: 0 25px">{data.userBatchVipEnd}</div>
+                <div class="item-container">
+                    <div id="tab_container">
+                        <div id="tab1" class="buy-wrapper tab_content clearfix">
+                            <div class="wrapper-item wrapper-shadow" v-for="(v,k) in data.batchMenuList" @click="OpenDialog(v)">
+                                <span class="time">{v.title}</span>
+                                <span class="price din_number_font"><i>¥</i>{ v.price }</span>
+                                <span data-time_id="9" class="buy-now">立即购买</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="applyCdkModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">购买更多解析次数（<span style="color: red">会员丢失问题，联系微信：kaolajiexi2</span>）</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div>
+                        <h5 v-if="vip_type == 1">剩余使用次数：{vip_times}（youtube，facebook，Twitter,Instagram需要会员才能进行解析）</h5>
+                        <h5 v-if="vip_type == 2">VIP到期时间：{vip_end_time}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="shangjiaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">考拉解析小程序</h4>
+                </div>
+
+                <div class="modal-body">
+                    <h4 style="text-align: center">微信小程序搜索：<b>考拉解析</b>或识别下方二维码</h4>
+                    <p style="text-align: center">
+                        <!--                            <img src="https://img.alicdn.com/imgextra/i1/0/O1CN01s3NWKE1jvssj0nz8Z_!!0-rate.jpg" alt="" width="260px">-->
+                        <img src="https://img.alicdn.com/bao/uploaded/i2/O1CN01z5r8sN1jvsrgu1QU0_!!0-rate.jpg" alt="" width="260px">
+                    </p>
+                    <p><span style="color: red">如需下载tiktok、youtube等国外视频，请使用<a href="http://www.kaolajiexi.net/help/compatibility" target="_blank">ios最新版下载方法</a></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">用户信息</h4>
+                </div>
+
+                <div class="modal-body">
+                    <h5>用户标识：{token}</h5>
+                </div>
+                <div class="modal-footer">
+                    <a href="/user/out" type="button" class="btn btn-danger" >退出</a>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="showPayModal"  tabindex="-1"  role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" @click="CloseDialog('showPayModal')" ><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">选择支付方式</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="payment-method">
+                        <li v-if="data.wechatPay" data-type="3" :class="{'active': data.selectMenu.payMethod === 3}" @click="SelectPayMethod(3)">
+                            <img src="/static/images/wechat.svg" alt="">
+                        </li>
+                        <li data-type="1" :class="{'active': data.selectMenu.payMethod === 1}" @click="SelectPayMethod(1)">
+                            <img src="/static/images/alipay.svg" alt="">
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <p v-if="data.disableApply" style="color: red;font-size: 14px;text-align: center">{data.errReport}</p>
+                    <div class="mod-ct" v-if="data.selectMenu.orderId !== 0">
+                        <div class="order">
+                        </div>
+                        <div class="amount" id="money">￥{data.selectMenu.price}</div>
+                        <div class="qrcode-img-wrapper" data-role="qrPayImgWrapper">
+                            <div data-role="qrPayImg" class="qrcode-img-area">
+                                <div class="ui-loading qrcode-loading" data-role="qrPayImgLoading" style="display: none;">加载中</div>
+                                <div style="position: relative;display: inline-block;">
+                                    <img  id='show_qrcode' alt="加载中..." :src="data.selectMenu.qrcode" width="210" height="210" style="display: block;">
+                                    <div style="background-color: rgba(0,0,0,0.8);position: absolute;left: 0;right: 0;top: 0;bottom: 0;" v-if="data.hideQrcode">
+                                        <p style="color: #fff;font-size: 18px;font-weight: bold;margin-bottom: 5px;margin-top: 20px">二维码已失效</p>
+                                        <p style="color: #fff;font-size: 18px;font-weight: bold">超时5分钟未付款</p>
+                                        <div style="margin-top: 20px;background-color: #00cc00;padding: 5px 14px;border-radius: 4px;display: inline-block;color: #fff;font-size: 20px;cursor: pointer" @click="refreshPay">刷新二维码</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="time-item">
+                            <div class="time-item" id="msg"><h1>付款请备注数字：<span style="color: red">{ data.selectMenu.userId }</span></h1> </div>
+                            <strong id="hour_show">0时</strong>
+                            <strong id="minute_show">{data.leftMinute}</strong>
+                            <strong id="second_show">{data.leftSecond}</strong>
+                        </div>
+                        <div class="tip">
+                            <div class="ico-scan"></div>
+                            <div class="tip-text">
+                                <p>请使用{ data.paymentOptions[data.selectMenu.payMethod] }扫一扫</p>
+                                <p>扫描二维码完成支付</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/static/js/3.4.1/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min2.js"></script>
+<script src="/static/js/clipboard.min2.js"></script>
+<script src="/static/js/vue.min.js"></script>
+<script src="/static/js/js.cookie.js"></script>
+<script src="/static/js/moment.js"></script>
+<script src="/static/js/common.js?v5"></script>
+<script>
+    $(document).ready(function () {
+        $("#parent-nav").hover(function() {
+            $("#child-nav").css("display", "block")
+        }, function() {
+            $("#child-nav").css("display", "none")
+        })
+    })
+
+    Vue.use(VueClipboard);
+    var app = new Vue({
+        delimiters: ["{", "}"],
+        el: '#app',
+        data: {
+            user_id:0,
+            message:"",
+            token:"",
+            vip_type:1,
+            vip_times:0,
+            vip_end_time:0,
+            batch_time:0,
+            times2:0,
+            domain:"",
+            has_type:0,
+            data:{
+                errorTip:"",
+                mode:"single",
+                menuList:[],
+                batchMenuList:[],
+                messageData: [],
+                wechatPay:true,
+                isPaymentModalOpen:false,
+                errReport:"",
+                selectMenu:{
+                    menu:0,
+                    price:0,
+                    payMethod:3,
+                    userId:0,
+                    orderId:0,
+                    qrcode:"",
+                    timerId:"",
+                },
+                hideQrcode:false,
+                disableApply:false,
+                leftMinute:"0分",
+                leftSecond:"0秒",
+                paymentOptions : {
+                    3:'微信',
+                    1:'支付宝'
+                },
+                userVipEnd:"",
+                userBatchVipEnd:""
+            }
+        },
+        mounted: function() {
+
+            this.token = token;
+            this.has_type = has_type;
+            this.vip_type = vip_type;
+            this.vip_times = vip_times;
+            this.vip_end_time = vip_end_time;
+            this.message = message;
+            this.user_id = user_id;
+            this.batch_time = batch_time;
+            this.times2 = times2;
+            this.domain = domain
+            this.data.mode = mode
+            this.data.menuList = menuList
+            this.data.errorTip = errorTip
+            this.data.messageData = messageData
+            console.log(messageData)
+            if(this.vip_end_time * 1000 > Date.now()) {
+                const date = new Date(this.vip_end_time * 1000);
+                const year = date.getFullYear(); // 获取年份
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // 获取月份（加1，因为月份是从0开始计数），并补齐两位数
+                const day = String(date.getDate()).padStart(2, '0'); // 获取日期，并补齐两位数
+                const hours = String(date.getHours()).padStart(2, '0'); // 获取小时，并补齐两位数
+                const minutes = String(date.getMinutes()).padStart(2, '0'); // 获取分钟，并补齐两位数
+                const seconds = String(date.getSeconds()).padStart(2, '0'); // 获取秒，并补齐两位数
+                const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                this.data.userVipEnd = "普通解析会员到期时间：" + formattedDate
+            }else {
+                this.data.userVipEnd = "普通解析剩余使用次数：" + this.vip_times
+            }
+
+            if(this.batch_time * 1000 > Date.now()) {
+                const date = new Date(this.batch_time * 1000);
+                const year = date.getFullYear(); // 获取年份
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // 获取月份（加1，因为月份是从0开始计数），并补齐两位数
+                const day = String(date.getDate()).padStart(2, '0'); // 获取日期，并补齐两位数
+                const hours = String(date.getHours()).padStart(2, '0'); // 获取小时，并补齐两位数
+                const minutes = String(date.getMinutes()).padStart(2, '0'); // 获取分钟，并补齐两位数
+                const seconds = String(date.getSeconds()).padStart(2, '0'); // 获取秒，并补齐两位数
+                const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                this.data.userBatchVipEnd = "批量解析会员到期时间：" + formattedDate
+            }else {
+                this.data.userBatchVipEnd = "普通解析剩余使用次数：" + this.times2
+            }
+
+        },
+        methods: {
+            //提交激活VIP
+            submitActivationModal: function () {
+
+                if (this.activationModal.code == "") {
+                    this.activationModal.errorTip = "请输入激活码";
+                    return;
+                }
+
+                this.activationModal.errorTip = "处理中...";
+                var vm = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/auth',
+                    xhrFields:{withCredentials: true},
+                    crossDomain: true,
+                    data: {"code": vm.activationModal.code},
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.status === 200) {
+                            //window.location.reload();
+                            $("#activationModal").modal('hide');
+                            vm.token = data.data.openid;
+                            vm.vip_type = data.data.type;
+                            vm.vip_times = data.data.times;
+                            vm.vip_end_time = data.data.end_time;
+                            vm.message = data.data.message;
+                            vm.activationModal.errorTip = "";
+                            vm.activationModal.code = "";
+                            vm.user_id = data.data.id
+                        }else {
+                            vm.activationModal.errorTip = data.msg;
+                        }
+                    },
+                    error: function () {
+                        vm.activationModal.errorTip = "处理失败,请重试!";
+                    }
+                });
+            },
+            ChangeTab: function(mode) {
+                this.data.mode = mode
+            },
+            CloseDialog: function(mode) {
+                $("#" + mode).modal('hide')
+                if(this.data.selectMenu.timerId) {
+                    clearTimeout(this.data.selectMenu.timerId)
+                }
+            },
+            OpenDialog: function(item) {
+                this.data.selectMenu.menu = item.value
+                this.data.selectMenu.price = item.price
+                this.SelectPayMethod(this.data.selectMenu.payMethod)
+                $("#showPayModal").modal('show');
+            },
+            refreshPay:function() {
+                this.SelectPayMethod(this.data.selectMenu.payMethod)
+            },
+            showLeftTime: function(s) {
+                let m =  Math.floor(s / 60);
+                let c = s % 60;
+                this.data.leftMinute = m + "分"
+                this.data.leftSecond = c + "秒"
+            },
+            SelectPayMethod: function(method) {
+
+                this.data.selectMenu.payMethod = method
+                this.data.disableApply = true
+                this.data.errReport = "正在生成订单..."
+                this.data.hideQrcode = false
+
+                var vm = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/v1/pay/apply',
+                    xhrFields:{withCredentials: true},
+                    crossDomain: true,
+                    data: {
+                        menu:vm.data.selectMenu.menu,
+                        pay_type:vm.data.selectMenu.payMethod
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data)
+                        if (data.Code === 200) {
+                            vm.data.selectMenu.userId = data.Data.user_id
+                            vm.data.selectMenu.orderId = data.Data.order_id
+                            vm.data.selectMenu.qrcode = data.Data.qrcode
+                            vm.data.selectMenu.price = data.Data.money
+                            vm.data.errReport = ""
+                            if(vm.data.selectMenu.timerId) {
+                                clearTimeout(vm.data.selectMenu.timerId)
+                            }
+                            var leftTime = 300;
+                            vm.data.selectMenu.timerId = setInterval(function() {
+                                if(leftTime <= 0) {
+                                    vm.data.hideQrcode = true;
+                                    clearTimeout(vm.data.selectMenu.timerId);
+                                }
+                                if(leftTime % 2 === 0 && leftTime !== 300) {
+                                    $.ajax({
+                                        url:'/v1/pay/check',// 跳转到 action
+                                        data:{
+                                            order_id:vm.data.selectMenu.orderId,
+                                            pay_type:vm.data.selectMenu.payMethod
+                                        },
+                                        type:'post',
+                                        cache:false,
+                                        dataType:'json',
+                                        success:function(data) {
+                                            if(data.Code === 200) {
+                                                clearTimeout(vm.data.selectMenu.timerId);
+                                                window.location.href = "/"
+                                            }
+                                        },
+                                        error : function() {
+                                            // view("异常！");
+                                            console.log("异常！");
+                                        }
+                                    })
+                                }
+
+                                leftTime--;
+                                vm.showLeftTime(leftTime)
+                            },1000);
+                        }else {
+                            vm.data.errReport = data.Msg;
+                        }
+                    },
+                    error: function () {
+                        vm.data.errReport = "处理失败,请重试!";
+                    }
+                });
+            },
+        }
+    });
+</script>
+</body>
+</html>

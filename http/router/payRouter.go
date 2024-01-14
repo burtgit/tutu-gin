@@ -13,7 +13,7 @@ func (p *PayRouter) Init(router *gin.Engine) {
 	v1 := router.Group("/v1")
 	v1.Use(middleware.ErrorHandle(), middleware.StatusHandle())
 	{
-		v1.GET("/pay/index", middleware.AuthHandle(), payController.Index)
+		v1.GET("/pay/index", payController.Index)
 		v1.GET("/pay/mobile", middleware.AuthHandle(), payController.Mobile)
 		v1.POST("/pay/apply", payController.Apply)
 		v1.GET("/pay/wechat", payController.Wechat)

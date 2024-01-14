@@ -10,6 +10,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"tutu-gin/lib/kljx"
+	"tutu-gin/lib/kljx/response"
 
 	"tutu-gin/record/recordDomain/values"
 
@@ -58,6 +60,59 @@ func (w *WebParse) Parse(c *gin.Context) {
 		return
 	}
 	global.DB.ID(apply.Id).Incr("success_times").Cols("success_times").Update(&apply)
+
+	if result.IsVideo {
+		// 加密
+		// 计算 SHA256 哈希值
+		secret := sha256.Sum256([]byte("lihuanjiehahha"))
+		// 初始化向量
+		iv := []byte("loserLiHuanJieaq")
+
+		// 创建 AES-256-CBC 加密器
+		block, err := aes.NewCipher(secret[:])
+		if err != nil {
+			panic(err)
+		}
+		mode := cipher.NewCBCEncrypter(block, iv)
+
+		// 加密数据
+		data := []byte(result.VideoUrls)
+		padded := pkcs7Pad(data, aes.BlockSize)
+		encrypted := make([]byte, len(padded))
+		mode.CryptBlocks(encrypted, padded)
+
+		// 将加密后的数据转换成 base64 编码
+		encoded := base64.StdEncoding.EncodeToString(encrypted)
+
+		// 替换 + 号为 ! 号
+		encoded = replacePlus(encoded)
+
+		result.EncodeUrl = "http://dw.zanqianba.com/xzb/video_" + strconv.FormatInt(time.Now().Unix(), 10) + ".mp4?s=" + encoded
+	}
+
+	c.JSON(http.StatusOK, api.ApiSuccessResponse(result))
+}
+
+func (w *WebParse) ParseV2(c *gin.Context) {
+	var requestData webValidator.WebParseValidator
+
+	if err := c.ShouldBindJSON(&requestData); err != nil {
+		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
+		return
+	}
+
+	tokens, _ := c.Request.Cookie("tokens")
+
+	// 目前全部启用考拉优化接口
+	err, result := kljx.NewClient[response.Parser]().Apply(kljx.Parse, map[string]string{
+		"platform": "www.zhishuzhan.com",
+		"pageUrl":  requestData.PageUrl,
+		"token":    tokens.Value,
+	})
+	if err != nil {
+		c.Error(err)
+		return
+	}
 
 	if result.IsVideo {
 		// 加密

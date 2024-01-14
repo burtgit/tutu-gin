@@ -17,61 +17,46 @@
 </head>
 
 <body>
-<!--<div class="preloader"><div class="preloader__wrap"><div class="circle-pulse"><div class="circle-pulse__1"></div><div class="circle-pulse__2"></div></div><div class="preloader__progress"><span></span></div></div></div>-->
-<!--<div class="lime-sidebar">-->
-<!--    <div class="lime-sidebar-inner slimscroll">-->
-<!--        <ul class="accordion-menu">-->
-<!--            <li class="sidebar-title">-->
-<!--                首页-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="" _action="./index.html" href="index.html"><i class="iconfont icon-dashboard1"></i>首页</a>-->
-<!--            </li>-->
-<!--            <li class="sidebar-title">-->
-<!--                登录 / 注册-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="" _action="./login.html" href="/login.html"><i class="iconfont icon-sign-in"></i>登录</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="" _action="./register.html" href="register.html"><i class="iconfont icon-tianjiayonghu-"></i>注册</a>-->
-<!--            </li>-->
-<!--            <li class="sidebar-title">-->
-<!--                开发者中心-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="" _action="./getapi.html" href="/getapi.html"><i class="iconfont icon-apps"></i>接口查询</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="" _action="./open.html" href="open.html"><i class="iconfont icon-Codeb"></i>开发文档</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="preloader"><div class="preloader__wrap"><div class="circle-pulse"><div class="circle-pulse__1"></div><div class="circle-pulse__2"></div></div><div class="preloader__progress"><span></span></div></div></div>
+<div class="lime-sidebar">
+    <div class="lime-sidebar-inner slimscroll">
+        <ul class="accordion-menu">
+            <li class="sidebar-title">
+                首页
+            </li>
+            <li>
+                <a class="" _action="./index.html" href="index.html"><i class="iconfont icon-dashboard1"></i>首页</a>
+            </li>
+            <li>
+                <a class="" href="/"><i class="iconfont icon-apps"></i>客户端下载</a>
+            </li>
+            <li class="sidebar-title">
+                会员权益
+            </li>
+            <li>
+                <a class="" href="javascript:void(0)" id="user-id"><i class="iconfont icon-tianjiayonghu-"></i>用户：</a>
+            </li>
+            <li>
+                <a class="" target="_blank" _action="/v1/pay/index" href="/v1/pay/index"><i class="iconfont icon-huiyuan"></i>购买会员</a>
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="lime-header">
     <nav class="navbar navbar-expand-lg">
         <section class="material-design-hamburger navigation-toggle">
-<!--            <a href="javascript:void(0)" class="button-collapse material-design-hamburger__icon">-->
-<!--                <span class="material-design-hamburger__layer"></span>-->
-<!--            </a>-->
+            <a href="javascript:void(0)" class="button-collapse material-design-hamburger__icon">
+                <span class="material-design-hamburger__layer"></span>
+            </a>
         </section>
         <a class="navbar-brand" href="#">兔子牙解析</a>
-<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--            <ul class="navbar-nav ml-auto">-->
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                        <i class="iconfont icon-sign-in"></i> 登录 / 注册 </a>-->
-<!--                    <ul class="dropdown-menu dropdown-menu-right">-->
-<!--                        <li><a class="dropdown-item" _action="./login.html" href="./login.html">登录</a></li>-->
-<!--                        <li class="divider"></li>-->
-<!--                        <li><a class="dropdown-item" _action="./register.html" href="./register.html">注册</a></li>-->
-<!--                    </ul>-->
-<!--                    &lt;!&ndash;a class="nav-link dropdown-toggle" _action="./login.html" href="/login.html" role="button">-->
-<!--                        <i class="iconfont icon-sign-in"></i> 登录/注册-->
-<!--                    </a&ndash;&gt;-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">账号：1233</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </div>
 <div class="lime-container">
@@ -83,7 +68,11 @@
                         <h5 class="card-title">网站公告</h5>
                         <div>
                             <p>网站支持快手、抖音、火山、今日头条、西瓜视频、微博、秒拍、小咖秀、晃咖、微视、美拍、网易云音乐、优酷、YouTube、好看视频、最右、全民、皮皮搞笑、皮皮虾、梨视频、哔哩哔哩(B站)、小红书、刷宝、QQ看点、facebook、Twitter、Instagram、剪映、AcFun(a站)、爱奇艺、muse(musical.ly)、Flipagram、陌陌、映客、小影、阳光宽频等100多个平台的视频解析</p>
+                            {{ if .isVip }}
+                            <p style="color: #037afb">您是尊贵的VIP会员（已为您开通youtube、twitter、ins、fb视频的解析权限）</p>
+                            {{ else }}
                             <a href="https://in.sucps.com/invite/index?invite_id=&domain=zanqianba.com">去水印app下载>>></a>
+                            {{ end }}
                         </div>
                     </div>
                 </div>
@@ -203,6 +192,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('a[_action="./index.html"]').addClass("active");
+        var user_id = getCookie("user_id")
+        if(user_id) {
+            $("#user-id").html('<i class="iconfont icon-tianjiayonghu-"></i>用户：' + user_id)
+        }
     })
 
     $("a[_action]").on("click", function() {
@@ -362,15 +355,15 @@
                         timerShow = setInterval(function() {
                             $.ajax({
                                 type: "GET",
-                                url: "/v1/qrcode/check?ticket=" + data.Data.Ticket,
+                                url: "/v2/qrcode/check?ticket=" + data.Data.Ticket,
                                 dataType: "json",
                                 data: {},
                                 async: true,
                                 success: function(res) {
-                                    res = JSON.parse(res)
-                                    if (res.status === 200) {
-                                        console.log(res)
-                                        setCookie("tokens",res.data,300)
+                                    if (res.Code === 200) {
+                                        setCookie("tokens",res.Data.Token,300)
+                                        setCookie("user_id",res.Data.UserId,300)
+                                        $("#user-id").html('<i class="iconfont icon-tianjiayonghu-"></i>用户：' + res.Data.UserId)
                                         clearTimeout(timerShow);
                                         $('#loginModal').modal('hide')
                                     }
@@ -404,7 +397,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/v1/parse/index",
+            url: "/v2/parse/index",
             dataType: "json",
             data: JSON.stringify({
                 "PageUrl": url,
@@ -423,19 +416,19 @@
 
                     message('success', data.Msg);
                     $(".main-open").removeAttr("style");
-                    if (data.Data.VideoUrls && data.Data.VideoUrls != '') {
+                    if (data.Data.videoUrls && data.Data.videoUrls != '') {
                         $(".main-videos").removeAttr("style");
-                        videos_list = [{"url":data.Data.VideoUrls,"desc":data.Data.Title}];
+                        videos_list = [{"url":data.Data.videoUrls,"desc":data.Data.title}];
                         var videos_html = "";
-                        videos_html += "<div class='videos-item'><div class='videos-title'><span class='videos-text'>" + data.Data.Title + "</span></div><img src='" + data.Data.CoverUrls + "' class='videos-pic' />";
-                        videos_html += "<div class='videos-footer'><span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp4' data-fileurl='" + data.Data.VideoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;&nbsp;&nbsp;<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.Title + "' data-video='" + data.Data.VideoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a></span><button class='btn btn-success btn-info' style='margin-top: 10px;background-color: #06ba54' data-clipboard-action='copy' data-clipboard-text='" + data.Data.EncodeUrl + "'>复制视频链接</button><button class='btn btn-success btn-info' style='margin-top: 10px;background-color: #50bfff' data-clipboard-action='copy' data-clipboard-text='" + data.Data.CoverUrls + "'>复制封面链接</button><button class='btn btn-success btn-info' style='margin-top: 10px;' data-clipboard-action='copy' data-clipboard-text='" + data.Data.Title + "'>复制标题</button></div>";
+                        videos_html += "<div class='videos-item'><div class='videos-title'><span class='videos-text'>" + data.Data.title + "</span></div><img src='" + data.Data.coverUrls + "' class='videos-pic' />";
+                        videos_html += "<div class='videos-footer'><span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.title + ".mp4' data-fileurl='" + data.Data.videoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;&nbsp;&nbsp;<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.title + "' data-video='" + data.Data.videoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a></span><button class='btn btn-success btn-info' style='margin-top: 10px;background-color: #06ba54' data-clipboard-action='copy' data-clipboard-text='" + data.Data.encodeUrl + "'>复制视频链接</button><button class='btn btn-success btn-info' style='margin-top: 10px;background-color: #50bfff' data-clipboard-action='copy' data-clipboard-text='" + data.Data.coverUrls + "'>复制封面链接</button><button class='btn btn-success btn-info' style='margin-top: 10px;' data-clipboard-action='copy' data-clipboard-text='" + data.Data.title + "'>复制标题</button></div>";
                         videos_html += "</div>";
 
                         $("#return-videos").html(videos_html);
-                    } else if (data.Data.IsVideo === false && data.Data.Pics != null) {
+                    } else if (data.Data.isVideo === false && data.Data.pics != null) {
                         $(".main-images").removeAttr("style");
-                        var animals = data.Data.Pics;
-                        images_list = data.Data.Pics;
+                        var animals = data.Data.pics;
+                        images_list = data.Data.pics;
                         var images_html = "";
                         animals.forEach(function(item) {
                             images_html += "<div class='videos-item'>";
@@ -443,18 +436,18 @@
                             images_html += "</div>";
                         });
                         $("#return-images").html(images_html);
-                        $('#return_pics_title').html("<ul class='list-group'><li class='list-group-item'>" + data.Data.Title + "</li></ul>")
+                        $('#return_pics_title').html("<ul class='list-group'><li class='list-group-item'>" + data.Data.title + "</li></ul>")
                     } else {
                         $(".main-video").removeAttr("style");
-                        if (data.Data.VideoUrls || data.Data.quality) {
+                        if (data.Data.videoUrls || data.Data.quality) {
                             $(".video-open").addClass("active");
-                        } else if (data.Data.CoverUrls) {
+                        } else if (data.Data.coverUrls) {
                             $(".image-open").addClass("active");
-                        } else if (data.Data.Title) {
+                        } else if (data.Data.title) {
                             $(".title-open").addClass("active");
                         }
-                        if (data.Data.Title) {
-                            $('#return_title').html("<ul class='list-group'><li class='list-group-item'>" + data.Data.Title + "</li></ul>");
+                        if (data.Data.title) {
+                            $('#return_title').html("<ul class='list-group'><li class='list-group-item'>" + data.Data.title + "</li></ul>");
                             $(".title-open").removeAttr("style");
                         } else {
                             data.Data.title = 'video'
@@ -463,8 +456,8 @@
                             $(".video-open").removeAttr("style");
                             var video_html = "<ul class='list-group'><li class='list-group-item'>";
                             if (data.Data.url) {
-                                var audio = data.Data.Audio ? "<a href='#' class='btn btn-info' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp3' data-fileurl='" + data.Data.Audio + "'><span class='iconfont icon-music txt-white'></span></a>&nbsp;" : "";
-                                video_html += "<p class='input-group'><input type='text' name='url' class='form-control' value='" + data.Data.VideoUrls + "'>&nbsp;<span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.Title + ".mp4' data-fileurl='" + data.Data.VideoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;" + audio + "<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.Title + "' data-video='" + data.Data.VideoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a>&nbsp;<button class='btn btn-warning' data-clipboard-demo data-clipboard-action='copy' data-clipboard-text='" + data.Data.VideoUrls + "'><span class='iconfont icon-fuzhi txt-white'></span></button></span></p>";
+                                var audio = data.Data.Audio ? "<a href='#' class='btn btn-info' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.title + ".mp3' data-fileurl='" + data.Data.Audio + "'><span class='iconfont icon-music txt-white'></span></a>&nbsp;" : "";
+                                video_html += "<p class='input-group'><input type='text' name='url' class='form-control' value='" + data.Data.videoUrls + "'>&nbsp;<span class='input-group-btn'><a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-aa='download' data-filename='" + data.Data.title + ".mp4' data-fileurl='" + data.Data.videoUrls + "'><span class='iconfont icon-xiazai txt-white'></span></a>&nbsp;" + audio + "<a href='#' class='btn btn-success' data-toggle='modal' data-target='#exampleModal' data-aa='video' data-title='" + data.Data.title + "' data-video='" + data.Data.videoUrls + "'><span class='iconfont icon-bofang txt-white'></span></a>&nbsp;<button class='btn btn-warning' data-clipboard-demo data-clipboard-action='copy' data-clipboard-text='" + data.Data.videoUrls + "'><span class='iconfont icon-fuzhi txt-white'></span></button></span></p>";
                             }
                             if (data.Data.Formats) {
                                 video_html += "<form class='form-inline justify-content-center' role='form'><div class='form-group'><i class='iconfont icon-zuan' style='font-size:38px;color:#1296db;vertical-align: middle;'></i></div>&nbsp;&nbsp;&nbsp;<div class='form-group'><select id='inlineFormCustomSelectPref' class='custom-select my-1 mr-sm-2' style='margin: 0 10px 0 5px;'>";
@@ -476,8 +469,8 @@
                             video_html += "</li></ul>";
                             $("#return_video").html(video_html);
                         }
-                        if (data.Data.CoverUrls) {
-                            if (data.Data.CoverUrls && data.Data.atlas) {
+                        if (data.Data.coverUrls) {
+                            if (data.Data.coverUrls && data.Data.atlas) {
                                 var atlas_html = "<div class='list-group'><div class='list-group-item'><ul class='nav nav-pills nav-justified' id='pills-tab' role='tablist'><li class='nav-item'><a class='nav-link active' id='cover-down-tab' data-toggle='pill' href='#cover-down' role='tab' aria-controls='cover-down' aria-selected='true'>封面</a></li><li class='nav-item'><a class='nav-link' id='atlas-down-tab' data-toggle='pill' href='#atlas-down' role='tab' aria-controls='atlas-down' aria-selected='false'>图集</a></li></ul></div></div><div class='tab-content' id='pills-tabContent'><div class='tab-pane fade show active' id='cover-down' role='tabpanel' aria-labelledby='cover-down-tab'><ul class='list-group'><li class='list-group-item'><a href='#' class='data-image-url modal123' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='" + data.Data.title + "' data-image='" + data.Data.cover + "'><img src='" + data.Data.cover + "' class='img-fluid src-image-url' alt='" + data.Data.title + "'></a></li></ul></div><div class='tab-pane fade' id='atlas-down' role='tabpanel' aria-labelledby='atlas-down-tab'><ul class='list-group'><li class='list-group-item'>";
                                 for (var i = 0; i < data.Data.atlas.length; i++) {
                                     atlas_html += "<a href='#' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='" + data.Data.title + "' data-image='" + data.Data.atlas[i] + "'><img src='" + data.Data.atlas[i] + "' class='img-thumbnail modal123' style='width:128px;height:128px;' alt='" + data.Data.title + "'></a>";
@@ -485,7 +478,7 @@
                                 atlas_html += "</li></ul></div></div>";
                                 $("#return_cover").html(atlas_html);
                             } else {
-                                $("#return_cover").html("<ul class='list-group'><li class='list-group-item'><a href='#' class='modal123' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='" + data.Data.Title + "' data-image='" + data.Data.CoverUrls + "'><img src='" + data.Data.CoverUrls + "' class='img-fluid' alt='" + data.Data.Title + "'></a></li></ul>");
+                                $("#return_cover").html("<ul class='list-group'><li class='list-group-item'><a href='#' class='modal123' data-toggle='modal' data-target='#exampleModal' data-aa='image' data-title='" + data.Data.title + "' data-image='" + data.Data.coverUrls + "'><img src='" + data.Data.coverUrls + "' class='img-fluid' alt='" + data.Data.title + "'></a></li></ul>");
                             }
                             $(".image-open").removeAttr("style");
                         }
@@ -506,15 +499,15 @@
                                 timerShow = setInterval(function() {
                                     $.ajax({
                                         type: "GET",
-                                        url: "/v1/qrcode/check?ticket=" + data.Data.Ticket,
+                                        url: "/v2/qrcode/check?ticket=" + data.Data.Ticket,
                                         dataType: "json",
                                         data: {},
                                         async: true,
                                         success: function(res) {
-                                            res = JSON.parse(res)
-                                            if (res.status === 200) {
-                                                console.log(res)
-                                                setCookie("tokens",res.data,300)
+                                            if (res.Code === 200) {
+                                                setCookie("tokens",res.Data.Token,300)
+                                                setCookie("user_id",res.Data.UserId,300)
+                                                $("#user-id").html('<i class="iconfont icon-tianjiayonghu-"></i>用户：' + res.Data.UserId)
                                                 clearTimeout(timerShow);
                                                 $('#loginModal').modal('hide')
                                             }
@@ -530,7 +523,11 @@
                         }
                     })
                 }
-                else {
+                else if (data.Code === 202) {
+                    window.location.href="/v1/pay/index?type=single&res=1"
+                }else if (data.Code === 204) {
+                    window.location.href="/v1/pay/index?type=single&res=2"
+                }  {
                     message('error', data.Msg);
                 }
 

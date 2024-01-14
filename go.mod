@@ -9,6 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/goccy/go-json v0.9.7
+	github.com/google/uuid v1.5.0
 	github.com/iawia002/lia v0.1.0
 	github.com/iawia002/lux v0.22.0
 	github.com/itchyny/gojq v0.12.7

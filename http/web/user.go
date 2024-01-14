@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"tutu-gin/lib/kljx"
+	"tutu-gin/lib/kljx/response"
 
 	"tutu-gin/core/global"
 
@@ -27,6 +29,13 @@ func (u *User) Qrcode(c *gin.Context) {
 	//	c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
 	//	return
 	//}
+
+	c.JSON(http.StatusOK, api.ApiSuccessResponse(map[string]string{
+		"Url":    "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + url.QueryEscape("6cb16fa127bf8c35117bb20414003d8bdbd6c27bc2fffc417ad4285eac476f69"),
+		"Ticket": "6cb16fa127bf8c35117bb20414003d8bdbd6c27bc2fffc417ad4285eac476f69",
+	}))
+
+	return
 
 	if len(token) <= 0 {
 		code, body, err := fasthttp.Get(nil, "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxd6322dba9f40d541&secret=3e05992970e12dcaf1074264742c6e12")
@@ -123,6 +132,32 @@ func (u *User) Check(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, string(body))
+}
+
+func (u *User) CheckV2(c *gin.Context) {
+	var requestData webValidator.UserQrcodeValidator
+
+	if err := c.ShouldBind(&requestData); err != nil {
+		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARAMETER_CHECK_FAIL)))
+		return
+	}
+
+	err, result := kljx.NewClient[response.User]().Apply(kljx.Login, map[string]string{
+		"ticket": requestData.Ticket,
+	})
+
+	if err != nil {
+		c.Error(err)
+		return
+	}
+
+	c.JSON(http.StatusOK, api.ApiSuccessResponse(map[string]any{
+		"Times":   result.Times,
+		"Token":   result.Token,
+		"EndTime": result.EndTime,
+		"UserId":  result.Id,
+		"Message": result.Message,
+	}))
 }
 
 func NewUser() *User {

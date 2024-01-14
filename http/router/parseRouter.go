@@ -16,4 +16,10 @@ func (p *ParseRouter) Init(router *gin.Engine) {
 		v1.POST("/parse/index", middleware.AuthHandle(), parseController.Parse)
 		v1.POST("/parse/dana", parseController.ParseDaNa)
 	}
+
+	v2 := router.Group("/v2")
+	v2.Use(middleware.ErrorHandle(), middleware.StatusHandle())
+	{
+		v2.POST("/parse/index", parseController.ParseV2)
+	}
 }
