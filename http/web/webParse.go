@@ -36,6 +36,9 @@ func (w *WebParse) Parse(c *gin.Context) {
 		return
 	}
 
+	c.Error(exception.ValidatorError(errors.Annotate(errors.New(exception.REFUSH_PAGE), exception.API_PARAMETER_CHECK_FAIL)))
+	return
+
 	day, _ := strconv.ParseInt(time.Now().Format("20060102"), 10, 64)
 	getInt64 := c.GetInt64("userId")
 

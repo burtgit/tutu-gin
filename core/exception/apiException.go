@@ -17,6 +17,7 @@ var apiErrMaps = map[string]int{
 	API_PAY_FAIL:             201,
 	API_PARAMETER_CHECK_FAIL: 201,
 	API_REQUEST_FAIL:         201,
+	REFUSH_PAGE:              201,
 	NEED_VIP:                 202,
 	NOT_LOGIN:                403,
 	OVER_NEED_VIP:            204,
@@ -38,6 +39,7 @@ func ValidatorError(err error) *ApiException {
 
 var (
 	API_PARAMETER_CHECK_FAIL = "参数请求有误"
+	REFUSH_PAGE              = "请刷新网页重新打开"
 	API_PARSER_FAIL          = "解析失败，请联系微信：kaolajiexi2"
 	API_REQUEST_FAIL         = "请求超时，请联系微信：kaolajiexi2"
 	API_PAY_FAIL             = "支付失败，请联系微信：kaolajiexi2"
