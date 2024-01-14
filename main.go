@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	initialize.InitConfig()
 	router.RouterInit(r)
-	r.Run(":8080")
+	r.Run(":5634")
 }
