@@ -14,7 +14,7 @@ func TestDownload(t *testing.T) {
 		{
 			name: "normal test",
 			args: test.Args{
-				URL:     "https://twitter.com/justinbieber/status/898217160060698624",
+				URL:     "https://twitter.com/dixibaby_/status/1711385351322018071/video/1",
 				Title:   "Justin Bieber on Twitter 898217160060698624",
 				Quality: "720x1280",
 			},

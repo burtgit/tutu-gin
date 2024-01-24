@@ -96,6 +96,12 @@ func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractor
 			hasAudio = true
 		}
 
+		ext := "mp4"
+
+		if strings.Contains(f.MimeType, "video/webm") {
+			ext = "webm"
+		}
+
 		if ok {
 			if stream.NoAudio && f.AudioChannels > 0 {
 				if len(f.URL) <= 0 {
@@ -106,6 +112,7 @@ func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractor
 						{
 							URL:  f.URL,
 							Size: int64(f.Height),
+							Ext:  ext,
 						},
 					},
 					Quality: f.QualityLabel,
@@ -122,6 +129,7 @@ func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractor
 					{
 						URL:  f.URL,
 						Size: int64(f.Height),
+						Ext:  ext,
 					},
 				},
 				Quality: f.QualityLabel,

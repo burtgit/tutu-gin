@@ -16,14 +16,14 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "normal test",
 			args: test.Args{
-				URL:   "https://www.youtube.com/watch?v=Gnbch2osEeo",
+				URL:   "https://youtu.be/ktVqmPt14ps?si=Gp4HeRCOU02Fblnc",
 				Title: "Multifandom Mashup 2017",
 			},
 		},
 		{
 			name: "signature test",
 			args: test.Args{
-				URL:   "https://www.youtube.com/watch?v=ZtgzKBrU1GY",
+				URL:   "https://www.youtube.com/watch?v=scpS6kl1DNw",
 				Title: "Halo Infinite - E3 2019 - Discover Hope",
 			},
 		},
@@ -38,14 +38,14 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "url_encoded_fmt_stream_map test",
 			args: test.Args{
-				URL:   "https://www.youtube.com/shorts/pYCNdvKhJmo?feature=share",
+				URL:   "https://www.youtube.com/watch?v=seMiQKl2edY",
 				Title: "QNAP Customer Story | Scorptec",
 			},
 		},
 		{
 			name: "stream 404 test 1",
 			args: test.Args{
-				URL:   "https://youtu.be/RPIdUNqytys?si=gTvnmSAadOmGnNfJ",
+				URL:   "https://youtu.be/ktVqmPt14ps?si=Gp4HeRCOU02Fblnc",
 				Title: "FreeFileSync: Mirror Synchronization",
 			},
 		},
