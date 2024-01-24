@@ -86,7 +86,7 @@ func (e *extractor) youtubeDownload(url string, video *youtube.Video) *extractor
 		f := video.Formats[i]
 		quality := strconv.Itoa(f.Height)
 
-		if !strings.Contains(f.MimeType, "video/mp4") {
+		if !strings.Contains(f.MimeType, "video/mp4") && !strings.Contains(f.MimeType, "video/webm") {
 			continue
 		}
 

@@ -54,6 +54,18 @@ func (s *GetLux) Fetch(dto *parserDto.GetSpareFetchDto) (result *parserDto.Parse
 				separate = 1
 			}
 
+			if v.Quality == "2160p" {
+				v.Quality = "4k"
+			}
+
+			if v.Quality == "1440p" {
+				v.Quality = "2k"
+			}
+
+			if v.Quality == "1080p" {
+				v.Quality = "1k"
+			}
+
 			formats = append(formats, parserDto.ParseFormat{
 				QualityNote: v.Quality,
 				Separate:    separate,

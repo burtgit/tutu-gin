@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	errors2 "github.com/juju/errors"
+	"regexp"
 	"strconv"
 	"strings"
 	"tutu-gin/lib/extractors"
@@ -66,8 +67,21 @@ type twitterInfo struct {
 
 // Extract is the main function to extract the data.
 func (e *extractor) Extract(url string, option extractors.Options) ([]*extractors.Data, error) {
-	url = strings.Replace(url, "twitter.com", "api.vxtwitter.com", -1)
-	url = strings.Replace(url, "x.com", "api.vxtwitter.com", -1)
+
+	if strings.Contains(url, "twitter.com") {
+		pattern := `/status/(\d+)`
+		re := regexp.MustCompile(pattern)
+		matches := re.FindStringSubmatch(url)
+
+		if len(matches) > 1 {
+			url = "https://api.vxtwitter.com/Twitter/status/" + matches[1]
+		} else {
+			url = strings.Replace(url, "twitter.com", "api.vxtwitter.com", -1)
+		}
+	} else {
+		url = strings.Replace(url, "x.com", "api.vxtwitter.com", -1)
+	}
+
 	b, err := request.Get(url, url, map[string]string{
 		"User-Agent": "TelegramBot (like TwitterBot)",
 	})
