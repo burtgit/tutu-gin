@@ -101,6 +101,10 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		return nil, errors2.Annotate(errors.New("twitter的json解析失败"), "twitter的json解析失败")
 	}
 
+	if detail.MediaExtended == nil || len(detail.MediaExtended) == 0 {
+		return nil, errors2.Annotate(errors.New("视频或图片不存在"), "视频或图片不存在")
+	}
+
 	quality := strconv.Itoa(detail.MediaExtended[0].Size.Height)
 	streams := make(map[string]*extractors.Stream)
 	var images []string
