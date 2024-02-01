@@ -3,7 +3,7 @@ module tutu-gin
 go 1.21.6
 
 require (
-	github.com/PuerkitoBio/goquery v1.8.0
+	github.com/PuerkitoBio/goquery v1.8.1
 	github.com/dop251/goja v0.0.0-20231027120936-b396bb4c349d
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gin-gonic/gin v1.8.1

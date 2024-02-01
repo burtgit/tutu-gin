@@ -3,6 +3,7 @@ package instagram
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/iawia002/lux/request"
 	errors2 "github.com/juju/errors"
 	netURL "net/url"
@@ -167,8 +168,21 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	}
 	dataStrings := utils.MatchOneOf(html, `gql_data.*\}\}`)
 	if dataStrings == nil || len(dataStrings) < 1 {
-		fmt.Println(html)
-		return nil, errors2.Annotate(errors.New("未匹配到数据"), "未匹配到数据")
+		// 检查是否为图片类型
+		if strings.Contains(html, "在 Instagram 观看") {
+			return nil, errors2.Annotate(errors.New("未匹配到数据"), "未匹配到数据")
+		}
+		doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
+
+		if err != nil {
+			return nil, errors2.Annotate(errors.New("html解析失败"), "html解析失败")
+		}
+
+		doc.Find("._aagv .x5yr21d").Each(func(i int, selection *goquery.Selection) {
+			srcset := selection.AttrOr("srcset", "")
+			fmt.Println(srcset)
+		})
+		return nil, errors2.Annotate(errors.New("还未开发"), "还未开发")
 	}
 	dataString := strings.Replace(dataStrings[0], `\"`, `"`, -1)
 	dataString = strings.Replace(dataString, `\\\/`, `/`, -1)
@@ -185,7 +199,13 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	var images []string
 	var isNotVideo bool
 	dataType := extractors.DataTypeVideo
-	title := data.GqlData.ShortcodeMedia.EdgeMediaToCaption.Edges[0].Node.Text
+
+	var title string
+
+	if len(data.GqlData.ShortcodeMedia.EdgeMediaToCaption.Edges) > 0 {
+		title = data.GqlData.ShortcodeMedia.EdgeMediaToCaption.Edges[0].Node.Text
+	}
+
 	cover := data.GqlData.ShortcodeMedia.DisplayUrl
 
 	if data.GqlData.ShortcodeMedia.IsVideo {
