@@ -2,7 +2,6 @@ package instagram
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/iawia002/lux/request"
 	errors2 "github.com/juju/errors"
@@ -178,11 +177,65 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 			return nil, errors2.Annotate(errors.New("html解析失败"), "html解析失败")
 		}
 
-		doc.Find("._aagv .x5yr21d").Each(func(i int, selection *goquery.Selection) {
+		imgs := make([]string, 0)
+
+		doc.Find("img.EmbeddedMediaImage").Each(func(i int, selection *goquery.Selection) {
 			srcset := selection.AttrOr("srcset", "")
-			fmt.Println(srcset)
+
+			scs := strings.Split(srcset, ",")
+
+			var maxSize, maxImg string
+
+			for _, v := range scs {
+				item := strings.Split(v, " ")
+				if len(item) > 1 {
+					if item[1] > maxSize {
+						maxSize = item[1]
+						maxImg = item[0]
+					}
+				}
+			}
+
+			imgs = append(imgs, maxImg)
 		})
-		return nil, errors2.Annotate(errors.New("还未开发"), "还未开发")
+
+		if len(imgs) <= 0 {
+			return nil, errors2.Annotate(errors.New("未能匹配到"), "未能匹配到")
+		}
+		html, err = request.Get(url, url, map[string]string{
+			"Cookie":         "ig_did=88184AC9-0D63-4462-AA47-D0BFF15B3572; datr=JOpNZQjtwKw9_sjZ2aX8zARw; csrftoken=PES3HGWe06P0LHWg1Shn3vUAjtHsLuWT; ig_nrcb=1; mid=ZU3qJgAEAAG0owZzr_p7Yf2HuI4M; dpr=3",
+			"User-Agent":     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+			"Viewport-Width": "756",
+			"Sec-Fetch-Mode": "navigate",
+			"Sec-Fetch-Dest": "document",
+			"Accept":         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+		})
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+
+		doc, err = goquery.NewDocumentFromReader(strings.NewReader(html))
+
+		if err != nil {
+			return nil, errors2.Annotate(errors.New("html解析失败"), "html解析失败")
+		}
+		var title string
+		doc.Find("title").Each(func(i int, selection *goquery.Selection) {
+			title = selection.Text()
+		})
+
+		return []*extractors.Data{
+			{
+				Site:       "Instagram instagram.com",
+				Title:      title,
+				Type:       extractors.DataTypeImage,
+				Streams:    nil,
+				URL:        url,
+				Image:      imgs,
+				Cover:      imgs[0],
+				IsNotVideo: true,
+			},
+		}, nil
 	}
 	dataString := strings.Replace(dataStrings[0], `\"`, `"`, -1)
 	dataString = strings.Replace(dataString, `\\\/`, `/`, -1)
