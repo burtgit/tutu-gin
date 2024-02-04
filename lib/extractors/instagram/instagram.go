@@ -168,7 +168,7 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	dataStrings := utils.MatchOneOf(html, `gql_data.*\}\}`)
 	if dataStrings == nil || len(dataStrings) < 1 {
 		// 检查是否为图片类型
-		if strings.Contains(html, "在 Instagram 观看") {
+		if strings.Contains(html, "在 Instagram 观看") || strings.Contains(html, "Watch on Instagram") {
 			return nil, errors2.Annotate(errors.New("未匹配到数据"), "未匹配到数据")
 		}
 		doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))

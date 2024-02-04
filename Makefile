@@ -22,7 +22,7 @@ upload_resorce_over:
 
 prod-over:
 	@GOOS=linux GOARCH=amd64 go build main.go
-	@mv main tutu-gin
-	@ssh root@ove "rm -rf /data/tutu-gin/tutu-gin"
-	@scp ./tutu-gin root@ove:/data/tutu-gin/tutu-gin
-	@ssh root@ove "/www/server/panel/pyenv/bin/supervisorctl restart tutu-gin:tutu-gin_00"
+	mv main tutu-gin
+	ssh root@ove "rm -rf /data/tutu-gin/tutu-gin"
+	scp ./tutu-gin root@ove:/data/tutu-gin/tutu-gin
+	ssh root@ove "/www/server/panel/pyenv/bin/supervisorctl restart tutu-gin:tutu-gin_00"

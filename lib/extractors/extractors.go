@@ -1,6 +1,7 @@
 package extractors
 
 import (
+	"fmt"
 	"net/url"
 	"strings"
 	"sync"
@@ -53,6 +54,12 @@ func Extract(u string, option Options) ([]*Data, error) {
 	if extractor == nil {
 		extractor = extractorMap[""]
 	}
+
+	if extractor == nil {
+		fmt.Println(u)
+		return nil, errors.New("unsupportted website")
+	}
+
 	videos, err := extractor.Extract(u, option)
 	if err != nil {
 		return nil, errors.WithStack(err)
