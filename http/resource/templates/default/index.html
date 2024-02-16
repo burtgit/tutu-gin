@@ -69,7 +69,7 @@
                         <div>
                             <p>网站支持快手、抖音、火山、今日头条、西瓜视频、微博、秒拍、小咖秀、晃咖、微视、美拍、网易云音乐、优酷、YouTube、好看视频、最右、全民、皮皮搞笑、皮皮虾、梨视频、哔哩哔哩(B站)、小红书、刷宝、QQ看点、facebook、Twitter、Instagram、剪映、AcFun(a站)、爱奇艺、muse(musical.ly)、Flipagram、陌陌、映客、小影、阳光宽频等100多个平台的视频解析</p>
                             {{ if .isVip }}
-                            <p style="color: #037afb">您是尊贵的VIP会员（已为您开通youtube、twitter、ins、fb视频的解析权限）</p>
+                            <p style="color: #037afb" class="vip">您是尊贵的VIP会员（已为您开通youtube、twitter、ins、fb视频的解析权限）</p>
                             {{ else }}
                             <a href="https://in.sucps.com/invite/index?invite_id=&domain=zhishuzhan.com" class="invite_rule" target="_blank">去水印app下载>>></a>
                             {{ end }}
@@ -197,6 +197,7 @@
         if(user_id) {
             $("#user-id").html('<i class="iconfont icon-tianjiayonghu-"></i>用户：' + user_id)
             $(".invite_rule").attr("href", "https://in.sucps.com/invite/index?invite_id="+user_id+"&domain=zhishuzhan.com");
+            $(".vip").text("您是尊贵的VIP会员"+user_id+"（已为您开通youtube、twitter、ins、fb视频的解析权限）");
         }
     })
 
