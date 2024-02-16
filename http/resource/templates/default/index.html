@@ -367,6 +367,8 @@
                                         setCookie("tokens",res.Data.Token,300)
                                         setCookie("user_id",res.Data.UserId,300)
                                         $("#user-id").html('<i class="iconfont icon-tianjiayonghu-"></i>用户：' + res.Data.UserId)
+                                        $(".invite_rule").attr("href", "https://in.sucps.com/invite/index?invite_id="+res.Data.UserId+"&domain=zhishuzhan.com");
+                                        $(".vip").text("您是尊贵的VIP会员"+res.Data.UserId+"（已为您开通youtube、twitter、ins、fb视频的解析权限）");
                                         clearTimeout(timerShow);
                                         $('#loginModal').modal('hide')
                                     }
@@ -511,6 +513,8 @@
                                                 setCookie("tokens",res.Data.Token,300)
                                                 setCookie("user_id",res.Data.UserId,300)
                                                 $("#user-id").html('<i class="iconfont icon-tianjiayonghu-"></i>用户：' + res.Data.UserId)
+                                                $(".invite_rule").attr("href", "https://in.sucps.com/invite/index?invite_id="+res.Data.UserId+"&domain=zhishuzhan.com");
+                                                $(".vip").text("您是尊贵的VIP会员"+res.Data.UserId+"（已为您开通youtube、twitter、ins、fb视频的解析权限）");
                                                 clearTimeout(timerShow);
                                                 $('#loginModal').modal('hide')
                                             }
