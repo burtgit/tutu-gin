@@ -1,6 +1,7 @@
 package twitter
 
 import (
+	"fmt"
 	"github.com/iawia002/lux/test"
 	"testing"
 	"tutu-gin/lib/extractors"
@@ -14,7 +15,7 @@ func TestDownload(t *testing.T) {
 		{
 			name: "normal test",
 			args: test.Args{
-				URL:     "https://twitter.com/dixibaby_/status/1711385351322018071/video/1",
+				URL:     "https://twitter.com/Asako8439/status/1757885329661657182?s=19",
 				Title:   "Justin Bieber on Twitter 898217160060698624",
 				Quality: "720x1280",
 			},
@@ -39,7 +40,11 @@ func TestDownload(t *testing.T) {
 	// The file size changes every time (caused by CDN?), so the size is not checked here
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			New().Extract(tt.args.URL, extractors.Options{})
+			extract, err := New().Extract(tt.args.URL, extractors.Options{})
+			if err != nil {
+				return
+			}
+			fmt.Println(extract)
 		})
 	}
 }

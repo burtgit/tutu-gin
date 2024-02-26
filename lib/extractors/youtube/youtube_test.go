@@ -16,7 +16,7 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "normal test",
 			args: test.Args{
-				URL:   "https://youtu.be/ktVqmPt14ps?si=Gp4HeRCOU02Fblnc",
+				URL:   "https://youtube.com/shorts/dV7eSdfRGGI",
 				Title: "Multifandom Mashup 2017",
 			},
 		},

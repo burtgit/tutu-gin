@@ -44,7 +44,7 @@ type twitterInfo struct {
 	MediaURLs      []string      `json:"mediaURLs"`
 	MediaExtended  []struct {
 		AltText        interface{} `json:"altText"`
-		DurationMillis int         `json:"duration_millis"`
+		DurationMillis int64       `json:"duration_millis"`
 		Size           struct {
 			Height int `json:"height"`
 			Width  int `json:"width"`
@@ -105,26 +105,31 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		return nil, errors2.Annotate(errors.New("视频或图片不存在"), "视频或图片不存在")
 	}
 
-	quality := strconv.Itoa(detail.MediaExtended[0].Size.Height)
 	streams := make(map[string]*extractors.Stream)
 	var images []string
 	var isNotVideo bool
 
 	if detail.MediaExtended[0].Type == "image" {
 		isNotVideo = true
-		images = append(images, detail.MediaExtended[0].Url)
-	} else {
-		stream := &extractors.Stream{
-			Parts: []*extractors.Part{
-				{
-					URL:  detail.MediaExtended[0].Url,
-					Size: 850,
-				},
-			},
-			Size:    850,
-			Quality: quality,
+		for _, v := range detail.MediaExtended {
+			images = append(images, v.Url)
 		}
-		streams[quality] = stream
+	} else {
+		for _, part := range detail.MediaExtended {
+			quality := strconv.FormatInt(part.DurationMillis, 10)
+			stream := &extractors.Stream{
+				Parts: []*extractors.Part{
+					{
+						URL:  part.Url,
+						Size: part.DurationMillis,
+					},
+				},
+				Size:    850,
+				Quality: quality,
+			}
+			streams[quality] = stream
+		}
+
 	}
 
 	return []*extractors.Data{
