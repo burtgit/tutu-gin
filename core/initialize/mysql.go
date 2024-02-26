@@ -16,7 +16,7 @@ func InitMysql() {
 	tbMapper := names.NewPrefixMapper(names.SnakeMapper{}, dbConfig.TablePrefix)
 
 	global.DB.SetTableMapper(tbMapper)
-	global.DB.ShowSQL(true)
+	global.DB.ShowSQL(false)
 	if err != nil {
 		panic("数据库连接失败")
 	}
