@@ -22,7 +22,7 @@ const (
 	Size1Mb  = Size1Kb * 1024
 	Size10Mb = Size1Mb * 10
 
-	playerParams = "CgIQBg=="
+	playerParams = "8AEByAMTwAT3stfP1YuzjUGiBhUB1dn6OzipLn_FhSVaNzK6-9XADLeqBkNBUG1rS0RKTjhPSkFhWm9GQTZ2dEgwSXZFVkI1REROSmR0ck5GVW9lVVNfbDVQa2hxSk8wcW9lQU5FWl9qbkJSOFRn"
 )
 
 var (
@@ -30,7 +30,7 @@ var (
 )
 
 // DefaultClient type to use. No reason to change but you could if you wanted to.
-var DefaultClient = AndroidClient
+var DefaultClient = IOSClient
 
 // Client offers methods to download video metadata and video streams.
 type Client struct {
@@ -127,6 +127,27 @@ func (c *Client) videoFromID(ctx context.Context, id string) (*Video, error) {
 	return &v, err
 }
 
+func (c *Client) videoFromIDV2(ctx context.Context, id string) (*Video, error) {
+	c.assureClient()
+	html, err := c.httpGetBodyBytes(ctx, "https://www.youtube.com/watch?v="+id+"&bpctr=9999999999&has_verified=1")
+	if err != nil {
+		return nil, err
+	}
+
+	v := Video{
+		ID: id,
+	}
+
+	err = v.parseVideoPage(html)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println(v)
+
+	return nil, err
+}
+
 type innertubeRequest struct {
 	VideoID         string            `json:"videoId,omitempty"`
 	BrowseID        string            `json:"browseId,omitempty"`
@@ -143,7 +164,6 @@ type playbackContext struct {
 }
 
 type contentPlaybackContext struct {
-	// SignatureTimestamp string `json:"signatureTimestamp"`
 	HTML5Preference string `json:"html5Preference"`
 }
 
@@ -173,6 +193,7 @@ type clientInfo struct {
 	key            string
 	version        string
 	userAgent      string
+	deviceModel    string
 	androidVersion int
 }
 
@@ -194,6 +215,16 @@ var (
 		androidVersion: 30,
 	}
 
+	// AndroidClient, download go brrrrrr.
+	IOSClient = clientInfo{
+		name:           "IOS",
+		version:        "18.11.34",
+		deviceModel:    "iPhone14,3",
+		key:            "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
+		userAgent:      "com.google.ios.youtube/18.11.34 (iPhone14,3; U; CPU iOS 15_6 like Mac OS X)",
+		androidVersion: 30,
+	}
+
 	// EmbeddedClient, not really tested.
 	EmbeddedClient = clientInfo{
 		name:      "WEB_EMBEDDED_PLAYER",
@@ -212,7 +243,6 @@ func (c *Client) videoDataByInnertube(ctx context.Context, id string) ([]byte, e
 		Params:         playerParams,
 		PlaybackContext: &playbackContext{
 			ContentPlaybackContext: contentPlaybackContext{
-				// SignatureTimestamp: sts,
 				HTML5Preference: "HTML5_PREF_WANTS",
 			},
 		},
@@ -233,13 +263,12 @@ func (c *Client) transcriptDataByInnertube(ctx context.Context, id string) ([]by
 func prepareInnertubeContext(clientInfo clientInfo) inntertubeContext {
 	return inntertubeContext{
 		Client: innertubeClient{
-			HL:                "en",
-			GL:                "US",
-			TimeZone:          "UTC",
-			ClientName:        clientInfo.name,
-			ClientVersion:     clientInfo.version,
-			AndroidSDKVersion: clientInfo.androidVersion,
-			UserAgent:         clientInfo.userAgent,
+			HL:            "zh-CN",
+			GL:            "HK",
+			TimeZone:      "UTC",
+			ClientName:    clientInfo.name,
+			ClientVersion: clientInfo.version,
+			UserAgent:     clientInfo.userAgent,
 		},
 		ThirdParty: ThirdParty{
 			EmbedUrl: "https://google.com",
@@ -493,18 +522,18 @@ func (c *Client) httpDo(req *http.Request) (*http.Response, error) {
 
 	req.Header.Set("User-Agent", c.client.userAgent)
 	//req.Header.Set("Origin", "https://youtube.com")
-	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	//req.Header.Set("Sec-Fetch-Mode", "navigate")
 
 	if len(c.consentID) == 0 {
 		c.consentID = strconv.Itoa(rand.Intn(899) + 100) //nolint:gosec
 	}
 
-	req.AddCookie(&http.Cookie{
-		Name:   "CONSENT",
-		Value:  "YES+cb.20210328-17-p0.en+FX+" + c.consentID,
-		Path:   "/",
-		Domain: ".youtube.com",
-	})
+	//req.AddCookie(&http.Cookie{
+	//	Name:   "CONSENT",
+	//	Value:  "YES+cb.20210328-17-p0.en+FX+" + c.consentID,
+	//	Path:   "/",
+	//	Domain: ".youtube.com",
+	//})
 
 	res, err := client.Do(req)
 
@@ -562,11 +591,11 @@ func (c *Client) httpPost(ctx context.Context, url string, body interface{}) (*h
 		return nil, errors2.Annotate(err, err.Error())
 	}
 
-	req.Header.Set("X-Youtube-Client-Name", "85")
-	req.Header.Set("X-Youtube-Client-Version", c.client.version)
+	req.Header.Set("X-YouTube-Client-Name", "5")
+	req.Header.Set("X-YouTube-Client-Version", c.client.version)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Origin", "https://www.youtube.com")
-	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+	req.Header.Set("User-Agent", c.client.userAgent)
 
 	resp, err := c.httpDo(req)
 	if err != nil {

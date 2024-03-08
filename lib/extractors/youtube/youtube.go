@@ -1,14 +1,15 @@
 package youtube
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
 	"tutu-gin/lib/extractors"
-	"tutu-gin/lib/youtube"
+	//"tutu-gin/lib/youtube"
 
 	"github.com/iawia002/lia/array"
-	//"github.com/kkdai/youtube/v2"
+	"github.com/kkdai/youtube/v2"
 	"github.com/pkg/errors"
 
 	"github.com/iawia002/lux/request"
@@ -43,9 +44,22 @@ func New() extractors.Extractor {
 // Extract is the main function to extract the data.
 func (e *extractor) Extract(url string, option extractors.Options) ([]*extractors.Data, error) {
 	if !option.Playlist {
+		count := 10
 		video, err := e.client.GetVideo(url)
 		if err != nil {
-			return nil, err
+			// 发现返回400，直接循环执行10次
+			if err.Error() == "unexpected status code: 400" {
+				for i := 0; i < count; i++ {
+					fmt.Println("油管的正在尝试....", i+1)
+					video, err = e.client.GetVideo(url)
+					if err == nil {
+						break
+					}
+				}
+			}
+			if err != nil {
+				return nil, err
+			}
 		}
 		return []*extractors.Data{e.youtubeDownload(url, video)}, nil
 	}
@@ -194,4 +208,28 @@ func getStreamExt(streamType string) string {
 		return ""
 	}
 	return exts[2]
+}
+
+func lazyLast(iterable []interface{}) (bool, interface{}) {
+	iterator := iterable
+	var prev interface{}
+	if len(iterator) > 0 {
+		prev = iterator[0]
+		iterator = iterator[1:]
+	} else {
+		return false, nil
+	}
+
+	for _, item := range iterator {
+		yield := []interface{}{false, prev}
+		// Process yield value here (e.g., print, store, etc.)
+		_ = yield
+		prev = item
+	}
+
+	yield := []interface{}{true, prev}
+	// Process yield value here (e.g., print, store, etc.)
+	_ = yield
+
+	return yield[0].(bool), yield[1]
 }
