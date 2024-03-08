@@ -5,9 +5,10 @@ import (
 	"strconv"
 	"strings"
 	"tutu-gin/lib/extractors"
+	"tutu-gin/lib/youtube"
 
 	"github.com/iawia002/lia/array"
-	"github.com/kkdai/youtube/v2"
+	//"github.com/kkdai/youtube/v2"
 	"github.com/pkg/errors"
 
 	"github.com/iawia002/lux/request"
@@ -44,7 +45,7 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	if !option.Playlist {
 		video, err := e.client.GetVideo(url)
 		if err != nil {
-			return nil, errors.WithStack(err)
+			return nil, err
 		}
 		return []*extractors.Data{e.youtubeDownload(url, video)}, nil
 	}

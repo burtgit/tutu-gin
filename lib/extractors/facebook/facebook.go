@@ -2,6 +2,7 @@ package facebook
 
 import (
 	"encoding/json"
+	"fmt"
 	errors2 "github.com/juju/errors"
 	"net/http"
 	"strings"
@@ -2068,7 +2069,7 @@ func getFinallyUrl(link string) (error, string) {
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Sec-Fetch-Site", "none")
 	req.Header.Set("Sec-Fetch-User", "?1")
-	req.Header.Set("Cookie", "datr=xiy-Y-ozZnKcMJXT9Fnle3vS; sb=GLkAZJQdYfckMxH6lECElWSg; c_user=100026471882579; m_ls=%7B%22c%22%3A%7B%221%22%3A%22HCwAABZEFqqu8bYBEwUWpv2Ypae-LQA%22%2C%222%22%3A%22GSwVQBxMAAAWABbA0I7MDBYAABV-HEwAABYAFsbQjswMFgAAFigA%22%2C%2295%22%3A%22HCwAABYEForuqJsDEwUWpv2Ypae-LQA%22%7D%2C%22d%22%3A%22daea6326-862c-4b75-a50f-7933bb4cf1fb%22%2C%22s%22%3A%220%22%2C%22u%22%3A%22s0e9j3%22%7D; dpr=3; locale=zh_TW; fbl_cs=AhDlAjyEZhqQ9pD3Sd1LpC%2FGGD0xOUI3cTZ0dmlRWDkrPXlzaWhpcmkxcQ; fbl_ci=687628016827021; vpd=v1%3B844x390x3; fbl_st=100630108%3BT%3A28416057; wl_cbv=v2%3Bclient_version%3A2392%3Btimestamp%3A1704963434; xs=23%3Az-GSUb6sfSpEPA%3A2%3A1677769042%3A-1%3A-1%3A%3AAcW2UXJI62U-wEsU1AYDouUuXpYvwO-SHxvjqPjRSPM; fr=1ydGfrd8SEi4WNXj4.AWU7iqPRCTkhM2zRXlFxjrTw3ag.Bln6-K.mj.AAA.0.0.Bln6-K.AWUUohmRe28; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1704964601536%2C%22v%22%3A1%7D; wd=471x869")
+	req.Header.Set("Cookie", "sb=GLkAZJQdYfckMxH6lECElWSg; c_user=100026471882579; m_ls=%7B%22c%22%3A%7B%221%22%3A%22HCwAABZEFqqu8bYBEwUWpv2Ypae-LQA%22%2C%222%22%3A%22GSwVQBxMAAAWABbA0I7MDBYAABV-HEwAABYAFsbQjswMFgAAFigA%22%2C%2295%22%3A%22HCwAABYEForuqJsDEwUWpv2Ypae-LQA%22%7D%2C%22d%22%3A%22daea6326-862c-4b75-a50f-7933bb4cf1fb%22%2C%22s%22%3A%220%22%2C%22u%22%3A%22s0e9j3%22%7D; fbl_cs=AhDlAjyEZhqQ9pD3Sd1LpC%2FGGD0xOUI3cTZ0dmlRWDkrPXlzaWhpcmkxcQ; fbl_ci=687628016827021; vpd=v1%3B844x390x3; fbl_st=100639923%3BT%3A28417173; wl_cbv=v2%3Bclient_version%3A2392%3Btimestamp%3A1705030393; ps_n=0; wd=1728x869; datr=VenfZcjQMyGd_sZ2q_gyUOD9; xs=23%3Az-GSUb6sfSpEPA%3A2%3A1677769042%3A-1%3A-1%3A%3AAcV6kzthjN6camXHusY0d_b46CyLBvW2snq6QLXTTsM; fr=1J6AWE6wV1IH1inoo.AWUaKpkMzO69JHeczLefZulA1iU.Bl3-lX.ms.AAA.0.0.Bl3-lX.AWWqP3Wnb5I; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1709173088316%2C%22v%22%3A1%7D")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 
 	// 发送请求
@@ -2106,7 +2107,7 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	html, err := request.Get(url, url, map[string]string{
 		"User-Agent":     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
 		"Accept":         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-		"Cookie":         "datr=xiy-Y-ozZnKcMJXT9Fnle3vS; sb=GLkAZJQdYfckMxH6lECElWSg; c_user=100026471882579; m_ls=%7B%22c%22%3A%7B%221%22%3A%22HCwAABZEFqqu8bYBEwUWpv2Ypae-LQA%22%2C%222%22%3A%22GSwVQBxMAAAWABbA0I7MDBYAABV-HEwAABYAFsbQjswMFgAAFigA%22%2C%2295%22%3A%22HCwAABYEForuqJsDEwUWpv2Ypae-LQA%22%7D%2C%22d%22%3A%22daea6326-862c-4b75-a50f-7933bb4cf1fb%22%2C%22s%22%3A%220%22%2C%22u%22%3A%22s0e9j3%22%7D; dpr=3; locale=zh_TW; fbl_cs=AhDlAjyEZhqQ9pD3Sd1LpC%2FGGD0xOUI3cTZ0dmlRWDkrPXlzaWhpcmkxcQ; fbl_ci=687628016827021; vpd=v1%3B844x390x3; fbl_st=100630108%3BT%3A28416057; wl_cbv=v2%3Bclient_version%3A2392%3Btimestamp%3A1704963434; xs=23%3Az-GSUb6sfSpEPA%3A2%3A1677769042%3A-1%3A-1%3A%3AAcW2UXJI62U-wEsU1AYDouUuXpYvwO-SHxvjqPjRSPM; fr=1ydGfrd8SEi4WNXj4.AWU7iqPRCTkhM2zRXlFxjrTw3ag.Bln6-K.mj.AAA.0.0.Bln6-K.AWUUohmRe28; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1704964601536%2C%22v%22%3A1%7D; wd=471x869",
+		"Cookie":         "sb=GLkAZJQdYfckMxH6lECElWSg; c_user=100026471882579; m_ls=%7B%22c%22%3A%7B%221%22%3A%22HCwAABZEFqqu8bYBEwUWpv2Ypae-LQA%22%2C%222%22%3A%22GSwVQBxMAAAWABbA0I7MDBYAABV-HEwAABYAFsbQjswMFgAAFigA%22%2C%2295%22%3A%22HCwAABYEForuqJsDEwUWpv2Ypae-LQA%22%7D%2C%22d%22%3A%22daea6326-862c-4b75-a50f-7933bb4cf1fb%22%2C%22s%22%3A%220%22%2C%22u%22%3A%22s0e9j3%22%7D; fbl_cs=AhDlAjyEZhqQ9pD3Sd1LpC%2FGGD0xOUI3cTZ0dmlRWDkrPXlzaWhpcmkxcQ; fbl_ci=687628016827021; vpd=v1%3B844x390x3; fbl_st=100639923%3BT%3A28417173; wl_cbv=v2%3Bclient_version%3A2392%3Btimestamp%3A1705030393; ps_n=0; wd=1728x869; datr=VenfZcjQMyGd_sZ2q_gyUOD9; xs=23%3Az-GSUb6sfSpEPA%3A2%3A1677769042%3A-1%3A-1%3A%3AAcV6kzthjN6camXHusY0d_b46CyLBvW2snq6QLXTTsM; fr=1J6AWE6wV1IH1inoo.AWUaKpkMzO69JHeczLefZulA1iU.Bl3-lX.ms.AAA.0.0.Bl3-lX.AWWqP3Wnb5I; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1709173088316%2C%22v%22%3A1%7D",
 		"Sec-Fetch-Site": "none",
 	})
 	if err != nil {
@@ -2114,6 +2115,7 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	}
 	dataStrings := utils.MatchOneOf(html, `[adp_CometVideoHomeNewPermalinkHeroUnitQueryRelayPreloader|adp_FBReelsRootWithEntrypointQueryRelayPreloader]\w+",(\{"__bbox":\{.*"browser_native_sd_url".*\}\})\]`)
 	if dataStrings == nil || len(dataStrings) < 2 {
+		fmt.Println(html)
 		return nil, errors2.Annotate(errors.New("未匹配到视频数据"), "未匹配到视频数据")
 	}
 
