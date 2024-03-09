@@ -22,7 +22,7 @@ const (
 	Size1Mb  = Size1Kb * 1024
 	Size10Mb = Size1Mb * 10
 
-	playerParams = "8AEByAMTwAT3stfP1YuzjUGiBhUB1dn6OzipLn_FhSVaNzK6-9XADLeqBkNBUG1rS0RKTjhPSkFhWm9GQTZ2dEgwSXZFVkI1REROSmR0ck5GVW9lVVNfbDVQa2hxSk8wcW9lQU5FWl9qbkJSOFRn"
+	playerParams = "CgIQBg=="
 )
 
 var (
@@ -30,7 +30,7 @@ var (
 )
 
 // DefaultClient type to use. No reason to change but you could if you wanted to.
-var DefaultClient = IOSClient
+var DefaultClient = AndroidClient
 
 // Client offers methods to download video metadata and video streams.
 type Client struct {
@@ -86,7 +86,7 @@ func (c *Client) videoFromID(ctx context.Context, id string) (*Video, error) {
 	}
 
 	// return early if all good
-	if err = v.parseVideoInfo(body); err == nil {
+	if err = v.ParseVideoInfo(body); err == nil {
 		return &v, nil
 	}
 
@@ -107,7 +107,7 @@ func (c *Client) videoFromID(ctx context.Context, id string) (*Video, error) {
 
 		bodyEmbed, errEmbed := c.videoDataByInnertube(ctx, id)
 		if errEmbed == nil {
-			errEmbed = v.parseVideoInfo(bodyEmbed)
+			errEmbed = v.ParseVideoInfo(bodyEmbed)
 		}
 
 		if errEmbed == nil {
@@ -168,8 +168,8 @@ type contentPlaybackContext struct {
 }
 
 type inntertubeContext struct {
-	Client     innertubeClient `json:"client"`
-	ThirdParty ThirdParty      `json:"thirdParty"`
+	Client innertubeClient `json:"client"`
+	//ThirdParty ThirdParty      `json:"thirdParty"`
 }
 
 type ThirdParty struct {
@@ -178,7 +178,6 @@ type ThirdParty struct {
 
 type innertubeClient struct {
 	HL                string `json:"hl"`
-	GL                string `json:"gl"`
 	ClientName        string `json:"clientName"`
 	ClientVersion     string `json:"clientVersion"`
 	AndroidSDKVersion int    `json:"androidSDKVersion,omitempty"`
@@ -209,9 +208,9 @@ var (
 	// AndroidClient, download go brrrrrr.
 	AndroidClient = clientInfo{
 		name:           "ANDROID",
-		version:        "17.31.35",
+		version:        "18.11.34",
 		key:            "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
-		userAgent:      "com.google.android.youtube/17.31.35 (Linux; U; Android 11) gzip",
+		userAgent:      "com.google.android.youtube/18.11.34 (Linux; U; Android 11) gzip",
 		androidVersion: 30,
 	}
 
@@ -248,7 +247,7 @@ func (c *Client) videoDataByInnertube(ctx context.Context, id string) ([]byte, e
 		},
 	}
 
-	return c.httpPostBodyBytes(ctx, "https://www.youtube.com/youtubei/v1/player?key="+c.client.key, data)
+	return c.httpPostBodyBytes(ctx, "https://www.youtube.com/youtubei/v1/player?key="+c.client.key+"&prettyPrint=false", data)
 }
 
 func (c *Client) transcriptDataByInnertube(ctx context.Context, id string) ([]byte, error) {
@@ -263,16 +262,15 @@ func (c *Client) transcriptDataByInnertube(ctx context.Context, id string) ([]by
 func prepareInnertubeContext(clientInfo clientInfo) inntertubeContext {
 	return inntertubeContext{
 		Client: innertubeClient{
-			HL:            "zh-CN",
-			GL:            "HK",
+			HL:            "en",
 			TimeZone:      "UTC",
 			ClientName:    clientInfo.name,
 			ClientVersion: clientInfo.version,
 			UserAgent:     clientInfo.userAgent,
 		},
-		ThirdParty: ThirdParty{
-			EmbedUrl: "https://google.com",
-		},
+		//ThirdParty: ThirdParty{
+		//	EmbedUrl: "https://google.com",
+		//},
 	}
 }
 
@@ -591,7 +589,7 @@ func (c *Client) httpPost(ctx context.Context, url string, body interface{}) (*h
 		return nil, errors2.Annotate(err, err.Error())
 	}
 
-	req.Header.Set("X-YouTube-Client-Name", "5")
+	req.Header.Set("X-YouTube-Client-Name", "3")
 	req.Header.Set("X-YouTube-Client-Version", c.client.version)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Origin", "https://www.youtube.com")

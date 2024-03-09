@@ -31,7 +31,7 @@ type Video struct {
 
 const dateFormat = "2006-01-02"
 
-func (v *Video) parseVideoInfo(body []byte) error {
+func (v *Video) ParseVideoInfo(body []byte) error {
 	var prData playerResponseData
 	if err := json.Unmarshal(body, &prData); err != nil {
 		return fmt.Errorf("unable to parse player response JSON: %w", err)

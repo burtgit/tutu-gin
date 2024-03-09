@@ -46,3 +46,7 @@ func TestDownload(t *testing.T) {
 		})
 	}
 }
+
+func TestEncode(t *testing.T) {
+	fmt.Println(EncodeBaseN("C21eFeQRGHO"))
+}
