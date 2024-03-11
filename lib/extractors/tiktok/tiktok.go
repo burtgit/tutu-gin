@@ -212,7 +212,7 @@ type tiktokContent struct {
 				Height    int         `json:"height"`
 				UrlPrefix interface{} `json:"url_prefix"`
 			} `json:"avatar_medium"`
-			PreviewStartTime     int         `json:"preview_start_time"`
+			PreviewStartTime     float64     `json:"preview_start_time"`
 			PreviewEndTime       int         `json:"preview_end_time"`
 			IsCommerceMusic      bool        `json:"is_commerce_music"`
 			IsOriginalSound      bool        `json:"is_original_sound"`
@@ -723,7 +723,7 @@ type tiktokContent struct {
 				Height    int         `json:"height"`
 				UrlPrefix interface{} `json:"url_prefix"`
 			} `json:"avatar_medium"`
-			PreviewStartTime     int         `json:"preview_start_time"`
+			PreviewStartTime     float64     `json:"preview_start_time"`
 			PreviewEndTime       int         `json:"preview_end_time"`
 			IsCommerceMusic      bool        `json:"is_commerce_music"`
 			IsOriginalSound      bool        `json:"is_original_sound"`

@@ -1,10 +1,11 @@
 package youtube
 
 import (
+	"fmt"
+	"github.com/iawia002/lux/test"
+	"regexp"
 	"testing"
 	"tutu-gin/lib/extractors"
-
-	"github.com/iawia002/lux/test"
 )
 
 func TestYoutube(t *testing.T) {
@@ -16,14 +17,14 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "normal test",
 			args: test.Args{
-				URL:   "https://youtube.com/shorts/dV7eSdfRGGI",
+				URL:   "https://youtube.com/shorts/68LLMQfEUQk?si=fwS2CdzAHAiLXVgG",
 				Title: "Multifandom Mashup 2017",
 			},
 		},
 		{
 			name: "signature test",
 			args: test.Args{
-				URL:   "https://www.youtube.com/watch?v=scpS6kl1DNw",
+				URL:   "https://youtu.be/ZWj-1xQK0jY?list=RDCMUCY4DrFDwxH7VaDHCsXzDE_w",
 				Title: "Halo Infinite - E3 2019 - Discover Hope",
 			},
 		},
@@ -38,7 +39,7 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "url_encoded_fmt_stream_map test",
 			args: test.Args{
-				URL:   "https://www.youtube.com/watch?v=seMiQKl2edY",
+				URL:   "https://youtu.be/1X8JVo8Zofg",
 				Title: "QNAP Customer Story | Scorptec",
 			},
 		},
@@ -56,5 +57,18 @@ func TestYoutube(t *testing.T) {
 			test.CheckError(t, err)
 			t.Log(data)
 		})
+	}
+}
+
+func TestClient(t *testing.T) {
+	validURL := `https?://www\.tiktok\.com/(?:embed|@(?P<user_id>[\w\.-]+)?/video)/(?P<id>\d+)`
+	re := regexp.MustCompile(validURL)
+
+	match := re.FindStringSubmatch("https://www.tiktok.com/@ayami_nmb48/video/7343566694993923346")
+	fmt.Println("Matched groups:")
+	for i, name := range re.SubexpNames() {
+		if i != 0 && name != "" {
+			fmt.Printf("%s: %s\n", name, match[i])
+		}
 	}
 }
