@@ -15,7 +15,7 @@ func TestDownload(t *testing.T) {
 		{
 			name: "video test",
 			args: test.Args{
-				URL:   "https://www.instagram.com/reel/CvUP0mytkh6/?igsh=MzRlODBiNWFlZA==",
+				URL:   "https://www.instagram.com/reel/C3FSJFvM_yI/?igsh=MTZ3ZzVmaGJkNnJyMg==",
 				Title: "Instagram BlIka1ZFCNr",
 				Size:  3003662,
 			},

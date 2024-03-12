@@ -46,7 +46,7 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "stream 404 test 1",
 			args: test.Args{
-				URL:   "https://www.youtube.com/watch?v=EqI0ckjtOPw",
+				URL:   "https://youtube.com/shorts/S3JMs-iPe50?si=Xx3PXHYWzsOKUNpV",
 				Title: "FreeFileSync: Mirror Synchronization",
 			},
 		},

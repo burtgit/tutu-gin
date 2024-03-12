@@ -11,6 +11,9 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"tutu-gin/core/global"
+	"tutu-gin/core/initialize"
+	yt_dl "tutu-gin/lib/yt-dl"
 )
 
 type RequestParams struct {
@@ -186,4 +189,18 @@ func TestVersion(t *testing.T) {
 	}
 
 	t.Log(NeedUpdate)
+}
+
+func TestYtDl(t *testing.T) {
+	initialize.InitConfig()
+
+	fmt.Println(global.SERVICE_CONFIG.YtDl.Path)
+
+	res, err := yt_dl.Client("https://www.tiktok.com/t/ZTLR3CyxK/")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fmt.Println(res)
+
 }

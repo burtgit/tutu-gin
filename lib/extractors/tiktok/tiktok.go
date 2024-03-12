@@ -860,12 +860,51 @@ func getRealUrl(url string) (string, error) {
 		},
 	}
 
-	req, err := http.NewRequest(http.MethodHead, url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return "", fmt.Errorf("创建请求出错: %v", err)
 	}
 
 	req.Header.Set("User-Agent", "facebookexternalhit/1.1")
+
+	//if _, ok := headers["Referer"]; !ok {
+	//	req.Header.Set("Referer", urlStr)
+	//}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("请求出错: %v", err)
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusMovedPermanently &&
+		resp.StatusCode != http.StatusFound && resp.StatusCode != http.StatusSeeOther &&
+		resp.StatusCode != http.StatusTemporaryRedirect {
+
+		return "", fmt.Errorf("请求返回非重定向状态码: %v", resp.StatusCode)
+	}
+
+	url = resp.Request.URL.String()
+
+	return url, nil
+}
+
+func getRealUrlBrowser(url string) (string, error) {
+
+	client := http.Client{
+		Transport: &http.Transport{
+			Proxy:              http.ProxyFromEnvironment,
+			DisableCompression: true,
+			TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
+		},
+	}
+
+	req, err := http.NewRequest(http.MethodHead, url, nil)
+	if err != nil {
+		return "", fmt.Errorf("创建请求出错: %v", err)
+	}
+
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
 
 	//if _, ok := headers["Referer"]; !ok {
 	//	req.Header.Set("Referer", urlStr)
@@ -973,21 +1012,25 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 			extractorsData.Site = "TikTok tiktok.com"
 			extractorsData.URL = url
 			for _, u := range item.Video.PlayAddr.UrlList {
-				if strings.Contains(u, "tiktokcdn.com") {
-					extractorsData.Streams = map[string]*extractors.Stream{
-						"default": {
-							Parts: []*extractors.Part{
-								{
-									URL:  u,
-									Ext:  "mp4",
-									Size: 850,
+
+				if strings.Contains(u, "tiktokv.com") {
+					url, err = getRealUrl(u)
+					if err == nil {
+						extractorsData.Streams = map[string]*extractors.Stream{
+							"default": {
+								Parts: []*extractors.Part{
+									{
+										URL:  url,
+										Ext:  "mp4",
+										Size: 850,
+									},
 								},
+								Size:    850,
+								Quality: "1080p",
 							},
-							Size:    850,
-							Quality: "1080p",
-						},
+						}
+						break
 					}
-					break
 				}
 			}
 
