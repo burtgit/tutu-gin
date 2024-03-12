@@ -838,9 +838,9 @@ func getTiktokVideoId(url string) (string, string) {
 
 	for i, n := range re.SubexpNames() {
 		if i != 0 && n != "" {
-			if n == "user_id" {
-				userId = match[i]
-			}
+			//if n == "user_id" {
+			//	userId = match[i]
+			//}
 			if n == "id" {
 				videoId = match[i]
 			}
@@ -967,9 +967,9 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		url, _ = getRealUrl(url)
 	}
 
-	userId, videoId := getTiktokVideoId(url)
+	_, videoId := getTiktokVideoId(url)
 
-	if len(videoId) <= 0 || len(userId) <= 0 {
+	if len(videoId) <= 0 {
 		return nil, errors.New("无法解析视频ID")
 	}
 

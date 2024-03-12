@@ -27,12 +27,13 @@ func TestDownload(t *testing.T) {
 		{
 			name: "normal test 2",
 			args: test.Args{
-				URL:   "https://www.tiktok.com/@customize_extensions/video/7234132978287267090?is_from_webapp=1&sender_device=pc&web_id=7256777820008269355",
+				URL:   "https://m.tiktok.com/v/7339130949411818753.html",
 				Title: "깜짝 퇴장 👋 #ENHYPEN #SUNGHOON #NI_KI #Make_the_change",
 				Size:  3848307,
 			},
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			data, err := New().Extract(tt.args.URL, extractors.Options{})
