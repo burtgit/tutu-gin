@@ -57,6 +57,8 @@ func (i Index) Index(c *gin.Context) {
 			"desc":    desc,
 			"path":    path,
 		})
+	} else if strings.Contains(c.Request.Host, "tkqsy.com") {
+		c.HTML(http.StatusOK, "pipi_index.html", gin.H{})
 	} else {
 
 		var token string

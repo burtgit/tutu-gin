@@ -1,0 +1,634 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="never">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>皮皮去水印 - 免费在线短视频去水印、一键去水印、视频去水印解析网站</title>
+    <meta name="keywords" content="抖音去水印，快手去水印，西瓜去水印，小红书去水印，tiktok去水印，短视频去水印">
+    <meta name="description" content="皮皮去水印是一个免费在线短视频去水印网站，提供一键去除抖音、快手、西瓜视频、小红书、TikTok等短视频平台上的水印功能。通过皮皮去水印，您可以方便地解析和下载没有水印的高质量短视频。去除烦人的水印，享受清晰、纯净的观看体验。快来尝试皮皮去水印，让您的短视频观看更加畅快无阻！">
+    <link rel="shortcut icon" href="/static/pipi_favicon.ico">
+    <link rel="stylesheet" href="/static/css/bootstrap.min2.css">
+<!--    <link rel="stylesheet" href="/static/css/main.css?v109">-->
+    <!--
+    <script type="text/javascript">
+        document.write('<link href="/static/css/main.css?v='+new Date().getTime()+'" rel="stylesheet"><\/link>');
+    </script>
+    -->
+
+    <style>
+        .form-control:focus {
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px rgba(255, 0, 0, 0.6);
+        }
+
+        .vid-wrap{
+            width:100%;background: #000;
+            position:relative;
+            padding-bottom:56.25%;    /*需要用padding来维持16:9比例,也就是9除以16*/
+            height: 0;
+        }
+        .vid-wrap video{
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%
+        }
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            padding-top: 65px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+            font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+        }
+
+        a:focus,
+        a:active:focus,
+        a.active:focus,
+        a.focus,
+        a:hover,
+        a:active.focus,
+        a.active.focus {
+            text-decoration: none;
+        }
+
+        .navbar-default .navbar-collapse,
+        .navbar-default .navbar-form {
+            border-color: #20a0ff;
+        }
+
+
+        .wrapper {
+            min-height: 100%;
+        }
+
+        .wrapper .footerPush {
+            height: 70px;
+            /* Footer 鐨勯珮搴� */
+        }
+
+        .footer {
+            clear: both;
+            /* 娓呴櫎娴姩鍏冪礌鏍煎紡 */
+            position: relative;
+            margin-top: -85px;
+            /* Footer 楂樺害鐨勮礋鍊� */
+            height: 85px;
+        }
+
+        .footer p {
+            margin: 0 0 1px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .alert {
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .navbar {
+            background: #20a0ff
+        }
+
+        .navbar-default .navbar-brand {
+            color: #fff;
+        }
+
+        .navbar-default .navbar-nav>li>a {
+            color: #fff;
+        }
+
+        .dropdown-menu {
+            min-width: auto;
+            padding: 0;
+        }
+
+        .dropdown-menu>li>a {
+            line-height: 30px;
+        }
+
+        .dropdown-menu>li>a:hover,
+        .dropdown-menu>li>a:focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: #1d8ce0;
+        }
+
+        @media (min-width: 768px) {
+
+            .navbar-right1 {
+                float: right !important;
+            }
+
+            .navbar>.container .navbar-brand,
+            .navbar>.container-fluid .navbar-brand {
+                margin-left: auto;
+            }
+
+            .navbar-right .dropdown-menu {
+                right: auto;
+                left: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container .navbar-header .logo-img {
+                margin-left: 15px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+                color: #fff;
+            }
+
+            .navbar-nav .open .dropdown-menu>li>a {
+                line-height: 25px;
+            }
+        }
+
+        .container .navbar-header .logo-img {
+            width: 42px;
+            height: 42px;
+            float: left;
+            display: inline-block;
+            background: url(/static/images/pipi_logo.png) no-repeat;
+            background-size: contain;
+            margin-top: 4px;
+        }
+
+
+
+        .navbar-default .navbar-nav>li:focus,.navbar-default .navbar-nav>li:hover {
+            background: #1d8ce0
+        }
+        .navbar-no>li:focus,.navbar-no>li:hover,.navbar-no>li>a:hover {
+            background: #ffffff00 !important;
+            color: rgb(255, 208, 75) !important;
+        }
+        .navbar .navbar-nav>li>a:hover {
+            color: #fff;
+        }
+
+        .navbar .navbar-nav>li>a:focus {
+            color: #fff;
+        }
+
+        .navbar-default .navbar-nav>.open>a,
+        .navbar-default .navbar-nav>.open>a:focus,
+        .navbar-default .navbar-nav>.open>a:hover {
+            color: #ffd04b;
+            background-color: #20a0ff;
+        }
+
+        .dropdown-menu {
+            background-color: #20a0ff;
+        }
+
+        .dropdown-menu>li>a {
+            color: #fff;
+        }
+
+        .navbar-default .navbar-toggle {
+            border-color: #fff0;
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        .navbar-default .navbar-toggle:focus,
+        .navbar-default .navbar-toggle:hover {
+            background-color: #fff0;
+        }
+
+        .navbar-toggle {
+            margin-right: 5px;
+        }
+
+        .navbar-brand>a:hover {
+            background-color: #fff0;
+        }
+
+        .navbar-brand {
+            padding: 15px 10px;
+        }
+
+        .navbar-default .navbar-brand:focus,
+        .navbar-default .navbar-brand:hover {
+            color: #fff;
+        }
+
+        .input-group-addon {
+            color: #fff;
+            background-color: #20a0ff;
+            border: 1px solid transparent;
+        }
+
+        .btn-default {
+            color: #fff;
+            background-color: #20a0ff;
+            border-color: #20a0ff;
+
+        }
+
+        .btn-default:focus,
+        .btn-default.focus {
+            color: #fff;
+            background-color: #20a0ff;
+            border-color: #20a0ff;
+        }
+
+        .btn-default:hover {
+            color: #fff;
+            background-color: #20a0ff;
+            border-color: #20a0ff;
+        }
+
+
+        .navbar-brand:focus,
+        .navbar-brand:active:focus,
+        .navbar-brand.active:focus,
+        .navbar-brand.focus,
+        .navbar-brand:active.focus,
+        .navbar-brand.active.focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .btn:focus,
+        .btn:active:focus,
+        .btn.active:focus,
+        .btn.focus,
+        .btn:active.focus,
+        .btn.active.focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .btn:hover,
+        .btn:focus,
+        .btn.focus {
+            color: #fff;
+        }
+
+        .btn-default:hover {
+            color: #fff;
+            background-color: #4db3ff;
+            border-color: #4db3ff;
+        }
+
+        .btn-default:active,
+        .btn-default.active,
+        .open>.dropdown-toggle.btn-default {
+            color: #fff;
+            background-color: #20a0ff;
+            background-image: none;
+            border-color: #20a0ff;
+        }
+
+        .btn-default:active:hover,
+        .btn-default.active:hover,
+        .open>.dropdown-toggle.btn-default:hover,
+        .btn-default:active:focus,
+        .btn-default.active:focus,
+        .open>.dropdown-toggle.btn-default:focus,
+        .btn-default:active.focus,
+        .btn-default.active.focus,
+        .open>.dropdown-toggle.btn-default.focus {
+            color: #fff;
+            background-color: #20a0ff;
+            border-color: #20a0ff;
+        }
+
+        p.alert-info {
+            color: #333;
+            background-color: #f5fafe;
+            border-color: #dee4e9;
+        }
+
+        .input-group-lg>.input-group-btn>.btn-clear {
+            position: absolute;
+            top: 0;
+            left: -35px;
+            width: 35px;
+            height: 45px;
+            background: url(/static/images/clear.png) no-repeat center;
+            z-index: 2;
+            -webkit-background-size: 18px;
+            background-size: 18px;
+            cursor: pointer;
+        }
+
+        .btn:hover,
+        .btn:focus,
+        .btn.focus {
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+        [v-cloak] {
+            display: none !important;
+        }
+
+        .btn-default.disabled.focus,
+        .btn-default.disabled:focus,
+        .btn-default.disabled:hover,
+        .btn-default[disabled].focus,
+        .btn-default[disabled]:focus,
+        .btn-default[disabled]:hover,
+        fieldset[disabled] .btn-default.focus,
+        fieldset[disabled] .btn-default:focus,
+        fieldset[disabled] .btn-default:hover {
+            background-color: #20a0ff;
+            border-color: #ccc;
+        }
+
+        .thumbnail p .btn-info {
+            margin-right: 2px;
+            margin-left: 2px;
+            margin-bottom: 4px;
+        }
+        .navbar-default {
+            background-color: #20a0ff;
+            border-color: #1d8ce0;
+        }
+        .thumbnail p .btn-success {
+            margin-right: 2px;
+            margin-left: 2px;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 1200px) {
+            .img {
+                max-width: 100%;
+                padding: 1px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                width: 1150px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app" style="display: contents;">
+    <div class="wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top ">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="logo-img"></span>
+                    <a href="/" class="navbar-brand">皮皮去水印</a></div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-no navbar-right">
+                        <li>
+                            <a href="https://in.sucps.com/invite/index" target="_blank">客户端下载</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container" style="margin-bottom: 20px;">
+            <div style="margin-bottom: 20px;">
+                <!--
+                <p>本站已支持解析下载<b>快手</b>、<b>抖音</b>、<b>火山</b>、<b>今日头条</b>、<b>西瓜视频</b>、<b>Tiktok</b>、<b>皮皮虾</b>、<b>皮皮搞笑</b>、<b>小咖秀</b>、<b>趣多拍</b>、<b>微视</b>、<b>美拍</b>、<b>网易云</b>、<b>陌陌</b>、<b>映客</b>、<b>迅雷</b>、<b>阳光宽频</b>、<b>全民K歌</b>、<b>WIDE短视频</b>、<b>微博</b>、<b>秒拍</b>、<b>酷燃</b>、<b>剪映</b>、<b>小红书</b>、<b>哔哩哔哩</b>、<b>百度贴吧</b>、<b>QQ看点</b>、<b>AcFun</b>、<b>趣头条</b>、<b>轻视频</b>、<b>最右</b>、<b>开眼</b>、<b>糗事百科</b>、<b>快手国际版(Kwai)</b>、<b>美图秀秀</b>、<b>段友</b>、<b>连信</b>、<b>得物</b>、<b>香哈菜谱</b>、<b>豆果美食</b>、<b>糖豆视频</b>、<b>多多视频</b>等平台的视频</p>
+                -->
+
+                <p>使用方法:</p>
+                <ol>
+                    <li>打开APP，点击分享按钮，在分享弹框中点击复制链接或通过分享到微信QQ等获取分享链接</li>
+                    <li>将刚才复制的链接粘贴到下面的输入框</li>
+                </ol>
+            </div>
+
+            <div class="input-group input-group-lg" style="margin-bottom: 10px;">
+                <input v-model.trim="link" @keyup.enter="submitLink()" type="text" class="form-control" placeholder="请在此处粘贴分享链接" aria-describedby="basic-addon2" style="padding-right: 32px;">
+
+                <div class="input-group-btn">
+                    <div v-cloak v-if="link" @click="clear()" class="btn-clear"></div>
+                    <button class="btn btn-default" :disabled="disabled" type="button" @click="submitLink()">一键解析</button>
+                </div>
+            </div>
+            <div v-cloak v-if="disabled" style="text-align: center;margin-bottom: 10px;">
+                <img src="/static/images/loading.gif" style="width: 50px;height: 50px;">
+            </div>
+            <div v-cloak v-if="errorTip" style="text-align: center;" class="alert alert-danger" role="alert" v-text="errorTip"></div>
+            <div v-cloak v-if="requestSuccess">
+
+                <p style="text-align: center;margin: 10px 15px;">{requestResult.Title}</p>
+                <div class="thumbnail">
+                    <div class="caption" style="padding:5px 0 0;">
+                        <p style="text-align: center;">
+                                    <span v-if="requestResult.IsVideo == true">
+                                        <a v-if="requestResult.VideoUrls" target="_blank" rel="noreferrer" :href="requestResult.VideoUrls" class="btn btn-success" download="video.mp4">下载视频</a>
+                                        <a v-if="requestResult.CoverUrls" target="_blank" rel="noreferrer" :href="requestResult.CoverUrls" class="btn btn-info" download="video.jpg">视频封面</a>
+                                    </span>
+                            <span v-if="requestResult.IsVideo == false">
+                                        <a v-if="requestResult.Pics" v-for="(item, index) in requestResult.Pics" target="_blank" rel="noreferrer" :href="item" class="btn btn-info" download="img.jpg">下载图片 <span class="badge">{index+1}</span>
+                                        </a>
+                                    </span>
+<!--                            <span v-if="requestResult.type == 3">-->
+<!--                                        <a v-if="requestResult.videos" v-for="(item, index) in requestResult.videos" target="_blank" rel="noreferrer" :href="item" class="btn btn-success" download="video.mp4">下载视频 <span class="badge">{index+1}</span>-->
+<!--                                        </a>-->
+<!--                                        <a v-if="requestResult.images" v-for="(item, index) in requestResult.images" target="_blank" rel="noreferrer" :href="item" class="btn btn-info" download="img.jpg">下载图片 <span class="badge">{index+1}</span>-->
+<!--                                        </a>-->
+<!--                                    </span>-->
+                        </p>
+                        <p style="text-align: center;">
+                            <a href="javascript:void(0);" @click="clear()" class="btn btn-danger">清空</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div style="text-align: center;" class="alert alert-success" role="alert">
+                    如点击下载按钮后没有直接下载，您可以尝试:
+                    <span class="label label-primary" style="margin-right: 5px;">电脑：在下载按钮上右键另存为</span>
+                    <span class="label label-primary" style="margin-right: 5px;">安卓手机：长按下载按钮保存视频</span>
+                    <span class="label label-primary">苹果手机：查看下方常见疑问</span>
+                </div>
+
+            </div>
+
+            <div style="text-align: center;margin-bottom: 40px;">
+            </div>
+            <!--
+            <div style="margin-bottom: 20px;">
+                <p>支持解析的视频地址格式:&nbsp;&nbsp; <a href="javascript:void(0);" @click="toggleAllSupportLink()" v-if="!showAllSupportLink">查看全部</a>
+                </p>
+                <ul style="word-break: break-all;">
+                    <li>http://v.douyin.com/xYrtAo/</li>
+                    <li>https://v.kuaishou.com/7nI7xu</li>
+                    <li>http://reflow.huoshan.com/share/item/6686412844235377924/</li>
+                    <li>https://vt.tiktok.com/ZSJ9ndVXc/</li>
+                    <li>https://www.meipai.com/media/1095878890</li>
+                    <li>http://www.toutiao.com/group/6400624752721740033/</li>
+                    <li v-if="!showAllSupportLink" @click="toggleAllSupportLink()">
+                        <a href="javascript:void(0);" title="查看全部">...</a>
+                    </li>
+                    <li v-cloak="" v-if="showAllSupportLink">http://www.365yg.com/group/6400624752721740033/</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://h5.weishi.qq.com/weishi/feed/6ZzjfFobs1IsBApWa/wsfeed?wxplay=1&amp;id=6ZzjfFobs1IsBApWa&amp;spid=1555338371941275</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://h5.pipix.com/item/6665260639503522056</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://mobile.xiaokaxiu.com/video?id=6522134505946357760</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://boc.inke.cn/innerapp/feed-share/index.html?from=feed&amp;kewname=feed_share_h5_201804&amp;feed_id=155557289100001189&amp;uid=722246189</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://m.immomo.com/s/moment/new-share-v2/aq7345764310.html</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://haokan.baidu.com/v?vid=9945109664225531298</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://share.quduopai.cn/dist/land/video-01/index.html?file_id=d75d6e1c626d72a78b77395fb62beb210152f4cd&amp;member_id=0&amp;channel=1</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://music.163.com/#/video?id=C14B9440AF3349D6E2903E04F381CA22</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://www.bilibili.com/video/BV1S7411s7op?p=3</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://kg2.qq.com/node/play?s=M_VKXpMdOqhB8MK8&amp;shareuid=639f9b84262e368831&amp;topsource=a0_pn201001006_z11_u126133135_l0_t1556593124__</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://h5.wide.meipai.com/app/share/video/?video_id=1554195210058696716</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://www.xiaohongshu.com/discovery/item/5c8b5f2f000000000f02f697</li>
+                    <li v-cloak="" v-if="showAllSupportLink">http://youliao.xunlei.com/share/#/?videoId=51421002966510592&amp;referer=youliao_android</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://n.miaopai.com/media/KYaL1cJB-s5D3THMGrEOZqdwok4_</li>
+                    <li v-cloak="" v-if="showAllSupportLink">http://share.v.uc.cn/video/share?video_id=340276153486937088&amp;module_id=0&amp;biz_id=1014&amp;scene_id=muggle&amp;size=4&amp;xss_item_id=2269872776227284309&amp;tab=video</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://lv.ulikecam.com/activity/lv/sharevideo?template_id=6750098784123882756&amp;from=singlemessage&amp;isappinstalled=0</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://m.weibo.cn/s/video/index?object_id=1034:4436200392480211&amp;segment_id=&amp;blog_mid=4436200452311271</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://www.acfun.cn/v/ac11911471</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://m.acfun.cn/sv/?mid=10984218&amp;platform=Android&amp;uid=25919729</li>
+                    <li v-cloak="" v-if="showAllSupportLink">http://kw.ai/p/Jx9AOwUL</li>
+                    <li v-cloak="" v-if="showAllSupportLink">https://m.kwai.com/photo/150000040568141/5229392118983360287?userId=150000040568141&amp;photoId=5229392118983360287&amp;timestamp=1585658061935&amp;cc=share_copylink&amp;language=zh-cn&amp;fid=397373286&amp;et=1_a%2F4668367342903762035_h90</li>
+                </ul>
+            </div>
+            -->
+            <div>
+                <p>常见疑问:</p>
+                <ol style="word-break: break-all;">
+                    <li>版权声明</li>
+                    <p class="alert alert-info">该功能仅供个人娱乐学习，严禁商业用途。主要用于用户备份及收藏个人喜爱的视频等。视频归相关网站及作者所有，本站不存储任何视频及图片。本站不对使用者的行为负担任何法律责任。如果有因为本站而导致您的权益受到损害，请与管理员联系，我们将理性对待，协助您解决相关问题。联系微信：kaolajiexi2</p>
+                    <li>Android手机上可以用吗？</li>
+                    <p class="alert alert-info">可以的，Android手机在常用的Chrome、UC、360、QQ等浏览器上都可以很方便的使用本站。也可以下载我们的app：<a href="https://in.sucps.com/invite/index" target="_blank">APP下载</a></p>
+                    <li>iOS设备（iPhone、iPad、iPod）上点击下载视频按钮后，跳转到视频页面，并没有直接下载，怎么办？</li>
+                    <p class="alert     alert-info">因Safari及微信内置浏览器均不支持下载文件，所以需要下载我们的app：<a href="https://in.sucps.com/invite/index" target="_blank">APP下载</a></p>
+                    <li>我在电脑上用的是IE浏览器，点下载视频按钮后，出现跟上面那用iPad的哥们一样的情况，跳转到视频页面，如何下载到本地呢？</li>
+                    <p class="alert alert-info">电脑上少数浏览器不支持直接下载，但可以在下载视频按钮上点击右键，然后选择"目标另存为"或"链接存储为"来下载视频；或者到跳转后的视频页面，在视频画面上点击右键，然后选择"视频另存为"来下载视频。当然，我们更推荐使用我们的客户端</p>
+                    <li>下载后的视频打不开怎么办？</li>
+                    <p class="alert alert-info">这种情况极少发生，一般是文件后缀问题，把下载后的文件后缀名改为.mp4即可播放。</p>
+                </ol>
+            </div>
+
+<!--            <div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <button type="button" class="close" data-dismiss="modal">-->
+<!--                                <span aria-hidden="true">&times;</span>-->
+<!--                                <span class="sr-only">Close</span>-->
+<!--                            </button>-->
+<!--                            <h4 class="modal-title" id="myModalLabel">人机识别</h4>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <p>为了验证您的身份，请输入人类验证码。<span class="small">(只在环境变化时验证)</span>-->
+<!--                            </p>-->
+<!--                            <div>-->
+<!--                                <div class="form-inline">-->
+<!--                                    <input class="form-control" type="number" placeholder="请输入验证码" v-model.trim="verify.code" value="">-->
+<!--                                    <button :disabled="verify.disabled" @click="verifyLogin()" class="btn btn-normal btn-success" style="margin:10px 10px 10px 10px;">提交验证</button>-->
+<!--                                </div>-->
+<!--                                <div v-cloak v-if="verify.errorTip" style="text-align: center;" class="alert alert-danger" role="alert" v-text="verify.errorTip"></div>-->
+<!--                            </div>-->
+<!--                            <p>扫码关注微信公众号「<b>一键解析</b>」，发送文字「<b>验证码</b>」获取验证码：</p>-->
+<!--                            <p>-->
+<!--                                <img src="/static/img/tutorials.png" style="max-width:100%;max-height:200px;">-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="modal fade" id="captchaModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">-->
+<!--                <div class="modal-dialog" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                <span aria-hidden="true">&times;</span>-->
+<!--                            </button>-->
+<!--                            <h4 class="modal-title" id="exampleModalLabel">请求太快啦，需要输入验证码验证一下</h4>-->
+<!--                        </div>-->
+
+<!--                        <div class="modal-body">-->
+<!--                            <img style="margin-bottom: 15px;" :src="captcha.src" @click="showCaptcha()">-->
+<!--                            <div class="form-group">-->
+<!--                                <p style="color:red;" @click="showCaptcha()">看不清,点击图片刷新</p>-->
+<!--                            </div>-->
+<!--                            <form>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="code" class="control-label">输入验证码:<span style="color:#999999">(不区分大小写)</span>-->
+<!--                                    </label>-->
+<!--                                    <input type="text" class="form-control" id="code" v-model.trim="captcha.code">-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <p v-if="captcha.errorTip" style="color: red;font-size: 14px;">{captcha.errorTip}</p>-->
+<!--                            <button type="button" class="btn" data-dismiss="modal">取消</button>-->
+<!--                            <button type="button" class="btn btn-success" :disabled="captcha.disabled" @click="captchaVerify()">验证</button>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <button type="button" class="close" data-dismiss="modal">-->
+<!--                                <span aria-hidden="true">&times;</span>-->
+<!--                                <span class="sr-only">Close</span>-->
+<!--                            </button>-->
+<!--                            <h4 class="modal-title" id="myModalLabel">微信小程序</h4>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body" >-->
+<!--                            <p>使用微信扫码小程序「<b><font color="red">一键解析</font></b>」，不限次数、完全免费，电脑手机均可使用，超方便！</p>-->
+<!--                            <p style="text-align: center;">-->
+<!--                                <img src="/static/img/gh_ed196baa83b4_258.jpg" style="max-width:100%;max-height:200px;">-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+        <div class="footerPush"></div>
+    </div>
+    <footer class="footer">
+        <div style="text-align: center;">
+            <p>接口提供、广告合作、问题或建议反馈加微信：kaolajiexi2</p>
+            <p>视频归相关网站及作者所有，本站不存储任何视频及图片</p>
+            <p>©2024 tkqsy<a rel="noreferrer" href="https://beian.miit.gov.cn/" target="_blank" style="font-size: 13px; color: rgb(153, 153, 153);">浙ICP备2023026833号-4</a>
+            </p>
+        </div>
+    </footer>
+</div>
+<script type="text/javascript" src="https://js.users.51.la/21011011.js"></script>
+<script src="//apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min2.js"></script>
+<script src="/static/js/vue.min.js"></script>
+<script src="/static/js/js.cookie.js?v2"></script>
+<script src="/static/js/pipi.js?v100"></script>
+
+</body>
+</html>
