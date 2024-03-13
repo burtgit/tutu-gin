@@ -480,7 +480,9 @@ func getCsrfToken(videoId string) (string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return "", errors2.Annotate(errors.New("请求返回状态码有误"), "请求返回状态码有误")
+		b, _ := io.ReadAll(resp.Body)
+		fmt.Println(string(b))
+		return "", errors2.Annotate(errors.New("请求返回状态码有误2"), "请求返回状态码有误2")
 	}
 
 	// 获取cookie里面的csrftoken内容
@@ -494,7 +496,7 @@ func getCsrfToken(videoId string) (string, error) {
 }
 
 // Extract is the main function to extract the data.
-func (e *extractor) Extract(url string, option extractors.Options) ([]*extractors.Data, error) {
+func (e *extractor) ExtractV2(url string, option extractors.Options) ([]*extractors.Data, error) {
 	videoId := getVideoId(url)
 	token, err := getCsrfToken(videoId)
 	if err != nil {
@@ -535,7 +537,9 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, errors2.Annotate(errors.New("请求返回状态码有误"), "请求返回状态码有误")
+		b, _ := io.ReadAll(resp.Body)
+		fmt.Println(string(b))
+		return nil, errors2.Annotate(errors.New("请求返回状态码有误1"), "请求返回状态码有误1")
 	}
 
 	b, _ := io.ReadAll(resp.Body)
@@ -596,7 +600,7 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 }
 
 // Extract is the main function to extract the data.
-func (e *extractor) ExtractV2(url string, option extractors.Options) ([]*extractors.Data, error) {
+func (e *extractor) Extract(url string, option extractors.Options) ([]*extractors.Data, error) {
 	// Instagram is forcing a login to access the page, so we use the embed page to bypass that.
 	url = strings.Replace(url, `/pink/p`, `/p`, -1)
 	u, err := netURL.Parse(url)

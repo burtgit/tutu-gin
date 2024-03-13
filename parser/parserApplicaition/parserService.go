@@ -1,7 +1,6 @@
 package parserApplicaition
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
@@ -106,7 +105,6 @@ func (p *ParserService) Agent(pageUrl string) (result *parserDto.ParserResultDto
 	result, err = parserAdapter.NewGetLux().Fetch(&parserDto.GetSpareFetchDto{PageUrl: pageUrl, Platform: platform})
 
 	if err != nil {
-		fmt.Println(err)
 		return nil, exception.DomainError(errors.Annotate(err, exception.DOMAIN_PARSE_FAIL))
 	}
 

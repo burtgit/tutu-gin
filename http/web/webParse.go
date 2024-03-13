@@ -6,7 +6,6 @@ import (
 	"crypto/cipher"
 	"crypto/sha256"
 	"encoding/base64"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -259,7 +258,6 @@ func (w *WebParse) Agent(c *gin.Context) {
 	parserService := parserApplicaition.NewParserService()
 	result, err := parserService.Agent(requestData.PageUrl)
 	if err != nil {
-		fmt.Println(err)
 		c.Error(exception.ValidatorError(errors.Annotate(err, exception.API_PARSER_FAIL)))
 		return
 	}
