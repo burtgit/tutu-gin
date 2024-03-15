@@ -6,6 +6,7 @@ import (
 	"fmt"
 	errors2 "github.com/juju/errors"
 	"github.com/pkg/errors"
+	"io"
 	"math/rand"
 	"net/http"
 	"regexp"
@@ -979,7 +980,7 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 	}
 
 	// 创建 GET 请求
-	req, err := http.NewRequest("GET", "https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/feed/?aweme_id="+videoId+"&version_name=26.1.3&version_code=260103&build_number=26.1.3&manifest_version_code=260103&update_version_code=260103&openudid="+randOpenid()+"&uuid="+randUuid()+"&_rticket="+strconv.FormatInt(time.Now().Unix()*1000, 10)+"&ts="+strconv.FormatInt(time.Now().Unix(), 10)+"&device_brand=Google&device_type=Pixel+7&device_platform=android&resolution=1080%2A2400&dpi=420&os_version=13&os_api=29&carrier_region=US&sys_region=US&region=US&app_name=trill&app_language=en&language=en&timezone_name=America%2FNew_York&timezone_offset=-14400&channel=googleplay&ac=wifi&mcc_mnc=310260&is_my_cn=0&aid=1180&ssmix=a&as=a1qwert123&cp=cbfhckdckkde1", nil)
+	req, err := http.NewRequest("GET", "https://api22-normal-c-useast2a.tiktokv.com/aweme/v1/feed/?aweme_id="+videoId+"&version_name=26.1.3&version_code=260103&build_number=26.1.3&manifest_version_code=260103&update_version_code=260103&openudid="+randOpenid()+"&uuid="+randUuid()+"&_rticket="+strconv.FormatInt(time.Now().Unix()*1000, 10)+"&ts="+strconv.FormatInt(time.Now().Unix(), 10)+"&device_brand=Google&device_type=Pixel+7&device_platform=android&resolution=1080%2A2400&dpi=420&os_version=13&os_api=29&carrier_region=US&sys_region=US&region=US&app_name=trill&app_language=en&language=en&timezone_name=America%2FNew_York&timezone_offset=-14400&channel=googleplay&ac=wifi&mcc_mnc=310260&is_my_cn=0&aid=1180&ssmix=a&as=a1qwert123&cp=cbfhckdckkde1", nil)
 	if err != nil {
 		return nil, errors2.Annotate(err, "创建请求失败")
 	}
@@ -994,7 +995,8 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		return nil, errors2.Annotate(err, "请求发送失败")
 	}
 	defer resp.Body.Close()
-
+	b, _ := io.ReadAll(resp.Body)
+	fmt.Println(string(b))
 	var result tiktokContent
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
