@@ -6,7 +6,6 @@ import (
 	"fmt"
 	errors2 "github.com/juju/errors"
 	"github.com/pkg/errors"
-	"io"
 	"math/rand"
 	"net/http"
 	"regexp"
@@ -995,8 +994,8 @@ func (e *extractor) Extract(url string, option extractors.Options) ([]*extractor
 		return nil, errors2.Annotate(err, "请求发送失败")
 	}
 	defer resp.Body.Close()
-	b, _ := io.ReadAll(resp.Body)
-	fmt.Println(string(b))
+	//b, _ := io.ReadAll(resp.Body)
+	//fmt.Println(string(b))
 	var result tiktokContent
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
