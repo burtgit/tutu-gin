@@ -19,7 +19,7 @@ func TestDownload(t *testing.T) {
 		{
 			name: "normal test 1",
 			args: test.Args{
-				URL:   "https://www.tiktok.com/@fatos.naturais/video/7277951260928560390",
+				URL:   "https://vt.tiktok.com/ZSF5bPxj3/",
 				Title: "イケすぎたXOXO#xoxo #repezenfoxx #背中男 #kfam #yoshikiさんを泣かせたチーム @K fam @【Repezen Foxx】🦊",
 				Size:  4356253,
 			},

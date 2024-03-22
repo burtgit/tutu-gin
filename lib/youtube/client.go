@@ -209,7 +209,7 @@ var (
 	AndroidClient = clientInfo{
 		name:           "ANDROID",
 		version:        "18.11.34",
-		key:            "AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w",
+		key:            "AIzaSyCjc_pVEDi4qsv5MtC2dMXzpIaDoRFLsxw",
 		userAgent:      "com.google.android.youtube/18.11.34 (Linux; U; Android 11) gzip",
 		androidVersion: 30,
 	}

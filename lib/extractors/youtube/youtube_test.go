@@ -17,7 +17,7 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "normal test",
 			args: test.Args{
-				URL:   "https://youtube.com/shorts/68LLMQfEUQk?si=fwS2CdzAHAiLXVgG",
+				URL:   "https://youtu.be/afqvp6O-pJA?si=YgdxpG3Gzo96CHAE",
 				Title: "Multifandom Mashup 2017",
 			},
 		},
@@ -46,7 +46,7 @@ func TestYoutube(t *testing.T) {
 		{
 			name: "stream 404 test 1",
 			args: test.Args{
-				URL:   "https://youtube.com/shorts/S3JMs-iPe50?si=Xx3PXHYWzsOKUNpV",
+				URL:   "https://m.youtube.com/watch?v=nyDk-rgP0tI",
 				Title: "FreeFileSync: Mirror Synchronization",
 			},
 		},

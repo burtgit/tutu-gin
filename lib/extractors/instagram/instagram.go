@@ -496,7 +496,7 @@ func getCsrfToken(videoId string) (string, error) {
 }
 
 // Extract is the main function to extract the data.
-func (e *extractor) ExtractV2(url string, option extractors.Options) ([]*extractors.Data, error) {
+func (e *extractor) Extract(url string, option extractors.Options) ([]*extractors.Data, error) {
 	videoId := getVideoId(url)
 	token, err := getCsrfToken(videoId)
 	if err != nil {
@@ -600,7 +600,7 @@ func (e *extractor) ExtractV2(url string, option extractors.Options) ([]*extract
 }
 
 // Extract is the main function to extract the data.
-func (e *extractor) Extract(url string, option extractors.Options) ([]*extractors.Data, error) {
+func (e *extractor) ExtractV2(url string, option extractors.Options) ([]*extractors.Data, error) {
 	// Instagram is forcing a login to access the page, so we use the embed page to bypass that.
 	url = strings.Replace(url, `/pink/p`, `/p`, -1)
 	u, err := netURL.Parse(url)

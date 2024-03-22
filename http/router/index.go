@@ -31,6 +31,7 @@ func RouterInit(engine *gin.Engine) {
 
 	// 初始化robots.txt文件
 	engine.StaticFile("/robots.txt", "./http/resource/robots.txt")
+	engine.StaticFile("/baidu_verify_codeva-onWy4Zh60I.html", "./http/resource/baidu_verify_codeva-onWy4Zh60I.html")
 
 	// 初始化favicon.ico
 	engine.StaticFile("/favicon.ico", "./http/resource/favicon.ico")
